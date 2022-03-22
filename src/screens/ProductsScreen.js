@@ -1,12 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import WineComponent from '../components/WineComponent';
 
 const ProductsScreen = () => {
-  return (
-    <View>
-      <Text>Products Screen</Text>
-    </View>
-  );
+  return <WineComponent />;
 };
 
 const styles = StyleSheet.create({});

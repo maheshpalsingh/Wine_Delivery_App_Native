@@ -4,7 +4,12 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DrawerNavigator from './DrawerNavigator';
 import Colors from '../assets/theme/Colors';
-import {HomeStackScreen, OrdersStackScreen} from './HomeNavigator';
+import {
+  CategoryStackScreen,
+  HomeStackScreen,
+  OrdersStackScreen,
+  SearchStackScreen,
+} from './HomeNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -23,8 +28,8 @@ const BottomtabNavigator = ({navigation}) => {
         }}
       />
       <Tab.Screen
-        name="Notifications"
-        component={OrdersStackScreen}
+        name="By Category"
+        component={CategoryStackScreen}
         options={{
           tabBarLabel: 'Categories',
           tabBarIcon: ({color}) => <Icon name="list" color={color} size={26} />,
@@ -32,7 +37,7 @@ const BottomtabNavigator = ({navigation}) => {
       />
       <Tab.Screen
         name="Search"
-        component={DrawerNavigator}
+        component={SearchStackScreen}
         options={{
           tabBarLabel: 'My Orders',
           tabBarIcon: ({color}) => (
@@ -42,7 +47,7 @@ const BottomtabNavigator = ({navigation}) => {
       />
       <Tab.Screen
         name="MyOrders"
-        component={DrawerNavigator}
+        component={OrdersStackScreen}
         options={{
           tabBarLabel: 'My Orders',
           tabBarIcon: ({color}) => (

@@ -11,27 +11,32 @@ import LoginScreen from '../screens/LoginScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {
+  CATEGORIES,
   LOGIN,
   MY_CART,
   MY_ORDERS,
   PRODUCTS_LIST,
   PRODUCTS_OVERVIEW,
+  SEARCH,
+  SETTINGS,
 } from '../constants/routeName';
 
 import Icons from 'react-native-vector-icons/Ionicons';
 
 import {useNavigation} from '@react-navigation/native';
 import Colors from '../assets/theme/Colors';
+import Categories from '../screens/Categories';
+import Search from '../screens/Search';
 
 // const screenOptions = ({navigation, route}) => ({
-const screenOptions = {
+const screenOptions = () => ({
   headerRight: () => (
     <Icons
       name="cart"
       size={32}
       style={{paddingRight: 10}}
       onPress={() => {
-        navigation.navigate(MycartScreen);
+        navigation.navigate('MycartScreen');
       }}
     />
   ),
@@ -43,7 +48,7 @@ const screenOptions = {
   headerStyle: {
     backgroundColor: Colors.purple,
   },
-};
+});
 
 // const Menu = {
 //   headerLeft: () => (
@@ -58,8 +63,8 @@ const screenOptions = {
 //   ),
 // };
 
-export const HomeStackScreen = () => {
-  const navigation = useNavigation();
+export const HomeStackScreen = ({navigation}) => {
+  // const navigation = useNavigation();
   const HomeStack = createStackNavigator();
   return (
     <HomeStack.Navigator screenOptions={screenOptions}>
@@ -82,8 +87,32 @@ export const HomeStackScreen = () => {
   );
 };
 
-export const SettingsStackScreen = () => {
-  const navigation = useNavigation();
+export const CategoryStackScreen = ({navigation}) => {
+  // const navigation = useNavigation();
+  const CategoryStack = createStackNavigator();
+  return (
+    <CategoryStack.Navigator screenOptions={screenOptions}>
+      <CategoryStack.Screen
+        name={CATEGORIES}
+        component={Categories}
+        options={{
+          headerLeft: () => (
+            <Icons
+              name="menu"
+              size={32}
+              style={{paddingLeft: 10}}
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+        }}></CategoryStack.Screen>
+    </CategoryStack.Navigator>
+  );
+};
+
+export const SettingsStackScreen = ({navigation}) => {
+  // const navigation = useNavigation();
   const SettingsStack = createStackNavigator();
   return (
     <SettingsStack.Navigator screenOptions={screenOptions}>
@@ -106,8 +135,7 @@ export const SettingsStackScreen = () => {
   );
 };
 
-export const OrdersStackScreen = () => {
-  const navigation = useNavigation();
+export const OrdersStackScreen = ({navigation}) => {
   const OrdersStack = createStackNavigator();
   return (
     <OrdersStack.Navigator screenOptions={screenOptions}>
@@ -130,8 +158,32 @@ export const OrdersStackScreen = () => {
   );
 };
 
-export const CartStackScreen = () => {
-  const navigation = useNavigation();
+export const SearchStackScreen = ({navigation}) => {
+  // const navigation = useNavigation();
+  const SearchStack = createStackNavigator();
+  return (
+    <SearchStack.Navigator screenOptions={screenOptions}>
+      <SearchStack.Screen
+        name={SEARCH}
+        component={Search}
+        options={{
+          headerLeft: () => (
+            <Icons
+              name="menu"
+              size={32}
+              style={{paddingLeft: 10}}
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+        }}></SearchStack.Screen>
+    </SearchStack.Navigator>
+  );
+};
+
+export const CartStackScreen = ({navigation}) => {
+  // const navigation = useNavigation();
   const CartStack = createStackNavigator();
   return (
     <CartStack.Navigator screenOptions={screenOptions}>
@@ -153,8 +205,8 @@ export const CartStackScreen = () => {
     </CartStack.Navigator>
   );
 };
-export const LogoutStackScreen = () => {
-  const navigation = useNavigation();
+export const LogoutStackScreen = ({navigation}) => {
+  // const navigation = useNavigation();
   const LogoutStack = createStackNavigator();
   return (
     <LogoutStack.Navigator
