@@ -29,14 +29,15 @@ import Categories from '../screens/Categories';
 import Search from '../screens/Search';
 
 // const screenOptions = ({navigation, route}) => ({
-const screenOptions = () => ({
+const screenOptions = ({navigation}) => ({
   headerRight: () => (
     <Icons
       name="cart"
       size={32}
       style={{paddingRight: 10}}
       onPress={() => {
-        navigation.navigate('MycartScreen');
+        // navigation.navigate('MY_CART', {screen: MycartScreen});
+        navigation.navigate(MY_CART, {screen: MycartScreen});
       }}
     />
   ),
@@ -64,28 +65,63 @@ const screenOptions = () => ({
 // };
 
 export const HomeStackScreen = ({navigation}) => {
-  // const navigation = useNavigation();
   const HomeStack = createStackNavigator();
   return (
     <HomeStack.Navigator screenOptions={screenOptions}>
       <HomeStack.Screen
         name={PRODUCTS_LIST}
-        component={ProductsScreen}
-        options={{
-          headerLeft: () => (
-            <Icons
-              name="menu"
-              size={32}
-              style={{paddingLeft: 10}}
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            />
-          ),
-        }}></HomeStack.Screen>
+        component={ProductsScreen}></HomeStack.Screen>
+      <HomeStack.Screen
+        name={MY_CART}
+        component={MycartScreen}></HomeStack.Screen>
     </HomeStack.Navigator>
   );
 };
+
+// export const HomeStackScreen = ({navigation}) => {
+//   // const navigation = useNavigation();
+//   const HomeStack = createStackNavigator();
+//   return (
+//     <HomeStack.Navigator
+//       screenOptions={({navigation}) => ({
+//         headerRight: () => (
+//           <Icons
+//             name="cart"
+//             size={32}
+//             style={{paddingRight: 10}}
+//             onPress={() => {
+//               // navigation.navigate('MY_CART', {screen: MycartScreen});
+//               navigation.navigate('CartStackScreen');
+//             }}
+//           />
+//         ),
+//         headerTitleAlign: 'center',
+//         headerTintColor: Colors.grey,
+//         headerTitleStyle: {
+//           fontWeight: 'bold',
+//         },
+//         headerStyle: {
+//           backgroundColor: Colors.purple,
+//         },
+//       })}>
+//       <HomeStack.Screen
+//         name={PRODUCTS_LIST}
+//         component={ProductsScreen}
+//         options={{
+//           headerLeft: () => (
+//             <Icons
+//               name="menu"
+//               size={32}
+//               style={{paddingLeft: 10}}
+//               onPress={() => {
+//                 navigation.openDrawer();
+//               }}
+//             />
+//           ),
+//         }}></HomeStack.Screen>
+//     </HomeStack.Navigator>
+//   );
+// };
 
 export const CategoryStackScreen = ({navigation}) => {
   // const navigation = useNavigation();
@@ -111,29 +147,29 @@ export const CategoryStackScreen = ({navigation}) => {
   );
 };
 
-export const SettingsStackScreen = ({navigation}) => {
-  // const navigation = useNavigation();
-  const SettingsStack = createStackNavigator();
-  return (
-    <SettingsStack.Navigator screenOptions={screenOptions}>
-      <SettingsStack.Screen
-        name={SETTINGS}
-        component={Settings}
-        options={{
-          headerLeft: () => (
-            <Icons
-              name="menu"
-              size={32}
-              style={{paddingLeft: 10}}
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            />
-          ),
-        }}></SettingsStack.Screen>
-    </SettingsStack.Navigator>
-  );
-};
+// export const SettingsStackScreen = ({navigation}) => {
+//   // const navigation = useNavigation();
+//   const SettingsStack = createStackNavigator();
+//   return (
+//     <SettingsStack.Navigator screenOptions={screenOptions}>
+//       <SettingsStack.Screen
+//         name={SETTINGS}
+//         component={Settings}
+//         options={{
+//           headerLeft: () => (
+//             <Icons
+//               name="menu"
+//               size={32}
+//               style={{paddingLeft: 10}}
+//               onPress={() => {
+//                 navigation.openDrawer();
+//               }}
+//             />
+//           ),
+//         }}></SettingsStack.Screen>
+//     </SettingsStack.Navigator>
+//   );
+// };
 
 export const OrdersStackScreen = ({navigation}) => {
   const OrdersStack = createStackNavigator();
@@ -205,24 +241,24 @@ export const CartStackScreen = ({navigation}) => {
     </CartStack.Navigator>
   );
 };
-export const LogoutStackScreen = ({navigation}) => {
-  // const navigation = useNavigation();
-  const LogoutStack = createStackNavigator();
-  return (
-    <LogoutStack.Navigator
-      screenOptions={{
-        headerTitleAlign: 'center',
-        headerTintColor: Colors.grey,
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-        headerStyle: {
-          backgroundColor: Colors.purple,
-        },
-      }}>
-      <LogoutStack.Screen
-        name={LOGIN}
-        component={LoginScreen}></LogoutStack.Screen>
-    </LogoutStack.Navigator>
-  );
-};
+// export const LogoutStackScreen = ({navigation}) => {
+//   // const navigation = useNavigation();
+//   const LogoutStack = createStackNavigator();
+//   return (
+//     <LogoutStack.Navigator
+//       screenOptions={{
+//         headerTitleAlign: 'center',
+//         headerTintColor: Colors.grey,
+//         headerTitleStyle: {
+//           fontWeight: 'bold',
+//         },
+//         headerStyle: {
+//           backgroundColor: Colors.purple,
+//         },
+//       }}>
+//       <LogoutStack.Screen
+//         name={LOGIN}
+//         component={LoginScreen}></LogoutStack.Screen>
+//     </LogoutStack.Navigator>
+//   );
+// };

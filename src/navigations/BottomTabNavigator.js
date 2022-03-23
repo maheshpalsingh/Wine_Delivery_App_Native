@@ -5,12 +5,23 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import DrawerNavigator from './DrawerNavigator';
 import Colors from '../assets/theme/Colors';
 import {
+  CartStackScreen,
   CategoryStackScreen,
   HomeStackScreen,
   OrdersStackScreen,
   SearchStackScreen,
 } from './HomeNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Categories from '../screens/Categories';
+import {
+  CATEGORIES,
+  MY_ORDERS,
+  PRODUCTS_LIST,
+  SEARCH,
+} from '../constants/routeName';
+import Search from '../screens/Search';
+import MyordersScreen from '../screens/MyOrdersScreen';
+import ProductsScreen from '../screens/ProductsScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 const BottomtabNavigator = ({navigation}) => {
@@ -21,6 +32,9 @@ const BottomtabNavigator = ({navigation}) => {
       barStyle={{backgroundColor: Colors.purple}}>
       <Tab.Screen
         name="Feed"
+        // component={() =>
+        //   navigation.navigate(HomeStackScreen, {screen: 'Categories'})
+        // }
         component={HomeStackScreen}
         options={{
           tabBarLabel: 'PRODUCTS',
@@ -28,7 +42,7 @@ const BottomtabNavigator = ({navigation}) => {
         }}
       />
       <Tab.Screen
-        name="By Category"
+        name="Categories"
         component={CategoryStackScreen}
         options={{
           tabBarLabel: 'Categories',
@@ -46,7 +60,8 @@ const BottomtabNavigator = ({navigation}) => {
         }}
       />
       <Tab.Screen
-        name="MyOrders"
+        name={MY_ORDERS}
+        //component={(MY_ORDERS, {screen: MyordersScreen})}
         component={OrdersStackScreen}
         options={{
           tabBarLabel: 'My Orders',

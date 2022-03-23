@@ -7,7 +7,7 @@ import AuthNavigator from './AuthNavigator';
 import BottomtabNavigator from './BottomTabNavigator';
 
 const AppNavContainer = () => {
-  let loggedIn = false;
+  let loggedIn = true;
   return (
     <NavigationContainer>
       {loggedIn ? <BottomtabNavigator /> : <AuthNavigator />}
