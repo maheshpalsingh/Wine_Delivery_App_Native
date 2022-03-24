@@ -20,8 +20,10 @@ import {
   SEARCH,
 } from '../constants/routeName';
 import Search from '../screens/Search';
-import MyordersScreen from '../screens/MyOrdersScreen';
 import ProductsScreen from '../screens/ProductsScreen';
+import ProductoverviewScreen from '../screens/ProductOverviewScreen';
+import MycartScreen from '../screens/MyCartScreen';
+import MyordersScreen from '../screens/MyOrdersScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 const BottomtabNavigator = ({navigation}) => {
@@ -43,7 +45,8 @@ const BottomtabNavigator = ({navigation}) => {
       />
       <Tab.Screen
         name="Categories"
-        component={CategoryStackScreen}
+        component={Categories}
+        navigation
         options={{
           tabBarLabel: 'Categories',
           tabBarIcon: ({color}) => <Icon name="list" color={color} size={26} />,

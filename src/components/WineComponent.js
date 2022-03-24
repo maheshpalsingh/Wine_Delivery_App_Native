@@ -7,60 +7,61 @@ import {
   TouchableOpacity,
   Button,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const WineList = [
-  {
-    name: 'AMARIS SYRAH',
-    image_url:
-      'https://iwsc.net/img/blog/medium-iwscawards114pre-dinner6184.jpg',
-    categories: 'Wine',
-    price: 5550,
-    quantity: '750ML',
-  },
-  {
-    name: 'BIB BANYAN',
-    image_url:
-      'https://lh3.googleusercontent.com/2-8WkwuUeFUPkk0mSGHcr9uIbsmFKVgmyYUcuEy0rmw3cxDT6XVeeEG6z2DnMiUW8kbKZ2-03eymFanVIKircsrHfg=w1000',
-    categories: 'Bear',
-    price: 2150,
-    quantity: '500ML',
-  },
-  {
-    name: 'CHAROSA VINEYARDS',
-    image_url:
-      'https://vinepair.com/wp-content/uploads/2019/12/Domaine-Matrot-Mersault-2017.png',
-    categories: 'Ciders',
-    price: 1750,
-    quantity: '250ML',
-  },
-  {
-    name: 'AMARIS SYRAH',
-    image_url:
-      'https://iwsc.net/img/blog/medium-iwscawards114pre-dinner6184.jpg',
-    categories: 'Wine',
-    price: 5550,
-    quantity: '750ML',
-  },
-  {
-    name: 'BIB BANYAN ',
-    image_url:
-      'https://lh3.googleusercontent.com/2-8WkwuUeFUPkk0mSGHcr9uIbsmFKVgmyYUcuEy0rmw3cxDT6XVeeEG6z2DnMiUW8kbKZ2-03eymFanVIKircsrHfg=w1000',
-    categories: 'Bear',
-    price: 2150,
-    quantity: '500ML',
-  },
-  {
-    name: 'CHAROSA VINEYARDS',
-    image_url:
-      'https://vinepair.com/wp-content/uploads/2019/12/Domaine-Matrot-Mersault-2017.png',
-    categories: 'Ciders',
-    price: 1750,
-    quantity: '250ML',
-  },
-];
+// const WineList = [
+//   {
+//     name: 'AMARIS SYRAH',
+//     image_url:
+//       'https://iwsc.net/img/blog/medium-iwscawards114pre-dinner6184.jpg',
+//     categories: 'Wine',
+//     price: 5550,
+//     quantity: '750ML',
+//   },
+//   {
+//     name: 'BIB BANYAN',
+//     image_url:
+//       'https://lh3.googleusercontent.com/2-8WkwuUeFUPkk0mSGHcr9uIbsmFKVgmyYUcuEy0rmw3cxDT6XVeeEG6z2DnMiUW8kbKZ2-03eymFanVIKircsrHfg=w1000',
+//     categories: 'Bear',
+//     price: 2150,
+//     quantity: '500ML',
+//   },
+//   {
+//     name: 'CHAROSA VINEYARDS',
+//     image_url:
+//       'https://vinepair.com/wp-content/uploads/2019/12/Domaine-Matrot-Mersault-2017.png',
+//     categories: 'Ciders',
+//     price: 1750,
+//     quantity: '250ML',
+//   },
+//   {
+//     name: 'AMARIS SYRAH',
+//     image_url:
+//       'https://iwsc.net/img/blog/medium-iwscawards114pre-dinner6184.jpg',
+//     categories: 'Wine',
+//     price: 5550,
+//     quantity: '750ML',
+//   },
+//   {
+//     name: 'BIB BANYAN ',
+//     image_url:
+//       'https://lh3.googleusercontent.com/2-8WkwuUeFUPkk0mSGHcr9uIbsmFKVgmyYUcuEy0rmw3cxDT6XVeeEG6z2DnMiUW8kbKZ2-03eymFanVIKircsrHfg=w1000',
+//     categories: 'Bear',
+//     price: 2150,
+//     quantity: '500ML',
+//   },
+//   {
+//     name: 'CHAROSA VINEYARDS',
+//     image_url:
+//       'https://vinepair.com/wp-content/uploads/2019/12/Domaine-Matrot-Mersault-2017.png',
+//     categories: 'Ciders',
+//     price: 1750,
+//     quantity: '250ML',
+//   },
+// ];
 
 const axios = require('axios');
 const url =
@@ -68,18 +69,15 @@ const url =
 
 const WineComponent = () => {
   const [products, setproducts] = useState([]);
-  const fetchApi = () => {
-    axios
-      .get(`${url}/products/all`)
-      .then(response => {
-        setproducts(response.data ?? []);
-      })
-      .catch(function (error) {
-        alert(error);
-      });
-  };
 
-  fetchApi();
+  axios
+    .get(`${url}/products/all`)
+    .then(response => {
+      setproducts(response.data ?? []);
+    })
+    .catch(function (error) {
+      alert(error);
+    });
 
   return (
     <View>
@@ -92,12 +90,12 @@ const WineComponent = () => {
               image={product.image}
               winename={product.name}
               price={product.price}
-              qtn={product.company}
+              qtn={product.category}
             />
           </View>
         ))}
-
-        {/* {WineList.map((wine, index) => (
+        {/* 
+        {WineList.map((wine, index) => (
           <View key={index}>
             <WineCard
               image={wine.image_url}
@@ -143,7 +141,7 @@ const WineCard = props => (
       <Text style={styles.txt_qtn}>{props.qtn}</Text>
     </View>
     <View style={styles.add_to_cart}>
-      <Button title="Add To Cart" color={Colors.purple} />
+      <Button title="Add To Cart" onPress={() => {}} color={Colors.purple} />
     </View>
   </View>
 );

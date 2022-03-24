@@ -37,7 +37,7 @@ const screenOptions = ({navigation}) => ({
       style={{paddingRight: 10}}
       onPress={() => {
         // navigation.navigate('MY_CART', {screen: MycartScreen});
-        navigation.navigate(MY_CART, {screen: MycartScreen});
+        navigation.navigate(MY_CART);
       }}
     />
   ),
@@ -67,7 +67,9 @@ const screenOptions = ({navigation}) => ({
 export const HomeStackScreen = ({navigation}) => {
   const HomeStack = createStackNavigator();
   return (
-    <HomeStack.Navigator screenOptions={screenOptions}>
+    <HomeStack.Navigator
+      initialRouteName={PRODUCTS_LIST}
+      screenOptions={screenOptions}>
       <HomeStack.Screen
         name={PRODUCTS_LIST}
         component={ProductsScreen}></HomeStack.Screen>
