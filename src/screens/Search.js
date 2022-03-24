@@ -4,7 +4,7 @@ const axios = require('axios');
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 //show me responce in console, it was working before now it is not working let me restart my laptop okay?ok
-const Search = () => {
+const Search = props => {
   const [products, setproducts] = useState([]);
   const fetchApi = () => {
     axios
@@ -28,9 +28,15 @@ const Search = () => {
       <Button onPress={() => fetchApi()} title="Call Api" />
       {products.map((product, index) => (
         // <Text key={index}>{product.name}</Text>
-        <Image
-          source={{uri: product.image}}
-          style={{width: '100%', height: '100%'}}
+        // <Image
+        //   source={{uri: product.image}}
+        //   style={{width: '100%', height: '100%'}}
+        // />
+        <Button
+          title="Goto Home"
+          onPress={() => {
+            props.navigation.navigate('Feed');
+          }}
         />
       ))}
     </View>

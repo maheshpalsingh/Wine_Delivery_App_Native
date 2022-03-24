@@ -12,6 +12,7 @@ import 'react-native-gesture-handler';
 import Colors from '../assets/theme/Colors';
 
 import Icons from 'react-native-vector-icons/Ionicons';
+import BottomtabNavigator from './BottomTabNavigator';
 
 const Drawer = createDrawerNavigator();
 
@@ -32,7 +33,7 @@ const DrawerNavigator = () => {
         }}></Drawer.Screen>
       <Drawer.Screen
         name="My Orders"
-        component={OrdersStackScreen}
+        component={HomeStackScreen}
         options={{
           drawerIcon: ({focused, size}) => (
             <Icons
@@ -44,7 +45,7 @@ const DrawerNavigator = () => {
         }}></Drawer.Screen>
       <Drawer.Screen
         name={SETTINGS}
-        component={SettingsStackScreen}
+        component={HomeStackScreen}
         options={{
           drawerIcon: ({focused, size}) => (
             <Icons
@@ -56,7 +57,7 @@ const DrawerNavigator = () => {
         }}></Drawer.Screen>
       <Drawer.Screen
         name="Logout"
-        component={LogoutStackScreen}
+        component={HomeStackScreen}
         options={{
           drawerIcon: ({focused, size}) => (
             <Icons

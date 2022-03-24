@@ -7,7 +7,7 @@ import ProductsScreen from './ProductsScreen';
 
 const MycartScreen = props => {
   let cartisemp = true;
-  return <View>{cartisemp ? <CartisEmpty /> : <CartItems />}</View>;
+  return <View>{cartisemp ? <CartisEmpty {...props} /> : <CartItems />}</View>;
 };
 
 const CartItems = () => {
@@ -34,7 +34,7 @@ const CartisEmpty = ({navigation}) => {
           title="START SHOPPING"
           color={Colors.purple}
           onPress={() => {
-            navigation.navigate(PRODUCTS_LIST);
+            navigation.navigate('Products');
           }}
         />
       </View>

@@ -46,8 +46,9 @@ const BottomtabNavigator = ({navigation}) => {
       <Tab.Screen
         name="Categories"
         component={Categories}
-        navigation
+        headerTitle="Cat"
         options={{
+          title: 'Cat',
           tabBarLabel: 'Categories',
           tabBarIcon: ({color}) => <Icon name="list" color={color} size={26} />,
         }}

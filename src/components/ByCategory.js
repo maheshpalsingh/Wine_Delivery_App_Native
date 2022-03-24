@@ -25,17 +25,18 @@ const WineByCategory = [
   },
 ];
 
-const ByCategory = ({navigation}) => {
+const ByCategory = props => {
   //const {navigate} = useNavigation();
   return (
     <View>
       <ScrollView>
+        <Text>hhhh</Text>
         {WineByCategory.map((wine, index) => (
           <View key={index}>
             <WineImage
               image={wine.image_url}
               category={wine.category}
-              onPress={() => navigation.navigate('HomeStackScreen')}
+              {...props}
             />
           </View>
         ))}
@@ -44,11 +45,15 @@ const ByCategory = ({navigation}) => {
   );
 };
 
-const WineImage = props => (
+const WineImage = (props, {navigation}) => (
   <>
     <View style={styles.screen}>
-      <View style={{borderRadius: 25}}>
-        <TouchableOpacity activeOpacity={0.5} onPress={props.onPress}>
+      <View>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => {
+            navigation.navigate('Products');
+          }}>
           <Text style={{fontSize: 30, color: Colors.black, fontFamily: 'bold'}}>
             {props.category}
           </Text>

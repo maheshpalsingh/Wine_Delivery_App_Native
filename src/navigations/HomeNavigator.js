@@ -132,19 +132,7 @@ export const CategoryStackScreen = ({navigation}) => {
     <CategoryStack.Navigator screenOptions={screenOptions}>
       <CategoryStack.Screen
         name={CATEGORIES}
-        component={Categories}
-        options={{
-          headerLeft: () => (
-            <Icons
-              name="menu"
-              size={32}
-              style={{paddingLeft: 10}}
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            />
-          ),
-        }}></CategoryStack.Screen>
+        component={Categories}></CategoryStack.Screen>
     </CategoryStack.Navigator>
   );
 };
@@ -179,19 +167,7 @@ export const OrdersStackScreen = ({navigation}) => {
     <OrdersStack.Navigator screenOptions={screenOptions}>
       <OrdersStack.Screen
         name={MY_ORDERS}
-        component={MyordersScreen}
-        options={{
-          headerLeft: () => (
-            <Icons
-              name="menu"
-              size={32}
-              style={{paddingLeft: 10}}
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            />
-          ),
-        }}></OrdersStack.Screen>
+        component={MyordersScreen}></OrdersStack.Screen>
     </OrdersStack.Navigator>
   );
 };
@@ -201,21 +177,7 @@ export const SearchStackScreen = ({navigation}) => {
   const SearchStack = createStackNavigator();
   return (
     <SearchStack.Navigator screenOptions={screenOptions}>
-      <SearchStack.Screen
-        name={SEARCH}
-        component={Search}
-        options={{
-          headerLeft: () => (
-            <Icons
-              name="menu"
-              size={32}
-              style={{paddingLeft: 10}}
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            />
-          ),
-        }}></SearchStack.Screen>
+      <SearchStack.Screen name={SEARCH} component={Search}></SearchStack.Screen>
     </SearchStack.Navigator>
   );
 };
@@ -227,19 +189,7 @@ export const CartStackScreen = ({navigation}) => {
     <CartStack.Navigator screenOptions={screenOptions}>
       <CartStack.Screen
         name={MY_CART}
-        component={MycartScreen}
-        options={{
-          headerLeft: () => (
-            <Icons
-              name="menu"
-              size={32}
-              style={{paddingLeft: 10}}
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            />
-          ),
-        }}></CartStack.Screen>
+        component={MycartScreen}></CartStack.Screen>
     </CartStack.Navigator>
   );
 };
