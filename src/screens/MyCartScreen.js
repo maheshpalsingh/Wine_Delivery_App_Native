@@ -1,19 +1,71 @@
-import React from 'react';
-import {View, StyleSheet, Text, Image, Button} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  Button,
+  ActivityIndicator,
+  FlatList,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
-import {PRODUCTS_LIST} from '../constants/routeName';
-import {HomeStackScreen} from '../navigations/HomeNavigator';
-import ProductsScreen from './ProductsScreen';
+import CartItem from '../components/shop/CartItem';
+import Card from '../components/UI/Card';
 
 const MycartScreen = props => {
-  let cartisemp = true;
+  let cartisemp = false;
   return <View>{cartisemp ? <CartisEmpty {...props} /> : <CartItems />}</View>;
 };
 
-const CartItems = () => {
+const CartItems = props => {
+  const [isLoading, setisLoading] = useState(false);
+  const cartTotalAmount = useSelector(state => state.cart.totalAmount);
+  const cartItems = useSelector(state => {
+    const transformedCartItems = [];
+    for (const key in state.cart.items) {
+      transformedCartItems.push({
+        productId: key,
+        productTitle: state.cart.items[key].productTitle,
+        productPrice: state.cart.items[key].productPrice,
+        quantity: state.cart.items[key].quantity,
+        sum: state.cart.items[key].sum,
+      });
+    }
+
+    return transformedCartItems;
+  });
+  const dispatch = useDispatch();
   return (
-    <View>
-      <Text>your carts</Text>
+    <View style={styles.screen}>
+      <Card style={styles.summary}>
+        <Text style={styles.summaryText}>
+          Total:
+          <Text style={styles.amount}>
+            ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
+          </Text>
+        </Text>
+        <Button
+          color={Colors.purple}
+          title="Order Now"
+          disabled={cartItems.length === 0}
+        />
+      </Card>
+      <FlatList
+        data={cartItems}
+        keyExtractor={item => item.productId}
+        renderItem={itemData => (
+          <CartItem
+            quantity={itemData.item.quantity}
+            name={itemData.item.productTitle}
+            amount={itemData.item.sum}
+            deletable
+            onRemove={() => {
+              // dispatch(cartActions.removeFromCart(itemData.item.productId));
+            }}
+          />
+        )}
+      />
     </View>
   );
 };
@@ -56,6 +108,23 @@ const styles = StyleSheet.create({
     width: '50%',
     alignSelf: 'center',
     borderRadius: 20,
+  },
+  screen: {
+    margin: 20,
+  },
+  summary: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    padding: 10,
+  },
+  summaryText: {
+    fontFamily: 'sans-serif-medium',
+    fontSize: 18,
+  },
+  amount: {
+    color: Colors.primary,
   },
 });
 
