@@ -1,9 +1,9 @@
-export const GET_PRODUCTS = 'SET_PRODUCTS';
+export const GET_PRODUCTS = 'GET_PRODUCTS';
 // export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 // export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 // export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 import axios from 'axios';
-const url =
+export const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 export const GetProductsAction = () => {
   return async dispatch => {

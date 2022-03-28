@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
 import AppNavContainer from './src/navigations';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
@@ -18,10 +18,13 @@ const rootReducer = combineReducers({
   wines: wineReducers,
   cart: cartReducers,
 });
-
+import SplashScreen from 'react-native-splash-screen';
 const Store = createStore(rootReducer, applyMiddleware(thunk));
 
 const App = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <Provider store={Store}>

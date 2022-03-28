@@ -8,6 +8,7 @@ import * as productsAction from '../store/actions/products';
 import * as cartActions from '../store/actions/cart';
 
 import {WineCard, WineImage} from '../components/WineComponent';
+import axios from 'axios';
 
 // const WineComponent = props => {
 //   const products = useSelector(state => state.wines.availableProducts);
@@ -48,6 +49,11 @@ const ProductsScreen = props => {
     };
     loadProducts();
   }, [dispatch]);
+  const url =
+    Platform.OS === 'android'
+      ? 'http://10.0.2.2:3001'
+      : 'http://127.0.0.1:3000';
+
   // return <WineComponent />;
   return (
     <View>
@@ -66,8 +72,20 @@ const ProductsScreen = props => {
             <Button
               title="Add To Cart"
               onPress={() => {
-                dispatch(cartActions.addtocart(itemData.item));
+                const addProduct = itemData.item._id;
+                console.log(addProduct);
+                axios
+                  .post(`${url}/order/${addProduct}`)
+                  .then(function (response) {
+                    console.log('Success');
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
               }}
+              // onPress={() => {
+              //   dispatch(cartActions.addtocart(itemData.item));
+              // }}
               color={Colors.purple}
             />
           </WineCard>

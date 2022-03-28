@@ -1,69 +1,100 @@
-import React, {useState} from 'react';
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
   Text,
   Image,
   Button,
-  ActivityIndicator,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
 import CartItem from '../components/shop/CartItem';
 import Card from '../components/UI/Card';
-
+import * as cartActions from '../store/actions/cart';
 const MycartScreen = props => {
   let cartisemp = false;
   return <View>{cartisemp ? <CartisEmpty {...props} /> : <CartItems />}</View>;
 };
 
 const CartItems = props => {
-  const [isLoading, setisLoading] = useState(false);
-  const cartTotalAmount = useSelector(state => state.cart.totalAmount);
-  const cartItems = useSelector(state => {
-    const transformedCartItems = [];
-    for (const key in state.cart.items) {
-      transformedCartItems.push({
-        productId: key,
-        productTitle: state.cart.items[key].productTitle,
-        productPrice: state.cart.items[key].productPrice,
-        quantity: state.cart.items[key].quantity,
-        sum: state.cart.items[key].sum,
-      });
-    }
-
-    return transformedCartItems;
-  });
+  const cartItems = useSelector(state => state.cart.availableOrders);
   const dispatch = useDispatch();
+  useEffect(() => {
+    const loadProducts = async () => {
+      await dispatch(cartActions.GetOrdersAction());
+    };
+    loadProducts();
+  }, [dispatch, cartItems]);
+  const cartTotalAmount = useSelector(state => state.cart.totalAmount);
+  // const cartItems = useSelector(state => {
+  //   const transformedCartItems = [];
+  //   for (const key in state.cart.items) {
+  //     transformedCartItems.push({
+  //       productId: key,
+  //       productTitle: state.cart.items[key].productTitle,
+  //       productPrice: state.cart.items[key].productPrice,
+  //       quantity: state.cart.items[key].quantity,
+  //       sum: state.cart.items[key].sum,
+  //     });
+  //   }
+
+  //  return transformedCartItems;
+  //}
+  //)
+  const url =
+    Platform.OS === 'android'
+      ? 'http://10.0.2.2:3001'
+      : 'http://127.0.0.1:3000';
+
   return (
     <View style={styles.screen}>
-      <Card style={styles.summary}>
-        <Text style={styles.summaryText}>
-          Total:
-          <Text style={styles.amount}>
-            ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
+      <View>
+        <Card style={styles.summary}>
+          <Text style={styles.summaryText}>
+            Total:
+            <Text style={styles.amount}>
+              ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
+            </Text>
           </Text>
-        </Text>
-        <Button
-          color={Colors.purple}
-          title="Order Now"
-          disabled={cartItems.length === 0}
-        />
-      </Card>
+          <Button
+            color={Colors.purple}
+            title="Order Now"
+            disabled={cartItems.length === 0}
+          />
+        </Card>
+      </View>
+      <Text style={styles.ordertext}>Orders</Text>
       <FlatList
         data={cartItems}
         keyExtractor={item => item.productId}
+        {...props}
         renderItem={itemData => (
-          <CartItem
-            quantity={itemData.item.quantity}
-            name={itemData.item.productTitle}
-            amount={itemData.item.sum}
-            deletable
-            onRemove={() => {
-              // dispatch(cartActions.removeFromCart(itemData.item.productId));
-            }}
-          />
+          <ScrollView>
+            {/* {console.log(itemData.item.productImage[0])} */}
+            <CartItem
+              image={itemData.item.productImage}
+              qty={itemData.item.qty}
+              name={itemData.item.productName}
+              price={itemData.item.productPrice}
+              onRemove={() => {
+                const idToRemove = itemData.item._id;
+                console.log(idToRemove);
+                axios
+                  .delete(`${url}/orders/me/${idToRemove}`)
+                  .then(() => console.log('Delete successful'))
+                  .catch(e => {
+                    console.log(e);
+                  });
+              }}
+              // deletable
+              // onRemove={() => {
+              //   // dispatch(cartActions.removeFromCart(itemData.item.productId));
+              // }}
+            />
+          </ScrollView>
         )}
       />
     </View>
@@ -125,6 +156,13 @@ const styles = StyleSheet.create({
   },
   amount: {
     color: Colors.primary,
+  },
+  confirm: {
+    width: '40%',
+  },
+
+  ordertext: {
+    fontSize: 20,
   },
 });
 

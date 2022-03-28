@@ -1,29 +1,74 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+  Image,
+  TouchableNativeFeedback,
+  Button,
+} from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
+import Colors from '../../assets/theme/Colors';
+
+// const CartItem = props => {
+//   return (
+//     <View style={styles.cartItem}>
+//       <View style={styles.itemData}>
+//         <Image style={styles.pic} />
+//         <Text style={styles.quantity}>{props.qty} </Text>
+//         <Text style={styles.mainText}>{props.name}</Text>
+//       </View>
+//       <View style={styles.itemData}>
+//         <Text style={styles.mainText}>
+//           ${Math.round(props.amount.toFixed(2) * 100) / 100}
+//         </Text>
+//         {props.deletable && (
+//           <TouchableOpacity
+//             onPress={props.onRemove}
+//             style={styles.deleteButton}>
+//             <Icons
+//               name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+//               size={23}
+//               color="red"
+//             />
+//           </TouchableOpacity>
+//         )}
+//       </View>
+//     </View>
+//   );
+// };
 
 const CartItem = props => {
+  let TouchableCmp = TouchableOpacity;
+  if (Platform.OS === 'android' && Platform.Version >= 21) {
+    TouchableCmp = TouchableNativeFeedback;
+  }
   return (
     <View style={styles.cartItem}>
-      <View style={styles.itemData}>
-        <Text style={styles.quantity}>{props.quantity} </Text>
-        <Text style={styles.mainText}>{props.name}</Text>
+      <View style={{padding: 10}}>
+        <Image
+          source={{
+            uri: props.image[0],
+          }}
+          style={styles.pic}
+        />
       </View>
-      <View style={styles.itemData}>
-        <Text style={styles.mainText}>
-          ${Math.round(props.amount.toFixed(2) * 100) / 100}
-        </Text>
-        {props.deletable && (
-          <TouchableOpacity
-            onPress={props.onRemove}
-            style={styles.deleteButton}>
-            <Icons
-              name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-              size={23}
-              color="red"
-            />
-          </TouchableOpacity>
-        )}
+      <View style={{padding: 10}}>
+        <Text style={styles.txt_name}>{props.name}</Text>
+        <Text style={styles.txt_name}>₹{props.price}</Text>
+        <Text style={styles.txt_category}>{props.qty}</Text>
+      </View>
+      <View style={styles.add_to_cart}>
+        {props.children}
+        {/* <Button title="Confirm" color={Colors.purple} /> */}
+        <Icons
+          name="trash"
+          size={24}
+          color={Colors.thistle}
+          onPress={props.onRemove}
+        />
       </View>
     </View>
   );
@@ -31,11 +76,23 @@ const CartItem = props => {
 
 const styles = StyleSheet.create({
   cartItem: {
+    margin: 10,
+    flex: 1,
     padding: 10,
     backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 20,
+    shadowColor: 'red',
+    shadowOpacity: 0.26,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 8,
+    elevation: 5,
+    borderRadius: 10,
+  },
+  pic: {
+    width: 100,
+    height: 100,
   },
   itemData: {
     flexDirection: 'row',
@@ -50,8 +107,13 @@ const styles = StyleSheet.create({
     fontFamily: 'sans-serif-medium',
     fontSize: 16,
   },
-  deleteButton: {
+  add_to_cart: {
     marginLeft: 20,
+    alignSelf: 'center',
+  },
+  txt_name: {
+    fontSize: 17,
+    fontFamily: 'bold',
   },
 });
 
