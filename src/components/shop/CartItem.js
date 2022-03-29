@@ -8,6 +8,7 @@ import {
   Image,
   TouchableNativeFeedback,
   Button,
+  Number,
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import Colors from '../../assets/theme/Colors';
@@ -58,7 +59,8 @@ const CartItem = props => {
       <View style={{padding: 10}}>
         <Text style={styles.txt_name}>{props.name}</Text>
         <Text style={styles.txt_name}>₹{props.price}</Text>
-        <Text style={styles.txt_category}>{props.qty}</Text>
+        <Text style={styles.txt_name}>Qty:{props.qty}</Text>
+        <Text style={styles.txt_name}>Total:{props.totalQty}</Text>
       </View>
       <View style={styles.add_to_cart}>
         {props.children}
@@ -112,8 +114,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   txt_name: {
-    fontSize: 17,
+    fontSize: 15,
     fontFamily: 'bold',
+    margin: 4,
   },
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,36 @@ import {
 import Colors from '../assets/theme/Colors';
 import {REGISTER} from '../constants/routeName';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
+const url =
+  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
-const Login = () => {
+const Login = props => {
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [errortext, setErrortext] = useState('');
+  const handleSubmitPress = () => {
+    setErrortext('');
+    if (!userEmail) {
+      alert('Please fill Email');
+      return;
+    }
+    if (!userPassword) {
+      alert('Please fill Password');
+      return;
+    }
+    let dataToSend = {email: userEmail, password: userPassword};
+    axios
+      .post(`${url}/users/login1`, {
+        dataToSend,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   const {navigate} = useNavigation();
   return (
     <View style={styles.screen}>
@@ -23,22 +51,46 @@ const Login = () => {
         />
       </View>
       <View>
-        <Text style={styles.welcome}>Welcome</Text>
+        <Text style={styles.welcome}>{props.title}</Text>
       </View>
       <View style={{paddingBottom: 10}}>
-        <TextInput style={styles.input} placeholder="Username" />
+        <TextInput
+          style={styles.input}
+          value={userEmail}
+          onChangeText={UserEmail => setUserEmail(UserEmail)}
+          placeholder="Enter Email"
+        />
       </View>
       <View style={{paddingBottom: 10}}>
-        <TextInput style={styles.input} placeholder="Password" />
+        <TextInput
+          style={styles.input}
+          value={userPassword}
+          onChangeText={UserPassword => setUserPassword(UserPassword)}
+          placeholder="Enter Password" //12345
+          keyboardType="default"
+          //secureTextEntry={true}
+        />
       </View>
+      {errortext != '' ? (
+        <Text style={styles.errorTextStyle}>{errortext}</Text>
+      ) : null}
       <View style={styles.buttonView}>
-        <Button style={styles.button} title="Sign in" color={Colors.purple} />
+        <Button
+          style={styles.button}
+          title="Sign in"
+          color={Colors.purple}
+          onPress={
+            handleSubmitPress
+            // console.log(username);
+          }
+          // onPress={props.signIn}
+        />
       </View>
       <View>
         <Text style={styles.info}>Dont't have an Account</Text>
         <TouchableOpacity
           onPress={() => {
-            navigate(REGISTER);
+            // navigate(REGISTER);
           }}>
           <Text style={styles.link}>Register</Text>
         </TouchableOpacity>

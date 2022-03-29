@@ -8,6 +8,7 @@ import {
   Button,
   FlatList,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
@@ -20,6 +21,8 @@ const MycartScreen = props => {
 };
 
 const CartItems = props => {
+  const [visible, setVisible] = useState(false);
+  const [total, setTotal] = useState(0);
   const cartItems = useSelector(state => state.cart.availableOrders);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -44,6 +47,17 @@ const CartItems = props => {
   //  return transformedCartItems;
   //}
   //)
+
+  useEffect(() => {
+    if (cartItems) {
+      let total = 0;
+      cartItems.forEach(item => {
+        total = total + item.qty * item.productPrice;
+      });
+      setTotal(total);
+    }
+  }, [cartItems]);
+
   const url =
     Platform.OS === 'android'
       ? 'http://10.0.2.2:3001'
@@ -51,12 +65,18 @@ const CartItems = props => {
 
   return (
     <View style={styles.screen}>
+      <ActivityIndicator
+        animating={visible}
+        // hidesWhenStopped={false}
+        color={'purple'}
+        size={'large'}
+      />
       <View>
         <Card style={styles.summary}>
           <Text style={styles.summaryText}>
             Total:
             <Text style={styles.amount}>
-              ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
+              ${Math.round(total.toFixed(2) * 100) / 100}
             </Text>
           </Text>
           <Button
@@ -66,7 +86,7 @@ const CartItems = props => {
           />
         </Card>
       </View>
-      <Text style={styles.ordertext}>Orders</Text>
+      <Text style={styles.ordertext}>Products</Text>
       <FlatList
         data={cartItems}
         keyExtractor={item => item.productId}
@@ -79,7 +99,15 @@ const CartItems = props => {
               qty={itemData.item.qty}
               name={itemData.item.productName}
               price={itemData.item.productPrice}
+              totalQty={
+                parseInt(itemData.item.qty) *
+                parseInt(itemData.item.productPrice)
+              }
               onRemove={() => {
+                setVisible(true);
+                setTimeout(() => {
+                  setVisible(false);
+                }, 500);
                 const idToRemove = itemData.item._id;
                 console.log(idToRemove);
                 axios
@@ -140,9 +168,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 20,
   },
-  screen: {
-    margin: 20,
-  },
+
   summary: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -162,7 +188,8 @@ const styles = StyleSheet.create({
   },
 
   ordertext: {
-    fontSize: 20,
+    fontSize: 15,
+    alignSelf: 'center',
   },
 });
 
