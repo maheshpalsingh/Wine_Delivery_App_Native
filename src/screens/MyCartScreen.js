@@ -20,10 +20,11 @@ const MycartScreen = props => {
   return <View>{cartisemp ? <CartisEmpty {...props} /> : <CartItems />}</View>;
 };
 
-const CartItems = props => {
+const CartItems = (props, getState) => {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
   const cartItems = useSelector(state => state.cart.availableOrders);
+
   const dispatch = useDispatch();
   useEffect(() => {
     const loadProducts = async () => {
@@ -31,7 +32,9 @@ const CartItems = props => {
     };
     loadProducts();
   }, [dispatch, cartItems]);
+
   const cartTotalAmount = useSelector(state => state.cart.totalAmount);
+
   // const cartItems = useSelector(state => {
   //   const transformedCartItems = [];
   //   for (const key in state.cart.items) {
@@ -62,6 +65,8 @@ const CartItems = props => {
     Platform.OS === 'android'
       ? 'http://10.0.2.2:3001'
       : 'http://127.0.0.1:3000';
+
+  const token = useSelector(state => state.cart.token);
 
   return (
     <View style={styles.screen}>
@@ -110,8 +115,14 @@ const CartItems = props => {
                 }, 500);
                 const idToRemove = itemData.item._id;
                 console.log(idToRemove);
+                const config = {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                  },
+                };
                 axios
-                  .delete(`${url}/orders/me/${idToRemove}`)
+                  .delete(`${url}/orders/me/${idToRemove}`, config)
                   .then(() => console.log('Delete successful'))
                   .catch(e => {
                     console.log(e);

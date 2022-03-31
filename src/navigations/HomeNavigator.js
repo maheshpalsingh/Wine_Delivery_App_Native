@@ -27,6 +27,7 @@ import {useNavigation} from '@react-navigation/native';
 import Colors from '../assets/theme/Colors';
 import Categories from '../screens/Categories';
 import Search from '../screens/Search';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 // const screenOptions = ({navigation, route}) => ({
 const screenOptions = ({navigation}) => ({
@@ -193,6 +194,7 @@ export const CartStackScreen = ({navigation}) => {
     </CartStack.Navigator>
   );
 };
+
 // export const LogoutStackScreen = ({navigation}) => {
 //   // const navigation = useNavigation();
 //   const LogoutStack = createStackNavigator();

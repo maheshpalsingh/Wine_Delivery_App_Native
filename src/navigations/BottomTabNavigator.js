@@ -48,7 +48,7 @@ const BottomtabNavigator = ({navigation}) => {
         component={Categories}
         headerTitle="Cat"
         options={{
-          title: 'Cat',
+          title: 'Categories',
           tabBarLabel: 'Categories',
           tabBarIcon: ({color}) => <Icon name="list" color={color} size={26} />,
         }}

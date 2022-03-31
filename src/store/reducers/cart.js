@@ -4,6 +4,9 @@ const initialState = {
   //items: {},
   totalAmount: 0,
   availableOrders: [],
+  //token: null,
+  token:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MDUxNzNhMTNjMzIzOTQzMmM5NzciLCJpYXQiOjE2NDg2MzkxOTJ9.EgLhqXu-A2f66Y3XWbWMi11H79awGLbyjCWvQjUaGdU',
 };
 
 export default (state = initialState, action) => {

@@ -9,17 +9,24 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
-import {REGISTER} from '../constants/routeName';
+import {PRODUCTS_LIST, REGISTER} from '../constants/routeName';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import {useSelector} from 'react-redux';
+import {HomeStackScreen} from '../navigations/HomeNavigator';
+import BottomtabNavigator from '../navigations/BottomTabNavigator';
+import ProductsScreen from '../screens/ProductsScreen';
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
 const Login = props => {
+  let logintoken = useSelector(state => state.cart.token);
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [errortext, setErrortext] = useState('');
-  const handleSubmitPress = () => {
+  const [valid, setvalid] = useState(true);
+
+  const handleSubmitPress = navigation => {
     setErrortext('');
     if (!userEmail) {
       alert('Please fill Email');
@@ -29,15 +36,37 @@ const Login = props => {
       alert('Please fill Password');
       return;
     }
+    // if (valid === false) {
+    //   alert('Worng Credentials');
+    //   return;
+    // }
+
     let dataToSend = {email: userEmail, password: userPassword};
+    console.log(dataToSend);
+    const config = {
+      headers: {
+        //Header Defination
+        //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'Content-Type': 'application/json',
+        // Authorization: `Bearer ${token}`,
+      },
+    };
     axios
-      .post(`${url}/users/login1`, {
-        dataToSend,
+      .post(`${url}/users/login1`, dataToSend, config)
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      .then(response => {
+        const {token} = response.data;
+        logintoken = token;
+        console.log(logintoken);
       })
-      .then(function (response) {
-        console.log(response);
+      .then(() => {
+        navigate(BottomtabNavigator);
       })
       .catch(function (error) {
+        // setvalid(false);
+        // setvalid(true);
         console.log(error);
       });
   };
@@ -90,7 +119,7 @@ const Login = props => {
         <Text style={styles.info}>Dont't have an Account</Text>
         <TouchableOpacity
           onPress={() => {
-            // navigate(REGISTER);
+            navigate(REGISTER);
           }}>
           <Text style={styles.link}>Register</Text>
         </TouchableOpacity>

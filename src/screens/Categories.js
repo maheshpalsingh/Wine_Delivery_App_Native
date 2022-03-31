@@ -7,7 +7,7 @@ import HeaderButton from '../components/UI/HeaderButton';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {MY_CART} from '../constants/routeName';
 
-const Categories = props => {
+const Categories = ({navigation}) => {
   return (
     <View>
       <Text>Hey</Text>

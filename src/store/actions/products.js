@@ -8,8 +8,16 @@ export const url =
 export const GetProductsAction = () => {
   return async dispatch => {
     try {
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MDUxNzNhMTNjMzIzOTQzMmM5NzciLCJpYXQiOjE2NDg2MzkxOTJ9.EgLhqXu-A2f66Y3XWbWMi11H79awGLbyjCWvQjUaGdU';
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
       await axios
-        .get(`${url}/products/all`)
+        .get(`${url}/products/all`, config)
         .then(response => {
           dispatch({
             type: GET_PRODUCTS,

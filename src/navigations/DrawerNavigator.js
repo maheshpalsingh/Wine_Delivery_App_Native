@@ -1,11 +1,6 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {
-  HomeStackScreen,
-  LogoutStackScreen,
-  OrdersStackScreen,
-  SettingsStackScreen,
-} from './HomeNavigator';
+import {ShopNavigator} from './HomeNavigator';
 
 import {HOME_NAVIGATOR, SETTINGS} from '../constants/routeName';
 import 'react-native-gesture-handler';
@@ -21,7 +16,7 @@ const DrawerNavigator = () => {
     <Drawer.Navigator>
       <Drawer.Screen
         name={HOME_NAVIGATOR}
-        component={HomeStackScreen}
+        component={ShopNavigator}
         options={{
           drawerIcon: ({focused, size}) => (
             <Icons
@@ -33,7 +28,7 @@ const DrawerNavigator = () => {
         }}></Drawer.Screen>
       <Drawer.Screen
         name="My Orders"
-        component={HomeStackScreen}
+        component={ShopNavigator}
         options={{
           drawerIcon: ({focused, size}) => (
             <Icons
@@ -45,7 +40,7 @@ const DrawerNavigator = () => {
         }}></Drawer.Screen>
       <Drawer.Screen
         name={SETTINGS}
-        component={HomeStackScreen}
+        component={ShopNavigator}
         options={{
           drawerIcon: ({focused, size}) => (
             <Icons
@@ -57,7 +52,7 @@ const DrawerNavigator = () => {
         }}></Drawer.Screen>
       <Drawer.Screen
         name="Logout"
-        component={HomeStackScreen}
+        component={ShopNavigator}
         options={{
           drawerIcon: ({focused, size}) => (
             <Icons
@@ -69,7 +64,7 @@ const DrawerNavigator = () => {
         }}></Drawer.Screen>
       <Drawer.Screen
         name="Terms & Conditions"
-        component={HomeStackScreen}
+        component={ShopNavigator}
         options={{
           drawerIcon: ({focused, size}) => (
             <Icons
