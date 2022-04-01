@@ -16,10 +16,10 @@ export const removefromcart = product => {
 export const GetOrdersAction = () => {
   // let token = useSelector(state => state.cart.token);
   // console.log('token', token);
-  // const token =
-  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MDUxNzNhMTNjMzIzOTQzMmM5NzciLCJpYXQiOjE2NDg2MzkxOTJ9.EgLhqXu-A2f66Y3XWbWMi11H79awGLbyjCWvQjUaGdU';
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ2N2VmOTM3MDZkNDFmZmQwYzMxMDEiLCJpYXQiOjE2NDg3ODg0Njl9.IqqAwqZZ2F_YYQFQL13g3MS9TKztYa69KlylfQ3uaXw';
   return async (dispatch, getState) => {
-    let token = getState().cart.token;
+    // let token = getState().cart.token;
     //console.log('token', token);
 
     try {
@@ -30,7 +30,7 @@ export const GetOrdersAction = () => {
         },
       };
       await axios
-        .get(`${url}/orders/me`, config)
+        .get(`${url}/carts/me`, config)
         .then(response => {
           dispatch({
             type: GET_ORDERS,

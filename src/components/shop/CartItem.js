@@ -78,7 +78,7 @@ const CartItem = props => {
 
 const styles = StyleSheet.create({
   cartItem: {
-    margin: 10,
+    margin: 8,
     flex: 1,
     padding: 10,
     backgroundColor: 'white',
@@ -89,8 +89,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.26,
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 8,
-    elevation: 5,
+    // elevation: 5,
     borderRadius: 10,
+    //paddingBottom: 10,
   },
   pic: {
     width: 100,

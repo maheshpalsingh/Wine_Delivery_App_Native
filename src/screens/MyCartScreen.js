@@ -9,6 +9,7 @@ import {
   FlatList,
   ScrollView,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
@@ -91,7 +92,10 @@ const CartItems = (props, getState) => {
           />
         </Card>
       </View>
-      <Text style={styles.ordertext}>Products</Text>
+      <View>
+        <Text style={styles.ordertext}>Products</Text>
+      </View>
+
       <FlatList
         data={cartItems}
         keyExtractor={item => item.productId}
@@ -99,6 +103,7 @@ const CartItems = (props, getState) => {
         renderItem={itemData => (
           <ScrollView>
             {/* {console.log(itemData.item.productImage[0])} */}
+
             <CartItem
               image={itemData.item.productImage}
               qty={itemData.item.qty}
@@ -121,17 +126,14 @@ const CartItems = (props, getState) => {
                     Authorization: `Bearer ${token}`,
                   },
                 };
+                console.log('Delete', `${url}/carts/me/${idToRemove}`);
                 axios
-                  .delete(`${url}/orders/me/${idToRemove}`, config)
+                  .delete(`${url}/carts/me/${idToRemove}`, config)
                   .then(() => console.log('Delete successful'))
                   .catch(e => {
                     console.log(e);
                   });
               }}
-              // deletable
-              // onRemove={() => {
-              //   // dispatch(cartActions.removeFromCart(itemData.item.productId));
-              // }}
             />
           </ScrollView>
         )}

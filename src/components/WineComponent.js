@@ -37,7 +37,8 @@ export const WineCard = props => {
   }
   return (
     <View style={styles.wine_card}>
-      <View style={{padding: 10}}>
+      {/* <View style={styles.touchable}> */}
+      <View style={{padding: 10, flex: 1}}>
         <Image
           source={{
             uri: props.image,
@@ -45,9 +46,9 @@ export const WineCard = props => {
           style={styles.wine_image}
         />
       </View>
-      <View style={{padding: 10}}>
+      <View style={{padding: 10, flex: 2}}>
         <Text style={styles.txt_name}>{props.winename}</Text>
-        <Text style={styles.txt_price}>{props.price}</Text>
+        <Text style={styles.txt_price}>${props.price}</Text>
         <Text style={styles.txt_category}>{props.category}</Text>
       </View>
       <View style={styles.add_to_cart}>{props.children}</View>
@@ -66,7 +67,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.56,
     shadowOffset: {width: 0, height: 3},
     shadowRadius: 8,
-    elevation: 5,
+    // elevation: 5,
+  },
+  touchable: {
+    borderRadius: 10,
+    overflow: 'hidden',
   },
   wine_image: {
     width: 80,
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.56,
     shadowOffset: {width: 0, height: 3},
     shadowRadius: 8,
-    elevation: 5,
+    //elevation: 5,
   },
   txt_name: {
     fontSize: 15,
@@ -94,10 +99,11 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   add_to_cart: {
-    paddingTop: 70,
+    paddingTop: 30,
+    paddingBottom: 10,
     paddingLeft: 20,
-    flex: 1,
-    justifyContent: 'center',
+    flex: 2,
+    // justifyContent: 'center',
     width: 200,
     height: 110,
     paddingRight: 10,

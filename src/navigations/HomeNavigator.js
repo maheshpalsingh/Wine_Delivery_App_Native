@@ -75,6 +75,9 @@ export const HomeStackScreen = ({navigation}) => {
         name={PRODUCTS_LIST}
         component={ProductsScreen}></HomeStack.Screen>
       <HomeStack.Screen
+        name={PRODUCTS_OVERVIEW}
+        component={ProductoverviewScreen}></HomeStack.Screen>
+      <HomeStack.Screen
         name={MY_CART}
         component={MycartScreen}></HomeStack.Screen>
     </HomeStack.Navigator>
@@ -179,6 +182,9 @@ export const SearchStackScreen = ({navigation}) => {
   return (
     <SearchStack.Navigator screenOptions={screenOptions}>
       <SearchStack.Screen name={SEARCH} component={Search}></SearchStack.Screen>
+      <SearchStack.Screen
+        name={PRODUCTS_OVERVIEW}
+        component={ProductoverviewScreen}></SearchStack.Screen>
     </SearchStack.Navigator>
   );
 };
