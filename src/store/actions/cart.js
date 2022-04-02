@@ -14,10 +14,10 @@ export const removefromcart = product => {
   return {type: REMOVE_FROM_CART};
 };
 export const GetOrdersAction = () => {
-  // let token = useSelector(state => state.cart.token);
+  let token = useSelector(state => state.cart.token);
   // console.log('token', token);
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ2N2VmOTM3MDZkNDFmZmQwYzMxMDEiLCJpYXQiOjE2NDg3ODg0Njl9.IqqAwqZZ2F_YYQFQL13g3MS9TKztYa69KlylfQ3uaXw';
+  //const token =
+  //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ2N2VmOTM3MDZkNDFmZmQwYzMxMDEiLCJpYXQiOjE2NDg3ODg0Njl9.IqqAwqZZ2F_YYQFQL13g3MS9TKztYa69KlylfQ3uaXw';
   return async (dispatch, getState) => {
     // let token = getState().cart.token;
     //console.log('token', token);

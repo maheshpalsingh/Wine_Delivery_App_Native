@@ -11,9 +11,11 @@ import LoginScreen from '../screens/LoginScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {
+  ACCOUNT,
   CATEGORIES,
   LOGIN,
   MY_CART,
+  MY_DETAILS,
   MY_ORDERS,
   PRODUCTS_LIST,
   PRODUCTS_OVERVIEW,
@@ -28,6 +30,8 @@ import Colors from '../assets/theme/Colors';
 import Categories from '../screens/Categories';
 import Search from '../screens/Search';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import AccountsTab from '../screens/AccountsTab';
+import MyDetailsScreen from '../screens/MyDetailsScreen';
 
 // const screenOptions = ({navigation, route}) => ({
 const screenOptions = ({navigation}) => ({
@@ -173,6 +177,20 @@ export const OrdersStackScreen = ({navigation}) => {
         name={MY_ORDERS}
         component={MyordersScreen}></OrdersStack.Screen>
     </OrdersStack.Navigator>
+  );
+};
+
+export const AccountStackScreen = ({navigation}) => {
+  const AccountStack = createStackNavigator();
+  return (
+    <AccountStack.Navigator screenOptions={screenOptions}>
+      <AccountStack.Screen
+        name={ACCOUNT}
+        component={AccountsTab}></AccountStack.Screen>
+      <AccountStack.Screen
+        name={MY_DETAILS}
+        component={MyDetailsScreen}></AccountStack.Screen>
+    </AccountStack.Navigator>
   );
 };
 

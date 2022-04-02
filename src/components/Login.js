@@ -52,19 +52,21 @@ const Login = props => {
       },
     };
     axios
-      .post(`${url}/users/login1`, dataToSend, config)
+      .post(`${url}/users/login`, dataToSend, config)
       // .then(function (response) {
       //   console.log(response);
       // })
       .then(response => {
         const {token} = response.data;
+        console.log(response.data);
         logintoken = token;
         console.log(logintoken);
       })
       .then(() => {
-        navigate(BottomtabNavigator);
+        navigate('DrawerNavigationRoutes');
       })
       .catch(function (error) {
+        alert('Invalid Credentials');
         // setvalid(false);
         // setvalid(true);
         console.log(error);

@@ -70,40 +70,39 @@ const CartItems = (props, getState) => {
   const token = useSelector(state => state.cart.token);
 
   return (
-    <View style={styles.screen}>
-      <ActivityIndicator
-        animating={visible}
-        // hidesWhenStopped={false}
-        color={'purple'}
-        size={'large'}
-      />
-      <View>
-        <Card style={styles.summary}>
-          <Text style={styles.summaryText}>
-            Total:
-            <Text style={styles.amount}>
-              ${Math.round(total.toFixed(2) * 100) / 100}
+    <ScrollView>
+      <View style={styles.screen}>
+        <ActivityIndicator
+          animating={visible}
+          // hidesWhenStopped={false}
+          color={'purple'}
+          size={'large'}
+        />
+        <View>
+          <Card style={styles.summary}>
+            <Text style={styles.summaryText}>
+              Total:
+              <Text style={styles.amount}>
+                ${Math.round(total.toFixed(2) * 100) / 100}
+              </Text>
             </Text>
-          </Text>
-          <Button
-            color={Colors.purple}
-            title="Order Now"
-            disabled={cartItems.length === 0}
-          />
-        </Card>
-      </View>
-      <View>
-        <Text style={styles.ordertext}>Products</Text>
-      </View>
+            <Button
+              color={Colors.purple}
+              title="Order Now"
+              disabled={cartItems.length === 0}
+            />
+          </Card>
+        </View>
 
-      <FlatList
-        data={cartItems}
-        keyExtractor={item => item.productId}
-        {...props}
-        renderItem={itemData => (
-          <ScrollView>
-            {/* {console.log(itemData.item.productImage[0])} */}
+        <View>
+          <Text style={styles.ordertext}>Products</Text>
+        </View>
 
+        <FlatList
+          data={cartItems}
+          keyExtractor={item => item.productId}
+          {...props}
+          renderItem={itemData => (
             <CartItem
               image={itemData.item.productImage}
               qty={itemData.item.qty}
@@ -135,10 +134,10 @@ const CartItems = (props, getState) => {
                   });
               }}
             />
-          </ScrollView>
-        )}
-      />
-    </View>
+          )}
+        />
+      </View>
+    </ScrollView>
   );
 };
 const CartisEmpty = ({navigation}) => {

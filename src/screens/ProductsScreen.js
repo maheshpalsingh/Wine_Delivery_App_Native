@@ -88,20 +88,14 @@ const ProductsScreen = props => {
                   //   setVisible(false);
                   // }, 500);
                   const addProduct = itemData.item._id;
-                  const pid = '62469cc7874f4f9e9497d669';
-                  console.log(pid, token);
                   const config = {
+                    method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
                       Authorization: `Bearer ${token}`,
-                      // 'Content-Length': 0,
                     },
                   };
-                  console.log('123', `${url}/cart/${addProduct}`);
-                  axios
-                    //.post(`localhost:3001/cart/${addProduct}`, config)
-                    //.post(`http://127.0.0.1:3001/cart/${addProduct}`, config)
-                    .post(`${url}/cart/${addProduct}`, config)
+                  fetch(`${url}/cart/${addProduct}`, config)
                     .then(function (response) {
                       console.log('Success');
                     })

@@ -9,3 +9,5 @@ export const REGISTER = 'SignUp';
 export const HOME_NAVIGATOR = 'Home';
 export const SETTINGS = 'Settings';
 export const SEARCH = 'Search';
+export const ACCOUNT = 'Account';
+export const MY_DETAILS = 'My Details';

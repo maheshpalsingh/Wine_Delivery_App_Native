@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import DrawerNavigator from './DrawerNavigator';
 import Colors from '../assets/theme/Colors';
 import {
+  AccountStackScreen,
   CartStackScreen,
   CategoryStackScreen,
   HomeStackScreen,
@@ -14,6 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Categories from '../screens/Categories';
 import {
+  ACCOUNT,
   CATEGORIES,
   MY_ORDERS,
   PRODUCTS_LIST,
@@ -24,6 +26,7 @@ import ProductsScreen from '../screens/ProductsScreen';
 import ProductoverviewScreen from '../screens/ProductOverviewScreen';
 import MycartScreen from '../screens/MyCartScreen';
 import MyordersScreen from '../screens/MyOrdersScreen';
+import Settings from '../screens/Settings';
 
 const Tab = createMaterialBottomTabNavigator();
 const BottomtabNavigator = ({navigation}) => {
@@ -64,13 +67,13 @@ const BottomtabNavigator = ({navigation}) => {
         }}
       />
       <Tab.Screen
-        name={MY_ORDERS}
+        name={ACCOUNT}
         //component={(MY_ORDERS, {screen: MyordersScreen})}
-        component={OrdersStackScreen}
+        component={AccountStackScreen}
         options={{
           tabBarLabel: 'My Orders',
           tabBarIcon: ({color}) => (
-            <Icon name="folder" color={color} size={26} />
+            <Icon name="account" color={color} size={26} />
           ),
         }}
       />
