@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 
-const Settings = () => {
+const SettingsScreen = () => {
   return (
     <SafeAreaView>
       <Text>Settings...</Text>
@@ -11,4 +11,4 @@ const Settings = () => {
 
 const styles = StyleSheet.create({});
 
-export default Settings;
+export default SettingsScreen;

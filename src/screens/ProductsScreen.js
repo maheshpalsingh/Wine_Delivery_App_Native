@@ -22,8 +22,9 @@ const ProductsScreen = props => {
   const [masterdata, setmasterdata] = useState([]);
   const [filtereddata, setfilterdata] = useState([]);
   const [searchdata, setsearchdata] = useState('');
-  const token = useSelector(state => state.cart.token);
-
+  let token = useSelector(state => state.cart.token);
+  //let token =
+  //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDkwNjMxMDh9.YjatjbKxIhBggJh_d7Erw8vjv_IiARbS5-zgMDoiG50';
   useEffect(() => {
     fetchProducts();
     return () => {};
@@ -97,7 +98,7 @@ const ProductsScreen = props => {
                   };
                   fetch(`${url}/cart/${addProduct}`, config)
                     .then(function (response) {
-                      console.log('Success');
+                      console.log('Added Successfully');
                     })
                     .catch(function (error) {
                       console.log(error);

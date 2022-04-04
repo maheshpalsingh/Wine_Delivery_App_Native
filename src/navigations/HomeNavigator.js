@@ -32,6 +32,8 @@ import Search from '../screens/Search';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import AccountsTab from '../screens/AccountsTab';
 import MyDetailsScreen from '../screens/MyDetailsScreen';
+import SettingsScreen from '../screens/Settings';
+import AuthNavigator from './AuthNavigator';
 
 // const screenOptions = ({navigation, route}) => ({
 const screenOptions = ({navigation}) => ({
@@ -190,6 +192,14 @@ export const AccountStackScreen = ({navigation}) => {
       <AccountStack.Screen
         name={MY_DETAILS}
         component={MyDetailsScreen}></AccountStack.Screen>
+
+      <AccountStack.Screen
+        name={MY_ORDERS}
+        component={MyordersScreen}></AccountStack.Screen>
+      <AccountStack.Screen
+        name="AuthNavigatorroute"
+        component={AuthNavigator}
+        options={{headerShown: false}}></AccountStack.Screen>
     </AccountStack.Navigator>
   );
 };

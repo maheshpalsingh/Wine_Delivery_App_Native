@@ -9,22 +9,22 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
-import {PRODUCTS_LIST, REGISTER} from '../constants/routeName';
+import {REGISTER} from '../constants/routeName';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-import {useSelector} from 'react-redux';
-import {HomeStackScreen} from '../navigations/HomeNavigator';
-import BottomtabNavigator from '../navigations/BottomTabNavigator';
-import ProductsScreen from '../screens/ProductsScreen';
+import {useDispatch, useSelector} from 'react-redux';
+import {setToken} from '../store/actions/cart';
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
 const Login = props => {
-  let logintoken = useSelector(state => state.cart.token);
+  // let logintoken = useSelector(state => state.cart.token);
+  //let carttoken = useSelector(state => state.cart.token);
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [errortext, setErrortext] = useState('');
   const [valid, setvalid] = useState(true);
+  const dispatch = useDispatch();
 
   const handleSubmitPress = navigation => {
     setErrortext('');
@@ -45,23 +45,18 @@ const Login = props => {
     console.log(dataToSend);
     const config = {
       headers: {
-        //Header Defination
-        //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${token}`,
       },
     };
     axios
       .post(`${url}/users/login`, dataToSend, config)
-      // .then(function (response) {
-      //   console.log(response);
-      // })
       .then(response => {
         const {token} = response.data;
         console.log(response.data);
-        logintoken = token;
-        console.log(logintoken);
+        // logintoken = token;
+        dispatch(props.setToken(token));
       })
+
       .then(() => {
         navigate('DrawerNavigationRoutes');
       })

@@ -71,9 +71,9 @@ const BottomtabNavigator = ({navigation}) => {
         //component={(MY_ORDERS, {screen: MyordersScreen})}
         component={AccountStackScreen}
         options={{
-          tabBarLabel: 'My Orders',
+          tabBarLabel: 'My Account',
           tabBarIcon: ({color}) => (
-            <Icon name="account" color={color} size={26} />
+            <Icon name="pencil" color={color} size={26} />
           ),
         }}
       />

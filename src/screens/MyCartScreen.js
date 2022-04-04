@@ -10,6 +10,7 @@ import {
   ScrollView,
   ActivityIndicator,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
@@ -21,10 +22,14 @@ const MycartScreen = props => {
   return <View>{cartisemp ? <CartisEmpty {...props} /> : <CartItems />}</View>;
 };
 
-const CartItems = (props, getState) => {
+const CartItems = (props, {navigation}) => {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
   const cartItems = useSelector(state => state.cart.availableOrders);
+  let token = useSelector(state => state.cart.token);
+
+  // let token =
+  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDkwNjMxMDh9.YjatjbKxIhBggJh_d7Erw8vjv_IiARbS5-zgMDoiG50';
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -67,8 +72,29 @@ const CartItems = (props, getState) => {
       ? 'http://10.0.2.2:3001'
       : 'http://127.0.0.1:3000';
 
-  const token = useSelector(state => state.cart.token);
-
+  const config = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const placeorder = () => {
+    fetch(`${url}/placeorder/my`, config)
+      // .then(() => {
+      //   setTimeout(() => {
+      //     alert('Success', 'Thank you.');
+      //   }, 500);
+      // })
+      .then(response => {
+        console.log('Successfully order');
+        //navigation.goBack();
+        //Alert.alert('Success','Added to Order');
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+  };
   return (
     <ScrollView>
       <View style={styles.screen}>
@@ -89,6 +115,9 @@ const CartItems = (props, getState) => {
             <Button
               color={Colors.purple}
               title="Order Now"
+              onPress={() => {
+                placeorder();
+              }}
               disabled={cartItems.length === 0}
             />
           </Card>
@@ -118,7 +147,7 @@ const CartItems = (props, getState) => {
                   setVisible(false);
                 }, 500);
                 const idToRemove = itemData.item._id;
-                console.log(idToRemove);
+                //console.log(idToRemove);
                 const config = {
                   headers: {
                     'Content-Type': 'application/json',

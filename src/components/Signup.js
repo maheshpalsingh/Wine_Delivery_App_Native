@@ -1,4 +1,4 @@
-import React, {createRef, useState} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -66,24 +66,16 @@ const Signup = () => {
       password: userPassword,
     };
     console.log(dataToSend);
-    // var formBody = [];
-    // for (var key in dataToSend) {
-    //   var encodedKey = encodeURIComponent(key);
-    //   var encodedValue = encodeURIComponent(dataToSend[key]);
-    //   formBody.push(encodedKey + '=' + encodedValue);
-    // }
-    // formBody = formBody.join('&');
+
     const config = {
       headers: {
-        //Header Defination
-        //'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
         'Content-Type': 'application/json',
       },
     };
 
     axios
-      .post(`${url}/users`, dataToSend, config)
-      .then(() => console.log('Success'))
+      .post(`${url}/users/register`, dataToSend, config)
+      .then(() => console.log('Registration Successfull'))
       .then(() => {
         navigate(LOGIN);
       })
@@ -179,41 +171,6 @@ const Signup = () => {
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </ScrollView>
-        {/* <View style={styles.form}>
-
-
-          <TextInput label="UserName:" placeholder="Enter Username" />
-
-          <TextInput label="Email:" placeholder="Enter Email" />
-          <TextInput
-            label="Password:"
-            placeholder="Enter Password"
-            secureTextEntry={true}
-          />
-          <TextInput
-            label="Age:"
-            placeholder="Enter Age"
-            keyboardType="number-pad"
-          />
-
-          <View style={styles.buttonView}>
-            <Button
-              style={styles.button}
-              title="REGISTER"
-              color={Colors.purple}
-            />
-          </View>
-
-          <View style={styles.lastSection}>
-            <Text style={styles.infoText}>Already have a account</Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigate(LOGIN);
-              }}>
-              <Text style={styles.link}>Login</Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
       </View>
     </View>
   );

@@ -10,62 +10,47 @@ import {
   FlatList,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
 
 const axios = require('axios');
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
+//let token =
+//'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDkwNjMxMDh9.YjatjbKxIhBggJh_d7Erw8vjv_IiARbS5-zgMDoiG50';
+
 const MyordersScreen = props => {
   const [masterdata, setmasterdata] = useState([]);
-  const [filtereddata, setfilterdata] = useState([]);
-  const [searchdata, setsearchdata] = useState('');
-
+  let token = useSelector(state => state.cart.token);
   useEffect(() => {
     fetchProducts();
     return () => {};
   }, []);
 
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  };
   const fetchProducts = () => {
     axios
-      .get(`${url}/products/all`)
+      .get(`${url}/orders/my`, config)
       .then(response => {
-        setfilterdata(response.data ?? []);
         setmasterdata(response.data ?? []);
+        //console.log(masterdata);
       })
       .catch(function (error) {
         alert(error);
       });
   };
 
-  const searchFilter = text => {
-    if (text) {
-      const newdata = masterdata.filter(item => {
-        const itemdata = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemdata.indexOf(textData) > -1;
-      });
-      setfilterdata(newdata);
-      setsearchdata(text);
-    } else {
-      setfilterdata(masterdata);
-      setsearchdata(text);
-    }
-  };
   return (
     <ScrollView>
       <View>
-        <TextInput
-          style={styles.input}
-          value={searchdata}
-          onChangeText={text => {
-            searchFilter(text);
-          }}
-          placeholder="Search"
-          underlineColorAndroid="transparent"
-        />
         <FlatList
-          data={filtereddata}
+          data={masterdata}
           keyExtractor={item => item._id}
           {...props}
           renderItem={(
@@ -73,9 +58,9 @@ const MyordersScreen = props => {
           ) => (
             <Card
               image={itemdata.item.image}
-              winename={itemdata.item.name}
-              price={itemdata.item.price}
-              qtn={itemdata.item.category}
+              winename={itemdata.item.products[0]}
+              Total={itemdata.item.total}
+              qtn={itemdata.item.products.length}
             />
           )}
         />
@@ -95,9 +80,9 @@ const Card = props => (
       />
     </View>
     <View style={{padding: 10}}>
+      <Text style={styles.txt_price}>Total:{props.Total}</Text>
+      <Text style={styles.txt_qtn}>No.of Products:{props.qtn}</Text>
       <Text style={styles.txt_name}>{props.winename}</Text>
-      <Text style={styles.txt_price}>{props.price}</Text>
-      <Text style={styles.txt_qtn}>{props.qtn}</Text>
     </View>
   </View>
 );

@@ -8,12 +8,12 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {MY_CART} from '../constants/routeName';
 
 const Categories = ({navigation}) => {
-  return (
-    <View>
-      <Text>Hey</Text>
-    </View>
-  );
-  // return <ByCategory />;
+  // return (
+  //   <View>
+  //     <Text>Hey</Text>
+  //   </View>
+  // );
+  return <ByCategory />;
 };
 
 Categories.navigationOptions = navData => {

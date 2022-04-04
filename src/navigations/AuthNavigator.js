@@ -10,7 +10,7 @@ import BottomtabNavigator from './BottomTabNavigator';
 const AuthNavigator = () => {
   const AuthStack = createStackNavigator();
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator initialRouteName={LOGIN}>
       <AuthStack.Screen
         name={LOGIN}
         options={styles.header}
