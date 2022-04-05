@@ -23,7 +23,7 @@ const AccountsTab = ({navigation}) => {
   useEffect(() => {
     fetchMyProfile();
     return () => {};
-  }, []);
+  }, [data]);
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -58,6 +58,7 @@ const AccountsTab = ({navigation}) => {
         alert(error);
       });
   };
+
   const logoutall = () => {
     fetch(`${url}/users/logoutAll`, config1)
       .then(response => {
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   text1: {
-    fontStyle: 'bold',
+    //fontStyle: 'bold',
     fontWeight: '700',
     fontSize: 20,
     tintColor: 'black',
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.5,
   },
   myorders: {
-    tintColor: Colors.thistle,
+    //tintColor: Colors.thistle,
     textAlign: 'left',
     borderBottomWidth: 1,
   },

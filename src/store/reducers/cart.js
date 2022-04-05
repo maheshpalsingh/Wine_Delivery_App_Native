@@ -4,9 +4,9 @@ const initialState = {
   //items: {},
   totalAmount: 0,
   availableOrders: [],
-  token: null,
-  //token:
-  //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRhZDYxMzliNTJjN2I1ODFhMTAwZTYiLCJpYXQiOjE2NDkwNzMyMDl9.XQm8m53DrJ5v6S8EBlGLhJTEvq94Eo63f1FGyIA2U7k',
+  //token: null,
+  token:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRhZDYxMzliNTJjN2I1ODFhMTAwZTYiLCJpYXQiOjE2NDkxNDA5NDZ9.F1wl-FtQ7vwJG7WtMBXgexK7NAgbrjI-qRf8JSqmy_I',
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +17,7 @@ export default (state = initialState, action) => {
         availableOrders: action.payload,
       };
     case SET_TOKEN: {
+      // console.log('red', action);
       return {
         ...state,
         token: action.payload,

@@ -26,15 +26,17 @@ const CartItems = (props, {navigation}) => {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
   const cartItems = useSelector(state => state.cart.availableOrders);
+  //console.log('cartItems', cartItems);
   let token = useSelector(state => state.cart.token);
+  //console.log('2', token);
 
-  // let token =
-  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDkwNjMxMDh9.YjatjbKxIhBggJh_d7Erw8vjv_IiARbS5-zgMDoiG50';
+  //let token
+  //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRhZDYxMzliNTJjN2I1ODFhMTAwZTYiLCJpYXQiOjE2NDkxMzcyMTZ9.JVOd924o4KL6cfrCWtUvTbNmYCEtPxXUhd4-oGx56GQ';
 
   const dispatch = useDispatch();
   useEffect(() => {
     const loadProducts = async () => {
-      await dispatch(cartActions.GetOrdersAction());
+      await dispatch(cartActions.GetCartsAction());
     };
     loadProducts();
   }, [dispatch, cartItems]);
@@ -88,7 +90,7 @@ const CartItems = (props, {navigation}) => {
       // })
       .then(response => {
         console.log('Successfully order');
-        //navigation.goBack();
+        //navigation.goBack({});
         //Alert.alert('Success','Added to Order');
       })
       .catch(function (error) {
@@ -154,7 +156,7 @@ const CartItems = (props, {navigation}) => {
                     Authorization: `Bearer ${token}`,
                   },
                 };
-                console.log('Delete', `${url}/carts/me/${idToRemove}`);
+                //console.log('Delete', `${url}/carts/me/${idToRemove}`);
                 axios
                   .delete(`${url}/carts/me/${idToRemove}`, config)
                   .then(() => console.log('Delete successful'))

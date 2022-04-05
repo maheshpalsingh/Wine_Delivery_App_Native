@@ -23,6 +23,7 @@ const ProductsScreen = props => {
   const [filtereddata, setfilterdata] = useState([]);
   const [searchdata, setsearchdata] = useState('');
   let token = useSelector(state => state.cart.token);
+  console.log('main token', token);
   //let token =
   //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDkwNjMxMDh9.YjatjbKxIhBggJh_d7Erw8vjv_IiARbS5-zgMDoiG50';
   useEffect(() => {

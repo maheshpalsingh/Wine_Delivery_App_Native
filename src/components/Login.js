@@ -54,7 +54,10 @@ const Login = props => {
         const {token} = response.data;
         console.log(response.data);
         // logintoken = token;
-        dispatch(props.setToken(token));
+        dispatch(setToken(token));
+        //mam this is not working...without dispatch login is correctly
+        //refresh
+        //where is this api callnng ?his mean 401 error one api
       })
 
       .then(() => {

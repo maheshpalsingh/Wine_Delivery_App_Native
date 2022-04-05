@@ -7,21 +7,22 @@ const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
 export const setToken = token => {
-  return {type: SET_TOKEN, token: token};
+  // console.log('store tokrn', token);
+  return {type: SET_TOKEN, payload: token};
 };
 
-export const addtocart = product => {
-  return {type: ADD_TO_CART, product: product};
-};
+// export const addtocart = product => {
+//   return {type: ADD_TO_CART, product: product};
+// };
 
-export const removefromcart = product => {
-  return {type: REMOVE_FROM_CART};
-};
-
+// export const removefromcart = product => {
+//   return {type: REMOVE_FROM_CART};
+// };
+// you have to call this api calling without that how you get data ?it was working before mam
 export const GetCartsAction = () => {
+  //console.log('view cart1');
   return async (dispatch, getState) => {
     let token = getState().cart.token;
-    //console.log('token', token);
 
     try {
       const config = {
@@ -33,6 +34,7 @@ export const GetCartsAction = () => {
       await axios
         .get(`${url}/carts/me`, config)
         .then(response => {
+          //console.log('response', response);
           dispatch({
             type: GET_ORDERS,
             payload: response.data,

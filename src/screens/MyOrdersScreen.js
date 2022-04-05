@@ -8,6 +8,7 @@ import {
   TextInput,
   Button,
   FlatList,
+  SectionList,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
@@ -39,31 +40,65 @@ const MyordersScreen = props => {
       .get(`${url}/orders/my`, config)
       .then(response => {
         setmasterdata(response.data ?? []);
-        //console.log(masterdata);
+        // console.log(masterdata);
       })
       .catch(function (error) {
         alert(error);
       });
   };
 
+  // const orders = itemdata => {
+  //   <Card
+  //     Total={itemdata.total}
+  //     totqtn={itemdata.products.length}
+  //     winename={itemdata.name[0]}
+  //     wineprice={itemdata.price[0]}
+  //     wineqty={itemdata.qty[0]}
+  //   />;
+  // };
+
+  const Item = ({title}) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+
   return (
     <ScrollView>
       <View>
-        <FlatList
+        <SectionList
+          sections={[{title: 'My Orders', data: masterdata}]}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({item}) => (
+            <Card
+              Total={item.total}
+              totqtn={item.products.length}
+              winename={item.name}
+              wineprice={item.price}
+              wineqty={item.qty}
+            />
+          )}
+          renderSectionHeader={({section: {title}}) => (
+            <Text style={styles.header}></Text>
+          )}
+        />
+        {/* <FlatList
           data={masterdata}
           keyExtractor={item => item._id}
           {...props}
+          //renderItem={({itemdata}) => orderdata}
           renderItem={(
             itemdata, // {ItemView}
           ) => (
             <Card
-              image={itemdata.item.image}
-              winename={itemdata.item.products[0]}
               Total={itemdata.item.total}
-              qtn={itemdata.item.products.length}
+              totqtn={itemdata.item.products.length}
+              winename={itemdata.item.name[0]}
+              wineprice={itemdata.item.price[0]}
+              wineqty={itemdata.item.qty[0]}
             />
           )}
-        />
+        /> */}
       </View>
     </ScrollView>
   );
@@ -71,52 +106,47 @@ const MyordersScreen = props => {
 
 const Card = props => (
   <View style={styles.wine_card}>
-    <View style={{padding: 10}}>
-      <Image
-        source={{
-          uri: props.image,
-        }}
-        style={styles.wine_image}
-      />
+    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <Text style={styles.txt_qtn}>Final Amount: $ {props.Total}</Text>
+      <Text style={styles.txt_qtn}>Total Products: {props.totqtn}</Text>
     </View>
-    <View style={{padding: 10}}>
-      <Text style={styles.txt_price}>Total:{props.Total}</Text>
-      <Text style={styles.txt_qtn}>No.of Products:{props.qtn}</Text>
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      }}>
       <Text style={styles.txt_name}>{props.winename}</Text>
+      <Text style={styles.txt_name}>Qty:{props.wineqty}</Text>
+      <Text style={styles.txt_name}>Price:{props.wineprice}</Text>
     </View>
   </View>
 );
 const styles = StyleSheet.create({
   screenimage: {width: '100%', height: 150, paddingBottom: 20},
   wine_card: {
+    padding: 10,
+    flex: 1,
     backgroundColor: 'white',
     margin: 15,
     borderRadius: 20,
-    flexDirection: 'row',
+    //flexDirection: 'column',
   },
   wine_image: {width: 80, height: 100, borderRadius: 20},
-  txt_name: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
+  // txt_name: {
+  //   fontSize: 15,
+  //   fontWeight: 'bold',
+  //   paddingTop: 10,
+  //   paddingBottom: 10,
+  // },
   txt_price: {
     paddingBottom: 10,
     fontSize: 15,
+    textAlign: 'center',
   },
   txt_qtn: {
     fontSize: 15,
     fontWeight: 'bold',
     paddingBottom: 10,
-  },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#009688',
-    backgroundColor: 'white',
-    margin: 5,
-    paddingLeft: 15,
   },
 });
 
