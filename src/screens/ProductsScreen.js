@@ -11,6 +11,7 @@ import {
 
 import {WineCard, WineImage} from '../components/WineComponent';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
 import {PRODUCTS_OVERVIEW} from '../constants/routeName';
@@ -22,6 +23,8 @@ const ProductsScreen = props => {
   const [masterdata, setmasterdata] = useState([]);
   const [filtereddata, setfilterdata] = useState([]);
   const [searchdata, setsearchdata] = useState('');
+  //const token2 = await AsyncStorage.getItem('token');
+  //console.log('token from screen ', token2);
   let token = useSelector(state => state.cart.token);
   console.log('main token', token);
   //let token =
@@ -95,6 +98,7 @@ const ProductsScreen = props => {
                     headers: {
                       'Content-Type': 'application/json',
                       Authorization: `Bearer ${token}`,
+                      // Authorization: `Bearer ${token2}`,
                     },
                   };
                   fetch(`${url}/cart/${addProduct}`, config)

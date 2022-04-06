@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     //fontStyle: 'bold',
     fontWeight: '700',
     fontSize: 20,
-    tintColor: 'black',
+    //tintColor: 'black',
   },
   text2: {
     flexDirection: 'row',

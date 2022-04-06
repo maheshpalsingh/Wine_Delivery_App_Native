@@ -155,7 +155,6 @@ const MyDetailsScreen = ({navigation}) => {
             transparent={true}
             visible={isModalVisible}
             onRequestClose={() => {
-              Alert.alert('Modal has been closed.');
               setisModalVisible(!isModalVisible);
             }}>
             <TouchableOpacity disabled={true} style={styles.container}>
@@ -168,7 +167,9 @@ const MyDetailsScreen = ({navigation}) => {
                   size={15}
                   style={{alignSelf: 'flex-end'}}
                 />
+                <Text style={styles.updatetext}>Update</Text>
                 <TextInput
+                  defaultValue={data.name}
                   style={{
                     borderWidth: 1,
                     borderRadius: 10,
@@ -263,8 +264,8 @@ const styles = StyleSheet.create({
   },
   modal: {
     padding: 20,
-    height: HEIGHT,
-    width: WIDTH - 80,
+    height: 200,
+    width: WIDTH - 60,
     paddingTop: 10,
     backgroundColor: 'white',
     borderRadius: 10,
@@ -319,6 +320,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     marginVertical: 15,
+  },
+  updatetext: {
+    fontStyle: 'normal',
+    fontSize: 20,
+    alignItems: 'center',
+    paddingLeft: 10,
   },
 });
 

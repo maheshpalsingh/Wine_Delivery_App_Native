@@ -4,9 +4,9 @@ const initialState = {
   //items: {},
   totalAmount: 0,
   availableOrders: [],
-  //token: null,
-  token:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRhZDYxMzliNTJjN2I1ODFhMTAwZTYiLCJpYXQiOjE2NDkxNDA5NDZ9.F1wl-FtQ7vwJG7WtMBXgexK7NAgbrjI-qRf8JSqmy_I',
+  token: null,
+  //token:
+  //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRhZDYxMzliNTJjN2I1ODFhMTAwZTYiLCJpYXQiOjE2NDkxNDA5NDZ9.F1wl-FtQ7vwJG7WtMBXgexK7NAgbrjI-qRf8JSqmy_I',
 };
 
 export default (state = initialState, action) => {

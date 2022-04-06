@@ -3,10 +3,16 @@ import {View, Text, StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-import {LOGIN, PRODUCTS_LIST, REGISTER} from '../constants/routeName';
+import {
+  LOGIN,
+  PRODUCTS_LIST,
+  REGISTER,
+  RESET_PASSWORD,
+} from '../constants/routeName';
 import Colors from '../assets/theme/Colors';
 import ProductsScreen from '../screens/ProductsScreen';
 import BottomtabNavigator from './BottomTabNavigator';
+import Forgetpassword from '../screens/ForgetPassword';
 const AuthNavigator = () => {
   const AuthStack = createStackNavigator();
   return (
@@ -20,6 +26,10 @@ const AuthNavigator = () => {
         name={REGISTER}
         options={styles.header}
         component={RegisterScreen}></AuthStack.Screen>
+      <AuthStack.Screen
+        name={RESET_PASSWORD}
+        options={styles.header}
+        component={Forgetpassword}></AuthStack.Screen>
 
       <AuthStack.Screen
         name="DrawerNavigationRoutes"

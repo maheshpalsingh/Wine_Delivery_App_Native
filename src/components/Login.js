@@ -1,32 +1,31 @@
 import React, {useState} from 'react';
+import {TextInput} from 'react-native-paper';
 import {
   View,
   Text,
   Image,
   StyleSheet,
-  TextInput,
   Button,
   TouchableOpacity,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
-import {REGISTER} from '../constants/routeName';
+import {REGISTER, RESET_PASSWORD} from '../constants/routeName';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {setToken} from '../store/actions/cart';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
 const Login = props => {
-  // let logintoken = useSelector(state => state.cart.token);
-  //let carttoken = useSelector(state => state.cart.token);
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [errortext, setErrortext] = useState('');
-  const [valid, setvalid] = useState(true);
+
   const dispatch = useDispatch();
 
-  const handleSubmitPress = navigation => {
+  const handleSubmitPress = () => {
     setErrortext('');
     if (!userEmail) {
       alert('Please fill Email');
@@ -52,12 +51,15 @@ const Login = props => {
       .post(`${url}/users/login`, dataToSend, config)
       .then(response => {
         const {token} = response.data;
-        console.log(response.data);
-        // logintoken = token;
+        //console.log(response.data);
+        // Using Redux Store
         dispatch(setToken(token));
-        //mam this is not working...without dispatch login is correctly
-        //refresh
-        //where is this api callnng ?his mean 401 error one api
+        //Using AsyncStorage
+        // try {
+        //   await AsyncStorage.setItem('token', token);
+        // } catch (e) {
+        //   console.log('Error while saving token in Async', e);
+        // }
       })
 
       .then(() => {
@@ -73,16 +75,19 @@ const Login = props => {
   const {navigate} = useNavigation();
   return (
     <View style={styles.screen}>
-      <View>
+      <View style={{paddingBottom: 10}}>
         <Image
           style={styles.image}
           source={require('../assets/my-app/download.jpg')}
         />
       </View>
-      <View>
-        <Text style={styles.welcome}>{props.title}</Text>
-      </View>
-      <View style={{paddingBottom: 10}}>
+
+      <View
+        style={{
+          paddingBottom: 10,
+          paddingTop: 10,
+          justifyContent: 'center',
+        }}>
         <TextInput
           style={styles.input}
           value={userEmail}
@@ -116,6 +121,21 @@ const Login = props => {
         />
       </View>
       <View>
+        <View style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+          <TouchableOpacity
+            onPress={() => {
+              navigate(RESET_PASSWORD);
+            }}>
+            <Text
+              style={{
+                padding: 10,
+                paddingLeft: 20,
+                fontSize: 16,
+              }}>
+              Forget Password
+            </Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.info}>Dont't have an Account</Text>
         <TouchableOpacity
           onPress={() => {
@@ -134,7 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.thistle,
   },
   image: {
-    marginTop: 50,
+    marginTop: 30,
     marginLeft: 70,
     borderRadius: 25,
   },
@@ -147,11 +167,9 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   input: {
-    borderBottomColor: Colors.purple,
-    borderWidth: 1,
-    marginLeft: '10%',
+    marginLeft: 30,
     marginRight: '20%',
-    borderRadius: 12,
+    borderTopRightRadius: 12,
   },
   button: {
     borderRadius: 10,
@@ -159,12 +177,12 @@ const styles = StyleSheet.create({
   buttonView: {
     paddingTop: 15,
     paddingLeft: 50,
-    paddingRight: 50,
+    paddingRight: 80,
     fontSize: 22,
   },
   info: {
     fontSize: 18,
-    padding: 25,
+    padding: 15,
     flexDirection: 'row',
   },
   link: {

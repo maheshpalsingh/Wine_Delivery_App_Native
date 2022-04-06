@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Input,
   Text,
-  TextInput,
   Image,
   Button,
   ScrollView,
@@ -12,6 +11,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+import {TextInput} from 'react-native-paper';
 import axios from 'axios';
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
@@ -29,6 +29,7 @@ const Signup = () => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userAge, setUserAge] = useState('');
+  const [userContact, setUserContact] = useState('');
   const [userAddress, setUserAddress] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,7 @@ const Signup = () => {
   const ageInputRef = createRef();
   const addressInputRef = createRef();
   const passwordInputRef = createRef();
+  const cnoInputRef = createRef();
 
   const handleSubmitButton = () => {
     setErrortext('');
@@ -53,6 +55,10 @@ const Signup = () => {
       alert('Please fill Age');
       return;
     }
+    if (!userContact) {
+      alert('Please fill Age');
+      return;
+    }
     if (!userPassword) {
       alert('Please fill Password');
       return;
@@ -64,6 +70,7 @@ const Signup = () => {
       email: userEmail,
       age: userAge,
       password: userPassword,
+      contactno: userContact,
     };
     console.log(dataToSend);
 
@@ -154,21 +161,35 @@ const Signup = () => {
                 ref={ageInputRef}
                 returnKeyType="next"
                 onSubmitEditing={() =>
-                  addressInputRef.current && addressInputRef.current.focus()
+                  cnoInputRef.current && cnoInputRef.current.focus()
                 }
                 blurOnSubmit={false}
               />
             </View>
-
-            {errortext != '' ? (
-              <Text style={styles.errorTextStyle}>{errortext}</Text>
-            ) : null}
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={handleSubmitButton}>
-              <Text style={styles.buttonTextStyle}>REGISTER</Text>
-            </TouchableOpacity>
+            <View style={styles.SectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={UserContact => setUserContact(UserContact)}
+                underlineColorAndroid="#f000"
+                placeholder="Enter Contact No."
+                placeholderTextColor="#8b9cb5"
+                keyboardType="numeric"
+                ref={cnoInputRef}
+                returnKeyType="next"
+                blurOnSubmit={false}
+              />
+            </View>
+            <View style={styles.buttonview}>
+              {errortext != '' ? (
+                <Text style={styles.errorTextStyle}>{errortext}</Text>
+              ) : null}
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                activeOpacity={0.5}
+                onPress={handleSubmitButton}>
+                <Text style={styles.buttonTextStyle}>REGISTER</Text>
+              </TouchableOpacity>
+            </View>
           </KeyboardAvoidingView>
         </ScrollView>
       </View>
@@ -215,23 +236,47 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 10,
   },
-  buttonView: {
-    paddingTop: 15,
-    paddingLeft: 50,
+  buttonview: {
+    paddingTop: 10,
+    paddingLeft: 90,
     paddingRight: 50,
+    tintColor: 'white',
     fontSize: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   lastSection: {
     flexDirection: 'row',
   },
   link: {
-    paddingTop: 20,
+    paddingTop: 10,
     paddingLeft: 25,
     color: Colors.primary,
     fontSize: 18,
   },
   infoText: {
-    paddingTop: 20,
+    paddingTop: 10,
+    fontSize: 18,
+  },
+  inputStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'baseline',
+    padding: 5,
+  },
+  buttonStyle: {
+    fontSize: 22,
+    backgroundColor: Colors.purple,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 120,
+    height: 40,
+
+    borderRadius: 18,
+  },
+  buttonTextStyle: {
+    justifyContent: 'center',
+    color: 'white',
     fontSize: 18,
   },
 });
