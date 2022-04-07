@@ -15,26 +15,30 @@ const AppNavContainer = () => {
   } else {
     loggedIn = false;
   }
-  //const [isloggedin, setisloggedin] = useState(null);
-  //useEffect(() => {
-  //const token = AsyncStorage.getItem('token').then(res => {
-  //console.log('Response', res);
-  //if (res) {
-  // setisloggedin(true);
-  //} else {
-  // setisloggedin(false);
-  //}
-  //});
-  //console.log('from index.', token);
-  // if (token != null) {
-  //   setisloggedin(true);
-  // } else {
-  //   setisloggedin(false);
-  // }
-  //});
+
+  // let a = AsyncStorage.getItem('token').then(res => {
+  //   console.log('ResponseA', JSON.stringify(res));
+  // });
+  // let ab = AsyncStorage.removeItem('token').then(res => {
+  //   console.log('Response removed', res);
+  // });
+
+  // const [isloggedin, setisloggedin] = useState(null);
+  // useEffect(() => {
+  //   let token = AsyncStorage.getItem('token').then(res => {
+  //     console.log('Response from login', JSON.stringify(res));
+  //     if (res) {
+  //       setisloggedin(true);
+  //     } else {
+  //       setisloggedin(false);
+  //     }
+  //   });
+  // });
+
   return (
     <NavigationContainer>
       {loggedIn ? <BottomtabNavigator /> : <AuthNavigator />}
+      {/* {isloggedin ? <BottomtabNavigator /> : <AuthNavigator />} */}
     </NavigationContainer>
   );
 };

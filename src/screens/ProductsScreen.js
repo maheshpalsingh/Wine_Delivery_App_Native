@@ -5,26 +5,36 @@ import {
   FlatList,
   Platform,
   Button,
-  ScrollView,
   TextInput,
+  Dimensions,
+  Modal,
+  TouchableOpacity,
 } from 'react-native';
-
+import {ScrollView} from 'react-native-gesture-handler';
 import {WineCard, WineImage} from '../components/WineComponent';
 
+import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
 import {PRODUCTS_OVERVIEW} from '../constants/routeName';
+import {Text} from 'react-native-paper';
 const axios = require('axios');
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
-
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = 150;
 const ProductsScreen = props => {
   const [masterdata, setmasterdata] = useState([]);
   const [filtereddata, setfilterdata] = useState([]);
   const [searchdata, setsearchdata] = useState('');
-  //const token2 = await AsyncStorage.getItem('token');
-  //console.log('token from screen ', token2);
+  const [isModalVisible, setisModalVisible] = useState(false);
+  const changeModalVisible = bool => {
+    setisModalVisible(bool);
+  };
+  // let text = await AsyncStorage.getItem('token');
+  //let token = JSON.parse(text);
+  //console.log('token from screen1 ', token);
   let token = useSelector(state => state.cart.token);
   console.log('main token', token);
   //let token =
@@ -62,6 +72,27 @@ const ProductsScreen = props => {
   };
   return (
     <View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          setisModalVisible(!isModalVisible);
+        }}>
+        <TouchableOpacity disabled={true} style={styles.container}>
+          <View style={styles.modal}>
+            <Icon
+              name="checkmark-circle-outline"
+              size={90}
+              color={Colors.white}
+            />
+
+            <View style={styles.modaltext}>
+              <Text style={{fontSize: 26}}>Added to Cart Successfully</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
       <TextInput
         style={styles.input}
         value={searchdata}
@@ -105,6 +136,12 @@ const ProductsScreen = props => {
                     .then(function (response) {
                       console.log('Added Successfully');
                     })
+                    .then(
+                      changeModalVisible(true),
+                      setTimeout(() => {
+                        changeModalVisible(false);
+                      }, 1000),
+                    )
                     .catch(function (error) {
                       console.log(error);
                     });
@@ -174,6 +211,26 @@ const styles = StyleSheet.create({
     width: 200,
     height: 110,
     paddingRight: 10,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal: {
+    height: 200,
+    width: WIDTH - 60,
+    paddingTop: 10,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.thistle,
+  },
+
+  modaltext: {
+    flex: 1,
+    fontSize: '30',
   },
 });
 

@@ -53,7 +53,7 @@ import {SimpleModal} from '../components/simpleModal';
 import Icon from 'react-native-vector-icons/Ionicons';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
-const MyDetailsScreen = ({navigation}) => {
+const MyDetailsScreen = async ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userAge, setUserAge] = useState('');
@@ -62,8 +62,9 @@ const MyDetailsScreen = ({navigation}) => {
   const [userPassword, setUserPassword] = useState('');
   const [isModalVisible, setisModalVisible] = useState(false);
   const [data, setdata] = useState('');
-
-  let token = useSelector(state => state.cart.token);
+  const token = await AsyncStorage.getItem('token');
+  console.log('token from storage ', token);
+  // let token = useSelector(state => state.cart.token);
   //let token =
   //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRhZDYxMzliNTJjN2I1ODFhMTAwZTYiLCJpYXQiOjE2NDkwNzMyMDl9.XQm8m53DrJ5v6S8EBlGLhJTEvq94Eo63f1FGyIA2U7k';
 
@@ -168,22 +169,8 @@ const MyDetailsScreen = ({navigation}) => {
                   style={{alignSelf: 'flex-end'}}
                 />
                 <Text style={styles.updatetext}>Update</Text>
-                <TextInput
-                  defaultValue={data.name}
-                  style={{
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    marginTop: 20,
-                  }}
-                />
-                <View
-                  style={{
-                    width: WIDTH / 3,
-                    padding: 15,
-
-                    justifyContent: 'center',
-                    alignItems: 'flex-end',
-                  }}>
+                <TextInput defaultValue={data.name} style={styles.modalinput} />
+                <View style={styles.modalbutton}>
                   <Button title="Update" />
                 </View>
               </View>
@@ -326,6 +313,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignItems: 'center',
     paddingLeft: 10,
+  },
+  modalbutton: {
+    width: WIDTH / 3,
+    padding: 15,
+
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  modalinput: {
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 20,
   },
 });
 

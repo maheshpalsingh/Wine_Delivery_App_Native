@@ -22,12 +22,15 @@ const MycartScreen = props => {
   return <View>{cartisemp ? <CartisEmpty {...props} /> : <CartItems />}</View>;
 };
 
-const CartItems = (props, {navigation}) => {
+const CartItems = async (props, {navigation}) => {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
   const cartItems = useSelector(state => state.cart.availableOrders);
+
+  const token = await AsyncStorage.getItem('token');
+  console.log('token from storage ', token);
   //console.log('cartItems', cartItems);
-  let token = useSelector(state => state.cart.token);
+  // let token = useSelector(state => state.cart.token);
   //console.log('2', token);
 
   //let token

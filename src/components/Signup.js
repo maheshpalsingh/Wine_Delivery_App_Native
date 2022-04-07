@@ -10,6 +10,8 @@ import {
   Keyboard,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Modal,
+  Dimensions,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
@@ -24,6 +26,10 @@ import Colors from '../assets/theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {LOGIN} from '../constants/routeName';
 import {HomeStackScreen} from '../navigations/HomeNavigator';
+import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = 150;
 const Signup = () => {
   const {navigate} = useNavigation();
   const [userName, setUserName] = useState('');
@@ -34,12 +40,17 @@ const Signup = () => {
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
+  const [isModalVisible, setisModalVisible] = useState(false);
   const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   const emailInputRef = createRef();
   const ageInputRef = createRef();
   const addressInputRef = createRef();
   const passwordInputRef = createRef();
   const cnoInputRef = createRef();
+
+  const changeModalVisible = bool => {
+    setisModalVisible(bool);
+  };
 
   const handleSubmitButton = () => {
     setErrortext('');
@@ -82,7 +93,12 @@ const Signup = () => {
 
     axios
       .post(`${url}/users/register`, dataToSend, config)
-      .then(() => console.log('Registration Successfull'))
+      .then(
+        changeModalVisible(true),
+        setTimeout(() => {
+          changeModalVisible(false);
+        }, 2000),
+      )
       .then(() => {
         navigate(LOGIN);
       })
@@ -94,6 +110,40 @@ const Signup = () => {
   };
   return (
     <View style={styles.screen}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          setisModalVisible(!isModalVisible);
+        }}>
+        <TouchableOpacity disabled={true} style={styles.container}>
+          {/* <Icon
+            name="close"
+            onPress={() => {
+              changeModalVisible(false);
+            }}
+            size={15}
+            style={{
+              alignSelf: 'flex-end',
+              marginRight: 30,
+              marginBottom: 10,
+              backgroundColor: 'white',
+            }}
+          /> */}
+          <View style={styles.modal}>
+            <Icon
+              name="checkmark-circle-outline"
+              size={90}
+              color={Colors.white}
+            />
+
+            <View style={styles.modaltext}>
+              <Text style={{fontSize: 26}}>Registration Success</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
       <Image
         style={styles.logo}
         source={require('../assets/my-app/download.jpg')}
@@ -278,6 +328,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'white',
     fontSize: 18,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal: {
+    height: 200,
+    width: WIDTH - 60,
+    paddingTop: 10,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.thistle,
+  },
+
+  modaltext: {
+    flex: 1,
+    fontSize: '30',
   },
 });
 

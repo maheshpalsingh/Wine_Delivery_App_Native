@@ -21,9 +21,11 @@ const url =
 //let token =
 //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDkwNjMxMDh9.YjatjbKxIhBggJh_d7Erw8vjv_IiARbS5-zgMDoiG50';
 
-const MyordersScreen = props => {
+const MyordersScreen = async props => {
   const [masterdata, setmasterdata] = useState([]);
-  let token = useSelector(state => state.cart.token);
+  const token = await AsyncStorage.getItem('token');
+  console.log('token from storage ', token);
+  // let token = useSelector(state => state.cart.token);
   useEffect(() => {
     fetchProducts();
     return () => {};
@@ -129,6 +131,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 15,
     borderRadius: 20,
+    shadowColor: Colors.pink,
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 3, height: 3},
+    shadowRadius: 8,
+    elevation: 8,
     //flexDirection: 'column',
   },
   wine_image: {width: 80, height: 100, borderRadius: 20},

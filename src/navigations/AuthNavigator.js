@@ -33,8 +33,8 @@ const AuthNavigator = () => {
 
       <AuthStack.Screen
         name="DrawerNavigationRoutes"
-        component={BottomtabNavigator}
         options={{headerShown: false}}
+        component={BottomtabNavigator}
       />
       {/* <AuthStack.Screen
         name={PRODUCTS_LIST}
