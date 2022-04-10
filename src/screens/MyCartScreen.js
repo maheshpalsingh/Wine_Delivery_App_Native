@@ -11,30 +11,41 @@ import {
   ActivityIndicator,
   SafeAreaView,
   Alert,
+  Dimensions,
+  Modal,
+  TouchableOpacity,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
 import CartItem from '../components/shop/CartItem';
 import Card from '../components/UI/Card';
 import * as cartActions from '../store/actions/cart';
+import Icon from 'react-native-vector-icons/Ionicons';
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = 150;
+
 const MycartScreen = props => {
   let cartisemp = false;
   return <View>{cartisemp ? <CartisEmpty {...props} /> : <CartItems />}</View>;
 };
 
-const CartItems = async (props, {navigation}) => {
+const CartItems = (props, {navigation}) => {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
+  const [isModalVisible, setisModalVisible] = useState(false);
+
   const cartItems = useSelector(state => state.cart.availableOrders);
 
-  const token = await AsyncStorage.getItem('token');
-  console.log('token from storage ', token);
   //console.log('cartItems', cartItems);
-  // let token = useSelector(state => state.cart.token);
+  let token = useSelector(state => state.cart.token);
   //console.log('2', token);
 
   //let token
   //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRhZDYxMzliNTJjN2I1ODFhMTAwZTYiLCJpYXQiOjE2NDkxMzcyMTZ9.JVOd924o4KL6cfrCWtUvTbNmYCEtPxXUhd4-oGx56GQ';
+
+  const changeModalVisible = bool => {
+    setisModalVisible(bool);
+  };
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -43,7 +54,7 @@ const CartItems = async (props, {navigation}) => {
     };
     loadProducts();
   }, [dispatch, cartItems]);
-
+  // console.log(cartItems);
   const cartTotalAmount = useSelector(state => state.cart.totalAmount);
 
   // const cartItems = useSelector(state => {
@@ -84,17 +95,25 @@ const CartItems = async (props, {navigation}) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const placeorder = () => {
+  const placeorder = props => {
     fetch(`${url}/placeorder/my`, config)
       // .then(() => {
       //   setTimeout(() => {
       //     alert('Success', 'Thank you.');
       //   }, 500);
       // })
+      .then(
+        changeModalVisible(true),
+        setTimeout(() => {
+          changeModalVisible(false);
+        }, 1000),
+      )
+      // .then(() => {
+      //   navigation.goBack();
+      // })
       .then(response => {
         console.log('Successfully order');
-        //navigation.goBack({});
-        //Alert.alert('Success','Added to Order');
+        //navigation.goBack();
       })
       .catch(function (error) {
         alert(error);
@@ -102,6 +121,27 @@ const CartItems = async (props, {navigation}) => {
   };
   return (
     <ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          setisModalVisible(!isModalVisible);
+        }}>
+        <TouchableOpacity disabled={true} style={styles.container}>
+          <View style={styles.modal}>
+            <Icon
+              name="checkmark-circle-outline"
+              size={90}
+              color={Colors.white}
+            />
+
+            <View style={styles.modaltext}>
+              <Text style={{fontSize: 26}}>Checkout Successfully</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
       <View style={styles.screen}>
         <ActivityIndicator
           animating={visible}
@@ -134,7 +174,7 @@ const CartItems = async (props, {navigation}) => {
 
         <FlatList
           data={cartItems}
-          keyExtractor={item => item.productId}
+          keyExtractor={item => item._id}
           {...props}
           renderItem={itemData => (
             <CartItem
@@ -236,6 +276,26 @@ const styles = StyleSheet.create({
   ordertext: {
     fontSize: 15,
     alignSelf: 'center',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal: {
+    height: 200,
+    width: WIDTH - 60,
+    paddingTop: 10,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.thistle,
+  },
+
+  modaltext: {
+    flex: 1,
+    fontSize: '30',
   },
 });
 

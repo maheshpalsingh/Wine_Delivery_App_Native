@@ -13,10 +13,12 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import wineReducers from './src/store/reducers/products';
 import cartReducers from './src/store/reducers/cart';
+import userReducers from './src/store/reducers/user';
 import thunk from 'redux-thunk';
 const rootReducer = combineReducers({
   wines: wineReducers,
   cart: cartReducers,
+  user: userReducers,
 });
 import SplashScreen from 'react-native-splash-screen';
 const Store = createStore(rootReducer, applyMiddleware(thunk));

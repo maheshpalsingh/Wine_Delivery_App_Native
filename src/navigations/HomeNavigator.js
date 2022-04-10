@@ -12,8 +12,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {
   ACCOUNT,
+  ADD_ADDRESS,
   CATEGORIES,
   LOGIN,
+  MY_ADDRESS,
   MY_CART,
   MY_DETAILS,
   MY_ORDERS,
@@ -34,6 +36,8 @@ import AccountsTab from '../screens/AccountsTab';
 import MyDetailsScreen from '../screens/MyDetailsScreen';
 import SettingsScreen from '../screens/Settings';
 import AuthNavigator from './AuthNavigator';
+import Addaddress from '../screens/ADDRESS/AddAddress';
+import ViewAddress from '../screens/ADDRESS/ViewAddress';
 
 // const screenOptions = ({navigation, route}) => ({
 const screenOptions = ({navigation}) => ({
@@ -143,6 +147,9 @@ export const CategoryStackScreen = ({navigation}) => {
       <CategoryStack.Screen
         name={CATEGORIES}
         component={Categories}></CategoryStack.Screen>
+      <CategoryStack.Screen
+        name={PRODUCTS_LIST}
+        component={ProductsScreen}></CategoryStack.Screen>
     </CategoryStack.Navigator>
   );
 };
@@ -196,10 +203,14 @@ export const AccountStackScreen = ({navigation}) => {
       <AccountStack.Screen
         name={MY_ORDERS}
         component={MyordersScreen}></AccountStack.Screen>
+
       <AccountStack.Screen
-        name="AuthNavigatorroute"
-        component={AuthNavigator}
-        options={{headerShown: false}}></AccountStack.Screen>
+        name={MY_ADDRESS}
+        component={ViewAddress}></AccountStack.Screen>
+
+      <AccountStack.Screen
+        name={ADD_ADDRESS}
+        component={Addaddress}></AccountStack.Screen>
     </AccountStack.Navigator>
   );
 };

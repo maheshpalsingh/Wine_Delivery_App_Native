@@ -28,8 +28,10 @@ import {LOGIN} from '../constants/routeName';
 import {HomeStackScreen} from '../navigations/HomeNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Commanbutton from './shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
+
 const Signup = () => {
   const {navigate} = useNavigation();
   const [userName, setUserName] = useState('');
@@ -110,15 +112,16 @@ const Signup = () => {
   };
   return (
     <View style={styles.screen}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          setisModalVisible(!isModalVisible);
-        }}>
-        <TouchableOpacity disabled={true} style={styles.container}>
-          {/* <Icon
+      <ScrollView>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isModalVisible}
+          onRequestClose={() => {
+            setisModalVisible(!isModalVisible);
+          }}>
+          <TouchableOpacity disabled={true} style={styles.container}>
+            {/* <Icon
             name="close"
             onPress={() => {
               changeModalVisible(false);
@@ -131,30 +134,31 @@ const Signup = () => {
               backgroundColor: 'white',
             }}
           /> */}
-          <View style={styles.modal}>
-            <Icon
-              name="checkmark-circle-outline"
-              size={90}
-              color={Colors.white}
-            />
+            <View style={styles.modal}>
+              <Icon
+                name="checkmark-circle-outline"
+                size={90}
+                color={Colors.white}
+              />
 
-            <View style={styles.modaltext}>
-              <Text style={{fontSize: 26}}>Registration Success</Text>
+              <View style={styles.modaltext}>
+                <Text style={{fontSize: 26}}>Registration Success</Text>
+              </View>
             </View>
-          </View>
-        </TouchableOpacity>
-      </Modal>
-      <Image
-        style={styles.logo}
-        source={require('../assets/my-app/download.jpg')}
-      />
-      <View>
-        {/* <Text style={styles.title}>Welcome to Wine Delivery App</Text>
-        <Text style={styles.subtitle}>Create a free Account🎁</Text> */}
-        <ScrollView>
-          <KeyboardAvoidingView enabled>
+          </TouchableOpacity>
+        </Modal>
+        <Image
+          style={styles.logo}
+          source={require('../assets/my-app/download.jpg')}
+        />
+        <View>
+          <Text style={styles.title}>Welcome to Wine Delivery App</Text>
+          <Text style={styles.subtitle}>Create a free Account 🎁</Text>
+
+          <KeyboardAvoidingView enabled="true">
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserName => setUserName(UserName)}
                 underlineColorAndroid="#f000"
@@ -170,6 +174,7 @@ const Signup = () => {
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserEmail => setUserEmail(UserEmail)}
                 underlineColorAndroid="#f000"
@@ -186,6 +191,7 @@ const Signup = () => {
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserPassword => setUserPassword(UserPassword)}
                 underlineColorAndroid="#f000"
@@ -202,6 +208,7 @@ const Signup = () => {
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserAge => setUserAge(UserAge)}
                 underlineColorAndroid="#f000"
@@ -218,6 +225,7 @@ const Signup = () => {
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserContact => setUserContact(UserContact)}
                 underlineColorAndroid="#f000"
@@ -229,52 +237,60 @@ const Signup = () => {
                 blurOnSubmit={false}
               />
             </View>
-            <View style={styles.buttonview}>
+            <View>
               {errortext != '' ? (
                 <Text style={styles.errorTextStyle}>{errortext}</Text>
               ) : null}
-              <TouchableOpacity
+              <Commanbutton
+                title="REGISTER"
+                style={styles.cb}
+                onPress={handleSubmitButton}
+              />
+              {/* <TouchableOpacity
                 style={styles.buttonStyle}
                 activeOpacity={0.5}
                 onPress={handleSubmitButton}>
                 <Text style={styles.buttonTextStyle}>REGISTER</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </KeyboardAvoidingView>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  cb: {
+    height: 48,
+    width: 350,
+  },
   SectionStyle: {
     flexDirection: 'row',
-    height: 40,
-    marginTop: 20,
-    marginLeft: 35,
-    marginRight: 35,
-    margin: 10,
+    justifyContent: 'center',
+    height: 55,
+    marginTop: 10,
+    marginBottom: 10,
   },
   screen: {
     flex: 1,
     backgroundColor: Colors.thistle,
   },
   logo: {
-    width: 170,
-    height: 100,
+    width: 350,
+    height: 150,
     alignSelf: 'center',
-    marginTop: 50,
-    marginBottom: 10,
+    marginTop: 28,
+    marginBottom: 15,
+    borderRadius: 15,
   },
   title: {
-    fontSize: 24,
-    paddingTop: 10,
+    fontSize: 22,
     fontWeight: '500',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 17,
+    fontSize: 16,
     paddingVertical: 10,
     fontWeight: '500',
     textAlign: 'center',
@@ -283,36 +299,15 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     // fontSize: 20,
   },
-  button: {
-    borderRadius: 10,
-  },
-  buttonview: {
-    paddingTop: 10,
-    paddingLeft: 90,
-    paddingRight: 50,
-    tintColor: 'white',
-    fontSize: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  lastSection: {
-    flexDirection: 'row',
-  },
-  link: {
-    paddingTop: 10,
-    paddingLeft: 25,
-    color: Colors.primary,
-    fontSize: 18,
-  },
-  infoText: {
-    paddingTop: 10,
-    fontSize: 18,
-  },
+
   inputStyle: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'baseline',
-    padding: 5,
+    borderRadius: 15,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    width: 350,
+    height: 50,
   },
   buttonStyle: {
     fontSize: 22,
@@ -321,8 +316,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 120,
     height: 40,
-
-    borderRadius: 18,
+    borderRadius: 15,
   },
   buttonTextStyle: {
     justifyContent: 'center',

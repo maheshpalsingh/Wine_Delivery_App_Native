@@ -12,3 +12,5 @@ export const SEARCH = 'Search';
 export const ACCOUNT = 'Account';
 export const MY_DETAILS = 'My Details';
 export const RESET_PASSWORD = 'RESET PASSWORD';
+export const MY_ADDRESS = 'MY ADDRESSES';
+export const ADD_ADDRESS = 'ADD ADDRESSES';

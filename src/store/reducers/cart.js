@@ -1,4 +1,9 @@
-import {ADD_TO_CART, GET_ORDERS, SET_TOKEN} from '../actions/cart';
+import {
+  ADD_TO_CART,
+  GET_ORDERS,
+  REMOVE_TOKEN,
+  SET_TOKEN,
+} from '../actions/cart';
 import CartItem from '../../modals/cart';
 const initialState = {
   //items: {},
@@ -21,6 +26,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         token: action.payload,
+      };
+    }
+    case REMOVE_TOKEN: {
+      return {
+        ...state,
+        token: null,
       };
     }
   }

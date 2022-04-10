@@ -4,33 +4,41 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  Button,
-  TouchableHighlightBase,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setToken} from '../store/actions/cart';
-import {useDispatch, useSelector} from 'react-redux';
-import Colors from '../assets/theme/Colors';
-import {LOGIN, MY_DETAILS, MY_ORDERS} from '../constants/routeName';
 const axios = require('axios');
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {removeToken, setToken} from '../store/actions/cart';
+import {useDispatch, useSelector} from 'react-redux';
+import Colors from '../assets/theme/Colors';
+import {LOGIN, MY_ADDRESS, MY_DETAILS, MY_ORDERS} from '../constants/routeName';
+import * as userActions from '../store/actions/user';
 import Icons from 'react-native-vector-icons/Ionicons';
-import {ScrollView} from 'react-native-gesture-handler';
+
 const AccountsTab = ({navigation}) => {
   const dispatch = useDispatch();
   const [data, setdata] = useState('');
-  //const token = await AsyncStorage.getItem('token');
-  //console.log('token from screen ', token);
+  const mydetails = useSelector(state => state.user.mydetails);
   let token = useSelector(state => state.cart.token);
-  //let token =
-  // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDg5NjQxNTZ9.MjqLpNq5rA1f3IbrtY-8mrOmTUjQ0Fy_JZcxL336HHA';
+  //console.log('My Account', token);
+
   useEffect(() => {
-    fetchMyProfile();
-    return () => {};
-  }, [data]);
+    const loadMe = async () => {
+      await dispatch(userActions.GetUsersAction());
+    };
+    loadMe();
+  }, [dispatch, mydetails]);
+
+  // console.log(mydetails);
+  // useEffect(() => {
+  //   fetchMyProfile();
+  //   return () => {};
+  // }, []);
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +67,8 @@ const AccountsTab = ({navigation}) => {
     fetch(`${url}/users/logout`, config1)
       .then(async response => {
         console.log('logging out');
-        navigation.navigate('AuthNavigatorroute');
+
+        dispatch(removeToken());
         await AsyncStorage.removeItem('token');
       })
       .catch(function (error) {
@@ -71,7 +80,8 @@ const AccountsTab = ({navigation}) => {
     fetch(`${url}/users/logoutAll`, config1)
       .then(async response => {
         console.log('logging out');
-        navigation.navigate('AuthNavigatorroute');
+
+        dispatch(removeToken());
         await AsyncStorage.removeItem('token');
       })
       .catch(function (error) {
@@ -93,11 +103,11 @@ const AccountsTab = ({navigation}) => {
           </View>
 
           <View style={styles.screen}>
-            <Text style={styles.text1}>{data.name}</Text>
+            <Text style={styles.text1}>{mydetails.name}</Text>
           </View>
           <View>
-            <Text style={styles.text2}>+91 - {data.contactno}</Text>
-            <Text style={styles.text2}>{data.email}</Text>
+            <Text style={styles.text2}>+91 - {mydetails.contactno}</Text>
+            <Text style={styles.text2}>{mydetails.email}</Text>
           </View>
           <Icons
             name="create"
@@ -131,7 +141,7 @@ const AccountsTab = ({navigation}) => {
               style={styles.buttonStyle}
               activeOpacity={0.5}
               onPress={() => {
-                navigation.navigate(MY_ORDERS);
+                navigation.navigate(MY_ADDRESS);
               }}>
               <Text style={styles.buttonTextStyle}>VIEW ALL ADDRESSES</Text>
             </TouchableOpacity>

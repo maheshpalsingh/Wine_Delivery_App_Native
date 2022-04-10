@@ -1,40 +1,9 @@
 import axios from 'axios';
-// import React from 'react';
-// import {View, Text, StyleSheet, SafeAreaView, TextInput} from 'react-native';
 import {useSelector} from 'react-redux';
-
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
-// //const token =
-// //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDg5NjQzOTR9.FKplrSHkuV_6AWSoTM3vvtizgsffcdK1ylBQe0aPkbY';
 
-// const MyDetailsScreen = async () => {
-//   // const config = {
-//   //   headers: {
-//   //     'Content-Type': 'application/json',
-//   //     Authorization: `Bearer ${token}`,
-//   //   },
-//   // };
-//   // await axios
-//   //   .get(`${url}/orders/my`, config)
-//   //   .then(response => {
-//   //     console.log(response.data);
-//   //   })
-//   //   .catch(function (error) {
-//   //     alert(error);
-//   //   });
-//   return (
-//     <SafeAreaView>
-//       <Text style={{fontSize: 20}}>My Details...</Text>
-//     </SafeAreaView>
-//   );
-// };
-
-// const styles = StyleSheet.create({});
-
-// export default MyDetailsScreen;
-
-import React, {createRef, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -42,29 +11,29 @@ import {
   SafeAreaView,
   TextInput,
   Button,
-  KeyboardAvoidingView,
   Modal,
   TouchableOpacity,
-  Pressable,
   Dimensions,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
 import {SimpleModal} from '../components/simpleModal';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Commanbutton from '../components/shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
-const MyDetailsScreen = async ({navigation}) => {
+
+const MyDetailsScreen = ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [userAge, setUserAge] = useState('');
-  const [userAddress, setUserAddress] = useState('');
+
   const [userContact, setUserContact] = useState('');
-  const [userPassword, setUserPassword] = useState('');
   const [isModalVisible, setisModalVisible] = useState(false);
+  const [isModalVisible1, setisModalVisible1] = useState(false);
+  const [isModalVisible2, setisModalVisible2] = useState(false);
   const [data, setdata] = useState('');
-  const token = await AsyncStorage.getItem('token');
-  console.log('token from storage ', token);
-  // let token = useSelector(state => state.cart.token);
+  // const token = AsyncStorage.getItem('token');
+  // console.log('token from storage ', token);
+  let token = useSelector(state => state.cart.token);
   //let token =
   //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRhZDYxMzliNTJjN2I1ODFhMTAwZTYiLCJpYXQiOjE2NDkwNzMyMDl9.XQm8m53DrJ5v6S8EBlGLhJTEvq94Eo63f1FGyIA2U7k';
 
@@ -78,7 +47,7 @@ const MyDetailsScreen = async ({navigation}) => {
     fetchMyProfile();
 
     return () => {};
-  }, []);
+  }, [data]);
   const fetchMyProfile = () => {
     axios
       .get(`${url}/users/get/me`, config)
@@ -89,29 +58,26 @@ const MyDetailsScreen = async ({navigation}) => {
         alert(error);
       });
   };
-  const handleSubmitButton = () => {
-    setLoading(true);
+  const changeModalVisible = bool => {
+    setisModalVisible(bool);
+  };
+  const changeModalVisible1 = bool => {
+    setisModalVisible1(bool);
+  };
+  const changeModalVisible2 = bool => {
+    setisModalVisible2(bool);
+  };
+  const updateEmail = () => {
+    console.log(userEmail);
     var dataToSend = {
-      name: userName,
       email: userEmail,
-      age: userAge,
-      password: userPassword,
-      contactno: userContact,
     };
     console.log(dataToSend);
-
-    // const config = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // };
-
     axios
       .patch(`${url}/users/update/me`, dataToSend, config)
       .then(() => console.log('Successfully Updates'))
       .then(() => {
-        navigation.goBack();
+        changeModalVisible1(false);
       })
       .catch(error => {
         //Hide Loader
@@ -119,29 +85,162 @@ const MyDetailsScreen = async ({navigation}) => {
         console.error(error);
       });
   };
-
-  const changeModalVisible = bool => {
-    setisModalVisible(bool);
+  const updateContact = () => {
+    console.log(userEmail);
+    var dataToSend = {
+      contactno: userContact,
+    };
+    console.log(dataToSend);
+    axios
+      .patch(`${url}/users/update/me`, dataToSend, config)
+      .then(() => console.log('Successfully Updates'))
+      .then(() => {
+        changeModalVisible2(false);
+      })
+      .catch(error => {
+        //Hide Loader
+        setLoading(false);
+        console.error(error);
+      });
   };
-
+  const updateName = () => {
+    console.log(userName);
+    var dataToSend = {
+      name: userName,
+    };
+    console.log(dataToSend);
+    axios
+      .patch(`${url}/users/update/me`, dataToSend, config)
+      .then(() => console.log('Successfully Updates'))
+      .then(() => {
+        changeModalVisible(false);
+      })
+      .catch(error => {
+        //Hide Loader
+        setLoading(false);
+        console.error(error);
+      });
+  };
   return (
     <SafeAreaView style={styles.screen}>
-      <Text style={styles.heading}>Update Details</Text>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          setisModalVisible(!isModalVisible);
+        }}>
+        <TouchableOpacity disabled={true} style={styles.container}>
+          <View style={styles.modal}>
+            <Icon
+              name="close"
+              onPress={() => {
+                changeModalVisible(false);
+              }}
+              size={15}
+              style={{alignSelf: 'flex-end'}}
+            />
+            <Text style={styles.updatetext}>Update Name</Text>
+            <TextInput
+              defaultValue={data.name}
+              style={styles.modalinput}
+              onChangeText={UserEmail => setUserName(UserEmail)}
+            />
+            <View style={styles.modalbutton}>
+              <Button
+                color={Colors.purple}
+                title="Update "
+                onPress={() => {
+                  updateName();
+                }}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible1}
+        onRequestClose={() => {
+          setisModalVisible1(!isModalVisible1);
+        }}>
+        <TouchableOpacity disabled={true} style={styles.container}>
+          <View style={styles.modal}>
+            <Icon
+              name="close"
+              onPress={() => {
+                changeModalVisible1(false);
+              }}
+              size={15}
+              style={{alignSelf: 'flex-end'}}
+            />
+            <Text style={styles.updatetext}>Update Email</Text>
+            <TextInput
+              defaultValue={data.email}
+              style={styles.modalinput}
+              //value={data.email}
+              onChangeText={UserEmail => setUserEmail(UserEmail)}
+            />
+            {/* <View>
+              <Commanbutton title="update" style={styles.cb} />
+            </View> */}
 
+            <View style={styles.modalbutton}>
+              <Button
+                color={Colors.purple}
+                title="Update"
+                onPress={() => {
+                  updateEmail();
+                }}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible2}
+        onRequestClose={() => {
+          setisModalVisible2(!isModalVisible2);
+        }}>
+        <TouchableOpacity disabled={true} style={styles.container}>
+          <View style={styles.modal}>
+            <Icon
+              name="close"
+              onPress={() => {
+                changeModalVisible2(false);
+              }}
+              size={15}
+              style={{alignSelf: 'flex-end'}}
+            />
+            <Text style={styles.updatetext}>Update Contact No.</Text>
+            <TextInput
+              defaultValue={data.contactno}
+              style={styles.modalinput}
+              onChangeText={UserEmail => setUserContact(UserEmail)}
+            />
+            <View style={styles.modalbutton}>
+              <Button
+                color={Colors.purple}
+                title="Update "
+                onPress={() => {
+                  updateContact();
+                }}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      <Text style={styles.heading}>Update Details</Text>
       <View style={styles.text1}>
         <Text style={styles.heading}>Name</Text>
         <View style={{flexDirection: 'row'}}>
           <View style={styles.data}>
             <Text style={styles.text2}>{data.name}</Text>
           </View>
-          {/* 
-          <TouchableOpacity
-            style={styles.touchableOpacity}
-            onPress={() => {
-              changeModalVisible(true);
-            }}>
-            <Text style={styles.text}> EDit</Text>
-          </TouchableOpacity> */}
           <View style={{width: 80, alignSelf: 'flex-end', padding: 10}}>
             <Button
               onPress={() => {
@@ -151,31 +250,6 @@ const MyDetailsScreen = async ({navigation}) => {
               color={Colors.purple}
             />
           </View>
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={isModalVisible}
-            onRequestClose={() => {
-              setisModalVisible(!isModalVisible);
-            }}>
-            <TouchableOpacity disabled={true} style={styles.container}>
-              <View style={styles.modal}>
-                <Icon
-                  name="close"
-                  onPress={() => {
-                    changeModalVisible(false);
-                  }}
-                  size={15}
-                  style={{alignSelf: 'flex-end'}}
-                />
-                <Text style={styles.updatetext}>Update</Text>
-                <TextInput defaultValue={data.name} style={styles.modalinput} />
-                <View style={styles.modalbutton}>
-                  <Button title="Update" />
-                </View>
-              </View>
-            </TouchableOpacity>
-          </Modal>
         </View>
 
         <Text style={styles.heading}>Email</Text>
@@ -187,7 +261,7 @@ const MyDetailsScreen = async ({navigation}) => {
           <View style={{width: 80, alignSelf: 'flex-end', padding: 10}}>
             <Button
               onPress={() => {
-                changeModalVisible(true);
+                changeModalVisible1(true);
               }}
               title="Edit"
               color={Colors.purple}
@@ -195,22 +269,6 @@ const MyDetailsScreen = async ({navigation}) => {
           </View>
         </View>
 
-        <Text style={styles.heading}>Age</Text>
-        <View style={{flexDirection: 'row'}}>
-          <View style={styles.data}>
-            <Text style={styles.text2}>{data.age}</Text>
-          </View>
-
-          <View style={{width: 80, alignSelf: 'flex-end', padding: 10}}>
-            <Button
-              onPress={() => {
-                changeModalVisible(true);
-              }}
-              title="Edit"
-              color={Colors.purple}
-            />
-          </View>
-        </View>
         <Text style={styles.heading}>Contactno</Text>
         <View style={{flexDirection: 'row'}}>
           <View style={styles.data}>
@@ -220,33 +278,27 @@ const MyDetailsScreen = async ({navigation}) => {
           <View style={{width: 80, alignSelf: 'flex-end', padding: 10}}>
             <Button
               onPress={() => {
-                changeModalVisible(true);
+                changeModalVisible2(true);
               }}
               title="Edit"
               color={Colors.purple}
             />
           </View>
         </View>
-        {/* {errortext != '' ? (
-            <Text style={styles.errorTextStyle}>{errortext}</Text>
-          ) : null} */}
-        {/* <View style={styles.save}>
-          <Button
-            title="Save"
-            onPress={() => {
-              handleSubmitButton();
-            }}
-          />
-        </View> */}
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  cb: {
+    height: 48,
+    width: 350,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     alignItems: 'center',
   },
   modal: {
@@ -289,25 +341,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // alignSelf: 'center',
   },
-  input: {
-    borderWidth: 1.5,
-    borderRadius: 10,
-  },
-  save: {
-    left: 15,
-    margin: 10,
-    width: 70,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-  },
-  touchableOpacity: {
-    backgroundColor: 'orange',
-    paddingHorizontal: 50,
-  },
-  text: {
-    fontSize: 16,
-    marginVertical: 15,
-  },
+
   updatetext: {
     fontStyle: 'normal',
     fontSize: 20,
@@ -315,9 +349,9 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   modalbutton: {
-    width: WIDTH / 3,
+    color: Colors.purple,
+    width: WIDTH / 2,
     padding: 15,
-
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
@@ -329,108 +363,3 @@ const styles = StyleSheet.create({
 });
 
 export default MyDetailsScreen;
-
-{
-  /* <KeyboardAvoidingView enabled>
-        <View style={styles.text1}>
-          <Text style={styles.heading}>Name</Text>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{flex: 1}}>
-              <TextInput
-                value={data.name}
-                placeholder={data.name}
-                style={styles.input}
-                onChangeText={UserName => setUserName(UserName)}
-                underlineColorAndroid="#f000"
-                placeholder="Enter Name"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  emailInputRef.current && emailInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </View>
-
-            <View style={{width: 80, alignSelf: 'flex-end', padding: 10}}>
-              <Button title="Edit" color={Colors.purple} />
-            </View>
-          </View>
-
-          <Text style={styles.heading}>Email</Text>
-          <TextInput
-            value={data.email}
-            style={styles.input}
-            onChangeText={UserEmail => setUserEmail(UserEmail)}
-            underlineColorAndroid="#f000"
-            placeholder="Enter Email"
-            placeholderTextColor="#8b9cb5"
-            keyboardType="email-address"
-            ref={emailInputRef}
-            returnKeyType="next"
-            onSubmitEditing={() =>
-              passwordInputRef.current && passwordInputRef.current.focus()
-            }
-            blurOnSubmit={false}
-          />
-          <Text style={styles.heading}>Password</Text>
-          <TextInput
-            //value={data.password}
-            style={styles.input}
-            onChangeText={UserPassword => setUserPassword(UserPassword)}
-            underlineColorAndroid="#f000"
-            placeholder="Enter Password"
-            placeholderTextColor="#8b9cb5"
-            ref={passwordInputRef}
-            returnKeyType="next"
-            secureTextEntry={true}
-            onSubmitEditing={() =>
-              ageInputRef.current && ageInputRef.current.focus()
-            }
-            blurOnSubmit={false}
-          />
-          <Text style={styles.heading}>Age</Text>
-          <TextInput
-            value={data.age}
-            style={styles.input}
-            onChangeText={UserAge => setUserAge(UserAge)}
-            underlineColorAndroid="#f000"
-            placeholder="Enter Age"
-            placeholderTextColor="#8b9cb5"
-            keyboardType="numeric"
-            ref={ageInputRef}
-            returnKeyType="next"
-            onSubmitEditing={() =>
-              contactInputRef.current && contactInputRef.current.focus()
-            }
-            blurOnSubmit={false}
-          />
-          <Text style={styles.heading}>Contactno</Text>
-          <TextInput
-            value={data.contactno}
-            style={styles.input}
-            onChangeText={UserAge => setUserContact(UserAge)}
-            underlineColorAndroid="#f000"
-            placeholder="Enter Contact Number"
-            placeholderTextColor="#8b9cb5"
-            keyboardType="numeric"
-            ref={contactInputRef}
-            returnKeyType="next"
-            blurOnSubmit={false}
-          />
-          {/* {errortext != '' ? (
-            <Text style={styles.errorTextStyle}>{errortext}</Text>
-          ) : null} */
-}
-
-{
-  /* <View style={styles.save}>
-        <Button
-          title="Save"
-          onPress={() => {
-            handleSubmitButton();
-          }}
-        />
-      </View> */
-}

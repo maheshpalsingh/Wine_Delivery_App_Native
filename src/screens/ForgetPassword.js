@@ -7,6 +7,9 @@ import {
   Dimensions,
   Modal,
   TouchableOpacity,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {LOGIN} from '../constants/routeName';
 import Colors from '../assets/theme/Colors';
@@ -14,6 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
+import Commanbutton from '../components/shop/CommanButton';
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
@@ -104,83 +108,102 @@ const Forgetpassword = ({navigation}) => {
           </View>
         </TouchableOpacity>
       </Modal>
-      <View style={styles.form}>
-        <Text style={styles.heading}>Setup New Password</Text>
-        <TextInput
-          placeholder="Enter email"
-          style={styles.input}
-          onChangeText={UserName => setUserEmail(UserName)}
-          underlineColorAndroid="#f000"
-          placeholderTextColor="#8b9cb5"
-          autoCapitalize="sentences"
-          returnKeyType="next"
-          onSubmitEditing={() =>
-            passwordInputRef.current && passwordInputRef.current.focus()
-          }
-          blurOnSubmit={false}
-        />
+      <ScrollView>
+        <KeyboardAvoidingView enabled="true">
+          <View style={styles.form}>
+            <Image
+              style={styles.image}
+              source={require('../assets/my-app/download.jpg')}
+            />
 
-        <TextInput
-          placeholder="New Password"
-          style={styles.input}
-          onChangeText={UserPassword => setPassword(UserPassword)}
-          underlineColorAndroid="#f000"
-          placeholderTextColor="#8b9cb5"
-          ref={passwordInputRef}
-          returnKeyType="next"
-          secureTextEntry={true}
-          onSubmitEditing={() =>
-            confirmpasswordInputRef.current &&
-            confirmpasswordInputRef.current.focus()
-          }
-          blurOnSubmit={false}
-        />
+            <Text style={styles.heading}>Setup New Password</Text>
+            <TextInput
+              theme={{colors: {primary: 'purple'}}}
+              placeholder="Enter email"
+              style={styles.input}
+              onChangeText={UserName => setUserEmail(UserName)}
+              underlineColorAndroid="#f000"
+              placeholderTextColor="#8b9cb5"
+              autoCapitalize="sentences"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
 
-        <TextInput
-          placeholder="Confirm New Password"
-          style={styles.input}
-          onChangeText={UserPassword => setconfirmPassword(UserPassword)}
-          underlineColorAndroid="#f000"
-          placeholderTextColor="#8b9cb5"
-          ref={confirmpasswordInputRef}
-          returnKeyType="next"
-          secureTextEntry={true}
-          blurOnSubmit={false}
-        />
-      </View>
-      <View style={styles.button}>
-        <Button
-          title={'Update Password'}
-          color={Colors.primary}
+            <TextInput
+              theme={{colors: {primary: 'purple'}}}
+              placeholder="New Password"
+              style={styles.input}
+              onChangeText={UserPassword => setPassword(UserPassword)}
+              underlineColorAndroid="#f000"
+              placeholderTextColor="#8b9cb5"
+              ref={passwordInputRef}
+              returnKeyType="next"
+              secureTextEntry={true}
+              onSubmitEditing={() =>
+                confirmpasswordInputRef.current &&
+                confirmpasswordInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+
+            <TextInput
+              theme={{colors: {primary: 'purple'}}}
+              placeholder="Confirm New Password"
+              style={styles.input}
+              onChangeText={UserPassword => setconfirmPassword(UserPassword)}
+              underlineColorAndroid="#f000"
+              placeholderTextColor="#8b9cb5"
+              ref={confirmpasswordInputRef}
+              returnKeyType="next"
+              secureTextEntry={true}
+              blurOnSubmit={false}
+            />
+          </View>
+        </KeyboardAvoidingView>
+
+        <Commanbutton
+          title="UPDATE PASSWORD"
+          style={styles.cb}
           onPress={handleSubmitButton}
         />
-      </View>
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  cb: {
+    flex: 1,
+    height: 48,
+  },
   screen: {
     flex: 1,
     backgroundColor: Colors.thistle,
   },
   form: {
-    paddingTop: 40,
-    marginTop: 50,
+    margin: 21,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
   },
   input: {
-    borderTopRightRadius: 20,
-    margin: 10,
-    padding: 10,
-    width: 300,
-    height: 40,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 15,
+    padding: 5,
+    width: 350,
+    height: 45,
+    borderRadius: 15,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
   },
   heading: {
-    fontSize: 25,
-    paddingBottom: 10,
+    fontSize: 20,
+    //paddingBottom: 10,
+    color: '#7F7D9C',
   },
   button: {
     borderRadius: 15,
@@ -209,6 +232,12 @@ const styles = StyleSheet.create({
   modaltext: {
     flex: 1,
     fontSize: '30',
+  },
+  image: {
+    marginBottom: 10,
+
+    width: 350,
+    borderRadius: 15,
   },
 });
 

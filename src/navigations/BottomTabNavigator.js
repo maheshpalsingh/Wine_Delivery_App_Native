@@ -48,7 +48,7 @@ const BottomtabNavigator = ({navigation}) => {
       />
       <Tab.Screen
         name="Categories"
-        component={Categories}
+        component={CategoryStackScreen}
         headerTitle="Cat"
         options={{
           title: 'Categories',

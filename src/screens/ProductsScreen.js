@@ -22,28 +22,36 @@ import {Text} from 'react-native-paper';
 const axios = require('axios');
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
+
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
+
 const ProductsScreen = props => {
   const [masterdata, setmasterdata] = useState([]);
   const [filtereddata, setfilterdata] = useState([]);
   const [searchdata, setsearchdata] = useState('');
   const [isModalVisible, setisModalVisible] = useState(false);
-  const changeModalVisible = bool => {
-    setisModalVisible(bool);
-  };
-  // let text = await AsyncStorage.getItem('token');
-  //let token = JSON.parse(text);
-  //console.log('token from screen1 ', token);
+  // const [token, settoken] = useState('');
+
+  // const get_data = async () => {
+  //   const gettoken = await AsyncStorage.getItem('token');
+  //   let token1 = gettoken ? await JSON.parse(gettoken) : {};
+  //   settoken(token1);
+  // };
+  // get_data();
   let token = useSelector(state => state.cart.token);
   console.log('main token', token);
   //let token =
   //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDkwNjMxMDh9.YjatjbKxIhBggJh_d7Erw8vjv_IiARbS5-zgMDoiG50';
   useEffect(() => {
     fetchProducts();
+
     return () => {};
   }, []);
 
+  const changeModalVisible = bool => {
+    setisModalVisible(bool);
+  };
   const fetchProducts = () => {
     axios
       .get(`${url}/products/all`)
@@ -129,7 +137,6 @@ const ProductsScreen = props => {
                     headers: {
                       'Content-Type': 'application/json',
                       Authorization: `Bearer ${token}`,
-                      // Authorization: `Bearer ${token2}`,
                     },
                   };
                   fetch(`${url}/cart/${addProduct}`, config)

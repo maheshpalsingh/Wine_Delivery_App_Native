@@ -9,6 +9,8 @@ import {
   Button,
   TouchableOpacity,
   Dimensions,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
 import {REGISTER, RESET_PASSWORD} from '../constants/routeName';
@@ -19,6 +21,7 @@ import {setToken} from '../store/actions/cart';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Commanbutton from './shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
 const url =
@@ -62,24 +65,23 @@ const Login = props => {
       .post(`${url}/users/login`, dataToSend, config)
       .then(async response => {
         const {token} = response.data;
-        //console.log(response.data);
+        console.log('while login..', token);
         // Using Redux Store
         dispatch(setToken(token));
         //Using AsyncStorage
-        // try {
-        //   await AsyncStorage.setItem('token', token);
-        // } catch (e) {
-        //   console.log('Error while saving token in Async', e);
-        // }
+        try {
+          await AsyncStorage.setItem('token', JSON.stringify({token}));
+        } catch (e) {
+          console.log('Error while saving token in Async', e);
+        }
       })
-      .then(
-        changeModalVisible(true),
-        setTimeout(() => {
-          changeModalVisible(false);
-        }, 3000),
-      )
+
       .then(() => {
-        navigate('DrawerNavigationRoutes');
+        changeModalVisible(true),
+          setTimeout(() => {
+            changeModalVisible(false);
+            navigate('DrawerNavigationRoutes');
+          }, 3000);
       })
       .catch(function (error) {
         alert('Invalid Credentials');
@@ -91,108 +93,94 @@ const Login = props => {
   const {navigate} = useNavigation();
   return (
     <View style={styles.screen}>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          setisModalVisible(!isModalVisible);
-        }}>
-        <TouchableOpacity disabled={true} style={styles.container}>
-          {/* <Icon
-            name="close"
-            onPress={() => {
-              changeModalVisible(false);
-            }}
-            size={15}
-            style={{
-              alignSelf: 'flex-end',
-              marginRight: 30,
-              marginBottom: 10,
-              backgroundColor: 'white',
-            }}
-          /> */}
-          <View style={styles.modal}>
-            <Icon
-              name="checkmark-circle-outline"
-              size={90}
-              color={Colors.white}
-            />
-
-            <View style={styles.modaltext}>
-              <Text style={{fontSize: 26}}>Login Success</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </Modal>
-      <View style={{paddingBottom: 10}}>
-        <Image
-          style={styles.image}
-          source={require('../assets/my-app/download.jpg')}
-        />
-      </View>
-
-      <View
-        style={{
-          paddingBottom: 10,
-          paddingTop: 10,
-        }}>
-        <TextInput
-          style={styles.input}
-          value={userEmail}
-          onChangeText={UserEmail => setUserEmail(UserEmail)}
-          placeholder="Enter Email"
-        />
-      </View>
-      <View style={{paddingBottom: 10}}>
-        <TextInput
-          style={styles.input}
-          value={userPassword}
-          onChangeText={UserPassword => setUserPassword(UserPassword)}
-          placeholder="Enter Password" //12345
-          keyboardType="default"
-          secureTextEntry={true}
-        />
-      </View>
-      {errortext != '' ? (
-        <Text style={styles.errorTextStyle}>{errortext}</Text>
-      ) : null}
-      <View style={styles.buttonView}>
-        <Button
-          style={styles.button}
-          title="Sign in"
-          color={Colors.purple}
-          onPress={
-            handleSubmitPress
-            // console.log(username);
-          }
-          // onPress={props.signIn}
-        />
-      </View>
-      <View>
-        <View style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-          <TouchableOpacity
-            onPress={() => {
-              navigate(RESET_PASSWORD);
+      <ScrollView>
+        <KeyboardAvoidingView enabled>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={isModalVisible}
+            onRequestClose={() => {
+              setisModalVisible(!isModalVisible);
             }}>
-            <Text
-              style={{
-                padding: 10,
-                paddingLeft: 20,
-                fontSize: 16,
+            <TouchableOpacity disabled={true} style={styles.container}>
+              <View style={styles.modal}>
+                <Icon
+                  name="checkmark-circle-outline"
+                  size={90}
+                  color={Colors.white}
+                />
+
+                <View style={styles.modaltext}>
+                  <Text style={{fontSize: 26}}>Login Success</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </Modal>
+
+          <View style={{paddingBottom: 10}}>
+            <Image
+              style={styles.image}
+              source={require('../assets/my-app/download.jpg')}
+            />
+          </View>
+
+          <View
+            style={{
+              paddingBottom: 15,
+              paddingTop: 10,
+            }}>
+            <TextInput
+              theme={{colors: {primary: 'purple'}}}
+              style={styles.input}
+              value={userEmail}
+              onChangeText={UserEmail => setUserEmail(UserEmail)}
+              placeholder="Enter Email"
+            />
+          </View>
+          <View style={{paddingBottom: 10}}>
+            <TextInput
+              theme={{colors: {primary: 'purple'}}}
+              style={styles.input}
+              value={userPassword}
+              onChangeText={UserPassword => setUserPassword(UserPassword)}
+              placeholder="Enter Password" //12345
+              keyboardType="default"
+              secureTextEntry={true}
+            />
+          </View>
+          <View style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigate(RESET_PASSWORD);
               }}>
-              Forget Password
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.info}>Dont't have an Account</Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigate(REGISTER);
-          }}>
-          <Text style={styles.link}>Register</Text>
-        </TouchableOpacity>
-      </View>
+              <Text
+                style={{
+                  paddingRight: 20,
+                  fontSize: 14,
+                  color: '#7F7D9C',
+                }}>
+                Forget Password
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {errortext != '' ? (
+            <Text style={styles.errorTextStyle}>{errortext}</Text>
+          ) : null}
+          <View style={styles.buttonView}>
+            <Commanbutton title="SIGN IN" onPress={handleSubmitPress} />
+          </View>
+
+          <View style={styles.info}>
+            <Text style={styles.text1}>Dont't have an Account ?</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigate(REGISTER);
+              }}>
+              <Text style={styles.link}>Register</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </View>
   );
 };
@@ -204,8 +192,10 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 30,
-    marginLeft: 70,
-    borderRadius: 25,
+    marginLeft: 30,
+    marginBottom: 5,
+    width: '85%',
+    borderRadius: 15,
   },
   welcome: {
     padding: 10,
@@ -218,26 +208,26 @@ const styles = StyleSheet.create({
   input: {
     marginLeft: 30,
     marginRight: 30,
-    borderTopRightRadius: 12,
-    borderTopLeftRadius: 12,
+    borderRadius: 15,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
   },
-  button: {
-    borderRadius: 10,
-  },
-  buttonView: {
-    paddingTop: 15,
-    paddingLeft: 50,
-    paddingRight: 80,
-    fontSize: 22,
-  },
+
   info: {
-    fontSize: 18,
-    padding: 15,
     flexDirection: 'row',
+    padding: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text1: {
+    fontSize: 18,
+    color: '#7F7F9C',
   },
   link: {
-    paddingLeft: 25,
-    color: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 5,
+    color: Colors.purple,
     fontSize: 18,
   },
   container: {
