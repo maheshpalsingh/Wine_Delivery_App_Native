@@ -1,15 +1,45 @@
 export const GET_PRODUCTS = 'GET_PRODUCTS';
+//export const GET_CATEGORIES = 'GET_CATEGORIES';
+
 // export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 // export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 // export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 import axios from 'axios';
 export const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
+
+// export const GetProductsCategory = () => {
+//   return async (dispatch, getState) => {
+//     let token = getState().cart.token;
+//     try {
+//       const config = {
+//         headers: {
+//           'Content-Type': 'application/json',
+//           Authorization: `Bearer ${token}`,
+//         },
+//       };
+//       await axios
+//         .get(`${url}/products/all`, config)
+//         .then(response => {
+//           dispatch({
+//             type: GET_CATEGORIES,
+//             payload: response.data,
+//           });
+//           // console.log(response.data);
+//         })
+//         .catch(function (error) {
+//           alert(error);
+//         });
+//     } catch (e) {
+//       console.log('Error while fetching products', e);
+//     }
+//   };
+// };
+
 export const GetProductsAction = () => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    let token = getState().cart.token;
     try {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MDUxNzNhMTNjMzIzOTQzMmM5NzciLCJpYXQiOjE2NDg2MzkxOTJ9.EgLhqXu-A2f66Y3XWbWMi11H79awGLbyjCWvQjUaGdU';
       const config = {
         headers: {
           'Content-Type': 'application/json',

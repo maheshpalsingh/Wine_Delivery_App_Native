@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
+  Image,
   Text,
   StyleSheet,
   SafeAreaView,
@@ -21,10 +22,8 @@ import Icons from 'react-native-vector-icons/Ionicons';
 
 const AccountsTab = ({navigation}) => {
   const dispatch = useDispatch();
-  const [data, setdata] = useState('');
   const mydetails = useSelector(state => state.user.mydetails);
   let token = useSelector(state => state.cart.token);
-  //console.log('My Account', token);
 
   useEffect(() => {
     const loadMe = async () => {
@@ -33,41 +32,16 @@ const AccountsTab = ({navigation}) => {
     loadMe();
   }, [dispatch, mydetails]);
 
-  // console.log(mydetails);
-  // useEffect(() => {
-  //   fetchMyProfile();
-  //   return () => {};
-  // }, []);
-
   const config = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
   };
-  const config1 = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const fetchMyProfile = () => {
-    axios
-      .get(`${url}/users/get/me`, config)
-      .then(response => {
-        setdata(response.data ?? []);
-      })
-      .catch(function (error) {
-        alert(error);
-      });
-  };
 
   const logout = () => {
-    fetch(`${url}/users/logout`, config1)
+    fetch(`${url}/users/logout`, config)
       .then(async response => {
-        console.log('logging out');
-
         dispatch(removeToken());
         await AsyncStorage.removeItem('token');
       })
@@ -77,10 +51,8 @@ const AccountsTab = ({navigation}) => {
   };
 
   const logoutall = () => {
-    fetch(`${url}/users/logoutAll`, config1)
+    fetch(`${url}/users/logoutAll`, config)
       .then(async response => {
-        console.log('logging out');
-
         dispatch(removeToken());
         await AsyncStorage.removeItem('token');
       })
@@ -96,10 +68,14 @@ const AccountsTab = ({navigation}) => {
             style={{
               borderWidth: 2,
               borderColor: 'white',
-              borderRadius: 50,
               backgroundColor: '#C5C6D0',
             }}>
-            <Icons name="person" size={50} color={Colors.white} />
+            <Image
+              style={styles.tinyLogo}
+              source={{
+                uri: 'https://st3.depositphotos.com/1007566/13129/v/950/depositphotos_131295836-stock-illustration-businessman-character-avatar-icon.jpg',
+              }}
+            />
           </View>
 
           <View style={styles.screen}>
@@ -122,6 +98,13 @@ const AccountsTab = ({navigation}) => {
         <View style={styles.container2}>
           <View style={styles.myorders}>
             <View style={styles.top}>
+              <Icons
+                color={Colors.purple}
+                name="folder"
+                size={24}
+                style={{paddingLeft: 10, paddingRight: 10}}
+              />
+
               <Text style={styles.heading}>My Orders </Text>
             </View>
             <TouchableOpacity
@@ -135,6 +118,12 @@ const AccountsTab = ({navigation}) => {
           </View>
           <View style={styles.myorders}>
             <View style={styles.top}>
+              <Icons
+                name="navigate"
+                size={24}
+                color={Colors.purple}
+                style={{paddingLeft: 10, paddingRight: 10}}
+              />
               <Text style={styles.heading}>My Addresses </Text>
             </View>
             <TouchableOpacity
@@ -148,21 +137,33 @@ const AccountsTab = ({navigation}) => {
           </View>
           <View style={styles.myorders}>
             <TouchableOpacity
-              style={styles.buttonStyle}
+              style={styles.buttonStyle1}
               activeOpacity={0.5}
               onPress={() => {
                 logout();
               }}>
+              <Icons
+                color={Colors.purple}
+                name="log-out"
+                size={24}
+                style={{paddingLeft: 10, paddingRight: 10}}
+              />
               <Text style={styles.buttonTextStyle}>Sign Out</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.myorders}>
             <TouchableOpacity
-              style={styles.buttonStyle}
+              style={styles.buttonStyle1}
               activeOpacity={0.5}
               onPress={() => {
                 logoutall();
               }}>
+              <Icons
+                color={Colors.purple}
+                name="log-out"
+                size={24}
+                style={{paddingLeft: 10, paddingRight: 10}}
+              />
               <Text style={styles.buttonTextStyle}>Sign Out All </Text>
             </TouchableOpacity>
           </View>
@@ -179,12 +180,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.purple,
     justifyContent: 'center',
     alignItems: 'center',
-    // borderRadius: 10,
-    // shadowColor: Colors.pink,
-    // shadowOpacity: 0.5,
-    // shadowOffset: {width: 0, height: 3},
-    // shadowRadius: 8,
-    // elevation: 8,
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
   },
   container2: {
     backgroundColor: Colors.thistle,
@@ -198,12 +197,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   text1: {
-    //fontStyle: 'bold',
     color: 'white',
     alignSelf: 'center',
     fontWeight: '700',
     fontSize: 20,
-    //tintColor: 'black',
   },
   text2: {
     color: 'white',
@@ -211,13 +208,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   myorders: {
-    //tintColor: Colors.thistle,
     textAlign: 'right',
     borderWidth: 1,
     backgroundColor: 'white',
     borderColor: 'white',
     marginBottom: 10,
-    //borderRadius: 10,
     shadowColor: Colors.pink,
     shadowOpacity: 0.5,
     shadowOffset: {width: 0, height: 3},
@@ -227,12 +222,17 @@ const styles = StyleSheet.create({
   buttonStyle: {
     margin: 10,
   },
+  buttonStyle1: {
+    margin: 10,
+    flexDirection: 'row',
+  },
   buttonTextStyle: {
     color: Colors.purple,
     fontSize: 18,
     alignSelf: 'flex-end',
   },
   top: {
+    flexDirection: 'row',
     margin: 10,
     paddingBottom: 15,
     borderBottomWidth: 1,

@@ -32,14 +32,11 @@ const Tab = createMaterialBottomTabNavigator();
 const BottomtabNavigator = ({navigation}) => {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="Categories"
       activeColor={Colors.white}
       barStyle={{backgroundColor: Colors.purple}}>
       <Tab.Screen
         name="Feed"
-        // component={() =>
-        //   navigation.navigate(HomeStackScreen, {screen: 'Categories'})
-        // }
         component={HomeStackScreen}
         options={{
           tabBarLabel: 'PRODUCTS',
@@ -56,7 +53,7 @@ const BottomtabNavigator = ({navigation}) => {
           tabBarIcon: ({color}) => <Icon name="list" color={color} size={26} />,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Search"
         component={SearchStackScreen}
         options={{
@@ -65,7 +62,7 @@ const BottomtabNavigator = ({navigation}) => {
             <Icon name="search" color={color} size={26} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name={ACCOUNT}
         //component={(MY_ORDERS, {screen: MyordersScreen})}

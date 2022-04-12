@@ -19,6 +19,7 @@ import {
   MY_CART,
   MY_DETAILS,
   MY_ORDERS,
+  PRODUCTSBYCATEGORY,
   PRODUCTS_LIST,
   PRODUCTS_OVERVIEW,
   SEARCH,
@@ -38,6 +39,7 @@ import SettingsScreen from '../screens/Settings';
 import AuthNavigator from './AuthNavigator';
 import Addaddress from '../screens/ADDRESS/AddAddress';
 import ViewAddress from '../screens/ADDRESS/ViewAddress';
+import Productsbycategory from '../screens/ProductsByCategory';
 
 // const screenOptions = ({navigation, route}) => ({
 const screenOptions = ({navigation}) => ({
@@ -148,8 +150,8 @@ export const CategoryStackScreen = ({navigation}) => {
         name={CATEGORIES}
         component={Categories}></CategoryStack.Screen>
       <CategoryStack.Screen
-        name={PRODUCTS_LIST}
-        component={ProductsScreen}></CategoryStack.Screen>
+        name={PRODUCTSBYCATEGORY}
+        component={Productsbycategory}></CategoryStack.Screen>
     </CategoryStack.Navigator>
   );
 };

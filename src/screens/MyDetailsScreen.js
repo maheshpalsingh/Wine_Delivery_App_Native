@@ -31,11 +31,8 @@ const MyDetailsScreen = ({navigation}) => {
   const [isModalVisible1, setisModalVisible1] = useState(false);
   const [isModalVisible2, setisModalVisible2] = useState(false);
   const [data, setdata] = useState('');
-  // const token = AsyncStorage.getItem('token');
-  // console.log('token from storage ', token);
+
   let token = useSelector(state => state.cart.token);
-  //let token =
-  //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRhZDYxMzliNTJjN2I1ODFhMTAwZTYiLCJpYXQiOjE2NDkwNzMyMDl9.XQm8m53DrJ5v6S8EBlGLhJTEvq94Eo63f1FGyIA2U7k';
 
   const config = {
     headers: {

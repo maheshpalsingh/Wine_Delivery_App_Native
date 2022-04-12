@@ -12,14 +12,12 @@ import {
   KeyboardAvoidingView,
   Modal,
   Dimensions,
+  Alert,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
-// Platform.OS === 'android'
-//   ? 'http://103.238.108.223:3001'
-//   : 'http://127.0.0.1:3000';
 
 import Colors from '../assets/theme/Colors';
 
@@ -46,7 +44,6 @@ const Signup = () => {
   const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   const emailInputRef = createRef();
   const ageInputRef = createRef();
-  const addressInputRef = createRef();
   const passwordInputRef = createRef();
   const cnoInputRef = createRef();
 
@@ -57,23 +54,24 @@ const Signup = () => {
   const handleSubmitButton = () => {
     setErrortext('');
     if (!userName) {
-      alert('Please fill Name');
+      Alert.alert('Warning', 'Please enter Name', [{text: 'OK'}]);
+
       return;
     }
     if (!userEmail) {
-      alert('Please fill Email');
+      Alert.alert('Warning', 'Please enter Email', [{text: 'OK'}]);
       return;
     }
     if (!userAge) {
-      alert('Please fill Age');
+      Alert.alert('Warning', 'Please enter Age', [{text: 'OK'}]);
       return;
     }
     if (!userContact) {
-      alert('Please fill Age');
+      Alert.alert('Warning', 'Please enter Contact No.', [{text: 'OK'}]);
       return;
     }
     if (!userPassword) {
-      alert('Please fill Password');
+      Alert.alert('Warning', 'Please enter Password', [{text: 'OK'}]);
       return;
     }
     //Show Loader
@@ -106,6 +104,7 @@ const Signup = () => {
       })
       .catch(error => {
         //Hide Loader
+        Alert.alert('Warning', 'Email Already Exists', [{text: 'OK'}]);
         setLoading(false);
         console.error(error);
       });
@@ -246,12 +245,6 @@ const Signup = () => {
                 style={styles.cb}
                 onPress={handleSubmitButton}
               />
-              {/* <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={handleSubmitButton}>
-                <Text style={styles.buttonTextStyle}>REGISTER</Text>
-              </TouchableOpacity> */}
             </View>
           </KeyboardAvoidingView>
         </View>

@@ -56,9 +56,9 @@ const CartItem = props => {
           style={styles.pic}
         />
       </View>
-      <View style={{padding: 10}}>
+      <View style={{alignSelf: 'flex-start'}}>
         <Text style={styles.txt_name}>{props.name}</Text>
-        <Text style={styles.txt_name}>₹{props.price}</Text>
+        <Text style={styles.txt_name}>$ {props.price}</Text>
         <Text style={styles.txt_name}>Qty:{props.qty}</Text>
         <Text style={styles.txt_name}>Total:{props.totalQty}</Text>
       </View>
@@ -68,7 +68,7 @@ const CartItem = props => {
         <Icons
           name="trash"
           size={24}
-          color={Colors.thistle}
+          color={Colors.purple}
           onPress={props.onRemove}
         />
       </View>
@@ -85,17 +85,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 20,
-    shadowColor: 'red',
-    shadowOpacity: 0.26,
-    shadowOffset: {width: 0, height: 2},
+    shadowColor: Colors.pink,
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 3},
     shadowRadius: 8,
-    // elevation: 5,
+    elevation: 8,
     borderRadius: 10,
     //paddingBottom: 10,
   },
   pic: {
     width: 100,
     height: 100,
+    transform: [{rotate: '45deg'}],
   },
   itemData: {
     flexDirection: 'row',
@@ -116,8 +117,9 @@ const styles = StyleSheet.create({
   },
   txt_name: {
     fontSize: 15,
-    fontFamily: 'bold',
+
     margin: 4,
+    fontFamily: 'sans-serif-medium',
   },
 });
 

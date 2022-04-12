@@ -27,7 +27,8 @@ export const GetCartsAction = () => {
   //console.log('view cart1');
   return async (dispatch, getState) => {
     let token = getState().cart.token;
-
+    // const token =
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRlZTNkZjdhNGUwOTI2NTM2OGEyZWMiLCJpYXQiOjE2NDk2NjExMjV9.Qsuh8KkokzrXOcEGB1Jeb3EAoAxiaVyV60asJuCQTPo';
     try {
       const config = {
         headers: {

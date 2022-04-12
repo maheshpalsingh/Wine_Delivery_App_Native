@@ -11,6 +11,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
 import {REGISTER, RESET_PASSWORD} from '../constants/routeName';
@@ -41,11 +42,12 @@ const Login = props => {
   const handleSubmitPress = () => {
     setErrortext('');
     if (!userEmail) {
-      alert('Please fill Email');
+      Alert.alert('Warning', 'Please enter your Email', [{text: 'OK'}]);
       return;
     }
     if (!userPassword) {
-      alert('Please fill Password');
+      Alert.alert('Warning', 'Please enter your Password', [{text: 'OK'}]);
+
       return;
     }
 
@@ -75,7 +77,6 @@ const Login = props => {
           console.log('Error while saving token in Async', e);
         }
       })
-
       .then(() => {
         changeModalVisible(true),
           setTimeout(() => {
@@ -84,10 +85,9 @@ const Login = props => {
           }, 3000);
       })
       .catch(function (error) {
-        alert('Invalid Credentials');
-        // setvalid(false);
-        // setvalid(true);
-        console.log(error);
+        Alert.alert('Invalid Credentials', 'Wrong Username or Password', [
+          {text: 'OK'},
+        ]);
       });
   };
   const {navigate} = useNavigation();

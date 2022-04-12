@@ -10,6 +10,7 @@ import {
   Image,
   ScrollView,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import {LOGIN} from '../constants/routeName';
 import Colors from '../assets/theme/Colors';
@@ -20,9 +21,9 @@ import {useNavigation} from '@react-navigation/native';
 import Commanbutton from '../components/shop/CommanButton';
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
-
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
+
 const Forgetpassword = ({navigation}) => {
   const {navigate} = useNavigation();
   const [userEmail, setUserEmail] = useState('');
@@ -38,20 +39,24 @@ const Forgetpassword = ({navigation}) => {
   const handleSubmitButton = () => {
     setErrortext('');
     if (userPassword !== userconfirmPassword) {
-      alert('Password and Confirm Password should same');
+      Alert.alert('Warning', 'Password and Confirm Password should same', [
+        {text: 'OK'},
+      ]);
       return;
     }
     if (!userEmail) {
-      alert('Please fill Email');
+      Alert.alert('Warning', 'Please enter Email', [{text: 'OK'}]);
       return;
     }
 
     if (!userPassword) {
-      alert('Please fill Password');
+      Alert.alert('Warning', 'Please enter Password', [{text: 'OK'}]);
+
       return;
     }
     if (!userconfirmPassword) {
-      alert('Please fill Password');
+      Alert.alert('Warning', 'Please enter Confirm Password', [{text: 'OK'}]);
+
       return;
     }
     //Show Loader
@@ -75,13 +80,11 @@ const Forgetpassword = ({navigation}) => {
         changeModalVisible(true),
         setTimeout(() => {
           changeModalVisible(false);
+          navigate(LOGIN);
         }, 2000),
       )
-      .then(() => {
-        navigation.navigate.goBack();
-      })
       .catch(error => {
-        //Hide Loader
+        Alert.alert('Warning', 'Invalid Credentials', [{text: 'OK'}]);
         console.error(error);
       });
   };
