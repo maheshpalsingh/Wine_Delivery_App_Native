@@ -1,15 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Platform,
-  TextInput,
-  Button,
-  FlatList,
-  SectionList,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, Platform, FlatList} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
@@ -85,17 +75,23 @@ const Card = props => (
           <Image source={{uri: props.image[i]}} style={styles.image} />
           <View
             style={{
-              flex: 1,
-
-              alignSelf: 'center',
+              alignSelf: 'flex-start',
               justifyContent: 'flex-start',
               alignItems: 'flex-start',
             }}>
-            {/* <Text style={styles.item}>{i + 1}.</Text> */}
             <Text style={styles.txt_name}>{name.toUpperCase()}</Text>
-
             <Text style={styles.txt_name}>Qty:{props.wineqty[i]}</Text>
-            <Text style={styles.txt_name}>Price:{props.wineprice[i]}</Text>
+          </View>
+          <View
+            style={{
+              margin: 5,
+              alignSelf: 'flex-start',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+            }}>
+            <Text style={{fontSize: 18, paddingRight: 5, fontWeight: 'bold'}}>
+              ${props.wineprice[i]}/-
+            </Text>
           </View>
         </View>
       );
@@ -106,17 +102,12 @@ const styles = StyleSheet.create({
   screen: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#d39bcb',
-    //backgroundColor: 'white',
+    backgroundColor: '#F2C1D1' + 88,
     borderRadius: 10,
     marginLeft: 15,
     marginRight: 15,
     marginBottom: 15,
-    shadowColor: Colors.purple,
-    shadowOpacity: 0.5,
-    shadowOffset: {width: 0, height: 2},
-    shadowRadius: 3,
-    elevation: 3,
+    padding: 10,
   },
   item: {
     fontSize: 15,
@@ -139,10 +130,10 @@ const styles = StyleSheet.create({
   txt_name: {
     fontFamily: 'sans-serif-medium',
     flex: 1,
-    fontSize: 15,
+    fontSize: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     margin: 5,
   },
 
@@ -157,8 +148,6 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 20,
     marginLeft: 10,
-
-    //transform: [{rotate: '50deg'}],
   },
 });
 

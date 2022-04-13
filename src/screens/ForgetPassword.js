@@ -3,7 +3,6 @@ import {Text, TextInput} from 'react-native-paper';
 import {
   View,
   StyleSheet,
-  Button,
   Dimensions,
   Modal,
   TouchableOpacity,
@@ -15,14 +14,12 @@ import {
 import {LOGIN} from '../constants/routeName';
 import Colors from '../assets/theme/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import Commanbutton from '../components/shop/CommanButton';
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = 150;
 
 const Forgetpassword = ({navigation}) => {
   const {navigate} = useNavigation();
@@ -59,15 +56,12 @@ const Forgetpassword = ({navigation}) => {
 
       return;
     }
-    //Show Loader
 
     var dataToSend = {
       email: userEmail,
       password: userPassword,
       confirmpassword: userconfirmPassword,
     };
-
-    console.log(dataToSend);
 
     const config = {
       headers: {
@@ -119,10 +113,10 @@ const Forgetpassword = ({navigation}) => {
               source={require('../assets/my-app/download.jpg')}
             />
 
-            <Text style={styles.heading}>Setup New Password</Text>
             <TextInput
               theme={{colors: {primary: 'purple'}}}
-              placeholder="Enter email"
+              label="Enter email"
+              mode="flat"
               style={styles.input}
               onChangeText={UserName => setUserEmail(UserName)}
               underlineColorAndroid="#f000"
@@ -137,7 +131,8 @@ const Forgetpassword = ({navigation}) => {
 
             <TextInput
               theme={{colors: {primary: 'purple'}}}
-              placeholder="New Password"
+              label="New Password"
+              mode="flat"
               style={styles.input}
               onChangeText={UserPassword => setPassword(UserPassword)}
               underlineColorAndroid="#f000"
@@ -154,7 +149,8 @@ const Forgetpassword = ({navigation}) => {
 
             <TextInput
               theme={{colors: {primary: 'purple'}}}
-              placeholder="Confirm New Password"
+              label="Confirm New Password"
+              mode="flat"
               style={styles.input}
               onChangeText={UserPassword => setconfirmPassword(UserPassword)}
               underlineColorAndroid="#f000"
@@ -193,19 +189,14 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input: {
-    marginLeft: 10,
-    marginRight: 10,
+    marginHorizontal: 10,
     marginTop: 15,
-    padding: 5,
+    padding: 10,
     width: 350,
     height: 45,
-    borderRadius: 15,
-    borderTopRightRadius: 15,
-    borderTopLeftRadius: 15,
   },
   heading: {
     fontSize: 20,
-    //paddingBottom: 10,
     color: '#7F7D9C',
   },
   button: {

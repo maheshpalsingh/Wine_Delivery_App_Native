@@ -1,9 +1,8 @@
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
-
-import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -16,16 +15,12 @@ import {
   Dimensions,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
-import {SimpleModal} from '../components/simpleModal';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Commanbutton from '../components/shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = 150;
 
 const MyDetailsScreen = ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
-
   const [userContact, setUserContact] = useState('');
   const [isModalVisible, setisModalVisible] = useState(false);
   const [isModalVisible1, setisModalVisible1] = useState(false);
@@ -40,11 +35,12 @@ const MyDetailsScreen = ({navigation}) => {
       Authorization: `Bearer ${token}`,
     },
   };
+
   useEffect(() => {
     fetchMyProfile();
-
     return () => {};
   }, [data]);
+
   const fetchMyProfile = () => {
     axios
       .get(`${url}/users/get/me`, config)

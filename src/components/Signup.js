@@ -161,8 +161,8 @@ const Signup = () => {
                 style={styles.inputStyle}
                 onChangeText={UserName => setUserName(UserName)}
                 underlineColorAndroid="#f000"
-                placeholder="Enter Name"
-                placeholderTextColor="#8b9cb5"
+                label="Enter Name"
+                mode="flat"
                 autoCapitalize="sentences"
                 returnKeyType="next"
                 onSubmitEditing={() =>
@@ -176,9 +176,8 @@ const Signup = () => {
                 theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserEmail => setUserEmail(UserEmail)}
-                underlineColorAndroid="#f000"
-                placeholder="Enter Email"
-                placeholderTextColor="#8b9cb5"
+                mode="flat"
+                label="Enter Email"
                 keyboardType="email-address"
                 ref={emailInputRef}
                 returnKeyType="next"
@@ -194,8 +193,8 @@ const Signup = () => {
                 style={styles.inputStyle}
                 onChangeText={UserPassword => setUserPassword(UserPassword)}
                 underlineColorAndroid="#f000"
-                placeholder="Enter Password"
-                placeholderTextColor="#8b9cb5"
+                mode="flat"
+                label="Enter Password"
                 ref={passwordInputRef}
                 returnKeyType="next"
                 secureTextEntry={true}
@@ -211,8 +210,8 @@ const Signup = () => {
                 style={styles.inputStyle}
                 onChangeText={UserAge => setUserAge(UserAge)}
                 underlineColorAndroid="#f000"
-                placeholder="Enter Age"
-                placeholderTextColor="#8b9cb5"
+                mode="flat"
+                label="Enter Age"
                 keyboardType="numeric"
                 ref={ageInputRef}
                 returnKeyType="next"
@@ -228,8 +227,8 @@ const Signup = () => {
                 style={styles.inputStyle}
                 onChangeText={UserContact => setUserContact(UserContact)}
                 underlineColorAndroid="#f000"
-                placeholder="Enter Contact No."
-                placeholderTextColor="#8b9cb5"
+                mode="flat"
+                label="Enter Contact No."
                 keyboardType="numeric"
                 ref={cnoInputRef}
                 returnKeyType="next"
@@ -294,11 +293,6 @@ const styles = StyleSheet.create({
   },
 
   inputStyle: {
-    justifyContent: 'center',
-    alignItems: 'baseline',
-    borderRadius: 15,
-    borderTopRightRadius: 15,
-    borderTopLeftRadius: 15,
     width: 350,
     height: 50,
   },

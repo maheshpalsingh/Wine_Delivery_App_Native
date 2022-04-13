@@ -1,20 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import 'react-native-gesture-handler';
 import ProductsScreen from '../screens/ProductsScreen';
 import ProductoverviewScreen from '../screens/ProductOverviewScreen';
 import MycartScreen from '../screens/MyCartScreen';
 import MyordersScreen from '../screens/MyOrdersScreen';
-import Settings from '../screens/Settings';
-import LoginScreen from '../screens/LoginScreen';
-
-import {createStackNavigator} from '@react-navigation/stack';
-
 import {
   ACCOUNT,
   ADD_ADDRESS,
   CATEGORIES,
-  LOGIN,
   MY_ADDRESS,
   MY_CART,
   MY_DETAILS,
@@ -23,39 +15,32 @@ import {
   PRODUCTS_LIST,
   PRODUCTS_OVERVIEW,
   SEARCH,
-  SETTINGS,
 } from '../constants/routeName';
-
+import {createStackNavigator} from '@react-navigation/stack';
 import Icons from 'react-native-vector-icons/Ionicons';
-
-import {useNavigation} from '@react-navigation/native';
 import Colors from '../assets/theme/Colors';
 import Categories from '../screens/Categories';
-import Search from '../screens/Search';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+
 import AccountsTab from '../screens/AccountsTab';
 import MyDetailsScreen from '../screens/MyDetailsScreen';
-import SettingsScreen from '../screens/Settings';
-import AuthNavigator from './AuthNavigator';
 import Addaddress from '../screens/ADDRESS/AddAddress';
 import ViewAddress from '../screens/ADDRESS/ViewAddress';
 import Productsbycategory from '../screens/ProductsByCategory';
 
-// const screenOptions = ({navigation, route}) => ({
 const screenOptions = ({navigation}) => ({
   headerRight: () => (
     <Icons
       name="cart"
       size={32}
+      color={Colors.white}
       style={{paddingRight: 10}}
       onPress={() => {
-        // navigation.navigate('MY_CART', {screen: MycartScreen});
         navigation.navigate(MY_CART);
       }}
     />
   ),
   headerTitleAlign: 'center',
-  headerTintColor: Colors.grey,
+  headerTintColor: Colors.white,
   headerTitleStyle: {
     fontWeight: 'bold',
   },
@@ -63,19 +48,6 @@ const screenOptions = ({navigation}) => ({
     backgroundColor: Colors.purple,
   },
 });
-
-// const Menu = {
-//   headerLeft: () => (
-//     <Icons
-//       name="menu"
-//       size={32}
-//       style={{paddingLeft: 10}}
-//       onPress={() => {
-//         navigation.openDrawer();
-//       }}
-//     />
-//   ),
-// };
 
 export const HomeStackScreen = ({navigation}) => {
   const HomeStack = createStackNavigator();
@@ -96,53 +68,7 @@ export const HomeStackScreen = ({navigation}) => {
   );
 };
 
-// export const HomeStackScreen = ({navigation}) => {
-//   // const navigation = useNavigation();
-//   const HomeStack = createStackNavigator();
-//   return (
-//     <HomeStack.Navigator
-//       screenOptions={({navigation}) => ({
-//         headerRight: () => (
-//           <Icons
-//             name="cart"
-//             size={32}
-//             style={{paddingRight: 10}}
-//             onPress={() => {
-//               // navigation.navigate('MY_CART', {screen: MycartScreen});
-//               navigation.navigate('CartStackScreen');
-//             }}
-//           />
-//         ),
-//         headerTitleAlign: 'center',
-//         headerTintColor: Colors.grey,
-//         headerTitleStyle: {
-//           fontWeight: 'bold',
-//         },
-//         headerStyle: {
-//           backgroundColor: Colors.purple,
-//         },
-//       })}>
-//       <HomeStack.Screen
-//         name={PRODUCTS_LIST}
-//         component={ProductsScreen}
-//         options={{
-//           headerLeft: () => (
-//             <Icons
-//               name="menu"
-//               size={32}
-//               style={{paddingLeft: 10}}
-//               onPress={() => {
-//                 navigation.openDrawer();
-//               }}
-//             />
-//           ),
-//         }}></HomeStack.Screen>
-//     </HomeStack.Navigator>
-//   );
-// };
-
 export const CategoryStackScreen = ({navigation}) => {
-  // const navigation = useNavigation();
   const CategoryStack = createStackNavigator();
   return (
     <CategoryStack.Navigator screenOptions={screenOptions}>
@@ -152,33 +78,15 @@ export const CategoryStackScreen = ({navigation}) => {
       <CategoryStack.Screen
         name={PRODUCTSBYCATEGORY}
         component={Productsbycategory}></CategoryStack.Screen>
+      <CategoryStack.Screen
+        name={MY_CART}
+        component={MycartScreen}></CategoryStack.Screen>
+      <CategoryStack.Screen
+        name={PRODUCTS_OVERVIEW}
+        component={ProductoverviewScreen}></CategoryStack.Screen>
     </CategoryStack.Navigator>
   );
 };
-
-// export const SettingsStackScreen = ({navigation}) => {
-//   // const navigation = useNavigation();
-//   const SettingsStack = createStackNavigator();
-//   return (
-//     <SettingsStack.Navigator screenOptions={screenOptions}>
-//       <SettingsStack.Screen
-//         name={SETTINGS}
-//         component={Settings}
-//         options={{
-//           headerLeft: () => (
-//             <Icons
-//               name="menu"
-//               size={32}
-//               style={{paddingLeft: 10}}
-//               onPress={() => {
-//                 navigation.openDrawer();
-//               }}
-//             />
-//           ),
-//         }}></SettingsStack.Screen>
-//     </SettingsStack.Navigator>
-//   );
-// };
 
 export const OrdersStackScreen = ({navigation}) => {
   const OrdersStack = createStackNavigator();
@@ -217,19 +125,6 @@ export const AccountStackScreen = ({navigation}) => {
   );
 };
 
-export const SearchStackScreen = ({navigation}) => {
-  // const navigation = useNavigation();
-  const SearchStack = createStackNavigator();
-  return (
-    <SearchStack.Navigator screenOptions={screenOptions}>
-      <SearchStack.Screen name={SEARCH} component={Search}></SearchStack.Screen>
-      <SearchStack.Screen
-        name={PRODUCTS_OVERVIEW}
-        component={ProductoverviewScreen}></SearchStack.Screen>
-    </SearchStack.Navigator>
-  );
-};
-
 export const CartStackScreen = ({navigation}) => {
   // const navigation = useNavigation();
   const CartStack = createStackNavigator();
@@ -241,25 +136,3 @@ export const CartStackScreen = ({navigation}) => {
     </CartStack.Navigator>
   );
 };
-
-// export const LogoutStackScreen = ({navigation}) => {
-//   // const navigation = useNavigation();
-//   const LogoutStack = createStackNavigator();
-//   return (
-//     <LogoutStack.Navigator
-//       screenOptions={{
-//         headerTitleAlign: 'center',
-//         headerTintColor: Colors.grey,
-//         headerTitleStyle: {
-//           fontWeight: 'bold',
-//         },
-//         headerStyle: {
-//           backgroundColor: Colors.purple,
-//         },
-//       }}>
-//       <LogoutStack.Screen
-//         name={LOGIN}
-//         component={LoginScreen}></LogoutStack.Screen>
-//     </LogoutStack.Navigator>
-//   );
-// };

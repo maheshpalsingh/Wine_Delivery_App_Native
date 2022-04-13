@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {WineCard, WineImage} from '../components/WineComponent';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
@@ -21,13 +20,7 @@ import {Text} from 'react-native-paper';
 const axios = require('axios');
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
-
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = 150;
-
-// const Productsbycategory = props => {
-//   const {winecategory} = props.route.params;
-//   console.log(winecategory);
 
 const Productsbycategory = props => {
   const {winecategory} = props.route.params;
@@ -37,7 +30,7 @@ const Productsbycategory = props => {
   const [isModalVisible, setisModalVisible] = useState(false);
 
   let token = useSelector(state => state.cart.token);
-  console.log('main token', token);
+
   useEffect(() => {
     fetchProducts();
     return () => {};
@@ -88,7 +81,6 @@ const Productsbycategory = props => {
               size={90}
               color={Colors.white}
             />
-
             <View style={styles.modaltext}>
               <Text style={{fontSize: 26}}>Added to Cart Successfully</Text>
             </View>
@@ -122,10 +114,6 @@ const Productsbycategory = props => {
                 title="Add To Cart"
                 color={Colors.purple}
                 onPress={() => {
-                  // setVisible(true);
-                  // setTimeout(() => {
-                  //   setVisible(false);
-                  // }, 500);
                   const addProduct = itemData.item._id;
                   const config = {
                     method: 'POST',
@@ -199,7 +187,7 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderWidth: 1,
-    borderColor: '#009688',
+    borderColor: Colors.thistle,
     backgroundColor: 'white',
     margin: 5,
     paddingLeft: 15,
@@ -209,7 +197,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 20,
     flex: 2,
-    // justifyContent: 'center',
     width: 200,
     height: 110,
     paddingRight: 10,

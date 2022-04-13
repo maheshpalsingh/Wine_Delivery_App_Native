@@ -47,15 +47,8 @@ const Login = props => {
     }
     if (!userPassword) {
       Alert.alert('Warning', 'Please enter your Password', [{text: 'OK'}]);
-
       return;
     }
-
-    // if (valid === false) {
-    //   alert('Worng Credentials');
-    //   return;
-    // }
-
     let dataToSend = {email: userEmail, password: userPassword};
     console.log(dataToSend);
     const config = {
@@ -124,30 +117,26 @@ const Login = props => {
             />
           </View>
 
-          <View
-            style={{
-              paddingBottom: 15,
-              paddingTop: 10,
-            }}>
-            <TextInput
-              theme={{colors: {primary: 'purple'}}}
-              style={styles.input}
-              value={userEmail}
-              onChangeText={UserEmail => setUserEmail(UserEmail)}
-              placeholder="Enter Email"
-            />
-          </View>
-          <View style={{paddingBottom: 10}}>
-            <TextInput
-              theme={{colors: {primary: 'purple'}}}
-              style={styles.input}
-              value={userPassword}
-              onChangeText={UserPassword => setUserPassword(UserPassword)}
-              placeholder="Enter Password" //12345
-              keyboardType="default"
-              secureTextEntry={true}
-            />
-          </View>
+          <TextInput
+            theme={{colors: {primary: 'purple'}}}
+            style={styles.input}
+            mode="flat"
+            value={userEmail}
+            onChangeText={UserEmail => setUserEmail(UserEmail)}
+            label="Enter Email"
+          />
+
+          <TextInput
+            mode="flat"
+            theme={{colors: {primary: 'purple'}}}
+            style={styles.input}
+            value={userPassword}
+            onChangeText={UserPassword => setUserPassword(UserPassword)}
+            label="Enter Password" //12345
+            keyboardType="default"
+            secureTextEntry={true}
+          />
+
           <View style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
             <TouchableOpacity
               onPress={() => {
@@ -195,7 +184,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginBottom: 5,
     width: '85%',
-    borderRadius: 15,
+    borderRadius: 20,
   },
   welcome: {
     padding: 10,
@@ -206,11 +195,10 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   input: {
-    marginLeft: 30,
-    marginRight: 30,
-    borderRadius: 15,
-    borderTopRightRadius: 15,
-    borderTopLeftRadius: 15,
+    marginHorizontal: 30,
+    marginTop: 15,
+    marginBottom: 5,
+    // borderRadius: 10,
   },
 
   info: {

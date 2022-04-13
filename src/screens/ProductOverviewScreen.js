@@ -2,18 +2,15 @@ import React from 'react';
 import {
   View,
   Text,
-  Button,
   ScrollView,
   SafeAreaView,
   Image,
   StyleSheet,
 } from 'react-native';
 
-import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
 
 const ProductoverviewScreen = props => {
-  // console.log(props.route);
   const {
     productimage,
     productDescription,
@@ -29,7 +26,6 @@ const ProductoverviewScreen = props => {
           <Image source={{uri: productimage}} style={styles.image} />
           <Image source={{uri: productimage}} style={styles.image1} />
         </View>
-
         <View style={styles.view2}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.company}>
@@ -37,7 +33,6 @@ const ProductoverviewScreen = props => {
                 {productCompany.toUpperCase()}
               </Text>
             </View>
-
             <View style={styles.name}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.text1}>{productName.toUpperCase()}</Text>
@@ -67,11 +62,23 @@ const styles = StyleSheet.create({
   },
   view2: {
     paddingTop: 20,
-
-    marginLeft: 10,
-    marginRight: 10,
-    //backgroundColor: Colors.thistle,
+    marginHorizontal: 10,
     flex: 3,
+  },
+  company: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 8,
+    marginLeft: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.purple + 'BD',
+    alignSelf: 'flex-start',
+    borderColor: Colors.purple,
+  },
+  companytext: {
+    color: 'white',
+    fontSize: 12,
   },
   image: {
     flex: 1,
@@ -107,7 +114,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   text2: {
-    color: Colors.purple,
+    //color: '#F2C1D1',
+    //color: '#7F7D9C',
+    color: '#7C6E7F',
     fontFamily: 'sans-serif-medium',
     fontSize: 18,
   },
@@ -119,24 +128,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  company: {
-    flex: 1,
-    paddingLeft: 10,
-    borderWidth: 1,
-    borderRadius: 10,
-    height: 40,
-    width: '40%',
-    backgroundColor: Colors.purple,
-  },
-  companytext: {
-    flex: 1,
-    color: 'white',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    padding: 10,
-    marginLeft: 10,
-    width: 150,
-  },
+
   name: {
     marginBottom: 10,
     paddingBottom: 10,
@@ -155,57 +147,3 @@ const styles = StyleSheet.create({
 });
 
 export default ProductoverviewScreen;
-
-//   return (
-//     <>
-//       <View style={styles.screen}>
-//         <Image source={{uri: productimage}} style={styles.image} />
-//         <ScrollView showsVerticalScrollIndicator={false}>
-//           <View
-//             style={{
-//               flex: 1,
-//             }}>
-//             <Text style={styles.heading}>Name:</Text>
-//             <Text style={styles.text}>{productName}</Text>
-//             <Text style={styles.heading}>Company:</Text>
-//             <Text style={styles.text}>{productCompany}</Text>
-//             <Text style={styles.heading}>About me:</Text>
-//             <Text style={styles.text}>{productDescription}</Text>
-//             <Text style={styles.heading}>Quantity:</Text>
-//             <Text style={styles.text}>{productCategory}</Text>
-//             <Text style={styles.heading}>Price:</Text>
-//             <Text style={styles.text}>${productPrice}</Text>
-//           </View>
-//         </ScrollView>
-//       </View>
-//     </>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   screen: {
-//     flex: 1,
-//     flexDirection: 'row',
-//   },
-//   image: {
-//     height: '100%',
-//     width: '30%',
-//   },
-//   text: {
-//     color: Colors.purple,
-//     fontSize: 16,
-//     fontWeight: 'bold',
-//     fontFamily: 'sans-serif-condensed',
-//     textAlign: 'center',
-//     backgroundColor: Colors.thistle,
-//   },
-//   heading: {
-//     padding: 16,
-//     color: 'black',
-//     fontFamily: 'sans-serif-condensed',
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     textAlign: 'center',
-//     backgroundColor: Colors.thistle,
-//   },
-// });

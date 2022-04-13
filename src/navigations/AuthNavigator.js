@@ -1,18 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-import {
-  LOGIN,
-  PRODUCTS_LIST,
-  REGISTER,
-  RESET_PASSWORD,
-} from '../constants/routeName';
+import {LOGIN, REGISTER, RESET_PASSWORD} from '../constants/routeName';
 import Colors from '../assets/theme/Colors';
-import ProductsScreen from '../screens/ProductsScreen';
 import BottomtabNavigator from './BottomTabNavigator';
 import Forgetpassword from '../screens/ForgetPassword';
+
 const AuthNavigator = () => {
   const AuthStack = createStackNavigator();
   return (

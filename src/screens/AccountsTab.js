@@ -11,12 +11,11 @@ import {
 const axios = require('axios');
 const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {removeToken, setToken} from '../store/actions/cart';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
-import {LOGIN, MY_ADDRESS, MY_DETAILS, MY_ORDERS} from '../constants/routeName';
+import {MY_ADDRESS, MY_DETAILS, MY_ORDERS} from '../constants/routeName';
 import * as userActions from '../store/actions/user';
 import Icons from 'react-native-vector-icons/Ionicons';
 
@@ -182,7 +181,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tinyLogo: {
-    width: 50,
+    width: 60,
     height: 50,
   },
   container2: {
@@ -200,9 +199,10 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center',
     fontWeight: '700',
-    fontSize: 20,
+    fontSize: 22,
   },
   text2: {
+    fontSize: 15,
     color: 'white',
     justifyContent: 'center',
     alignItems: 'center',

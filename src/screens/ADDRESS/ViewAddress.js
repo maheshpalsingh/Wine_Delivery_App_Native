@@ -21,13 +21,12 @@ const url =
   Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
+
 const ViewAddress = ({navigation}, props) => {
   const [masterdata, setmasterdata] = useState([]);
   const [isModalVisible, setisModalVisible] = useState(false);
   let token = useSelector(state => state.cart.token);
-  console.log('main token', token);
-  //let token =
-  //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5MzIyMGUwM2UyZDcyNjY5OGIzM2IiLCJpYXQiOjE2NDkwNjMxMDh9.YjatjbKxIhBggJh_d7Erw8vjv_IiARbS5-zgMDoiG50';
+
   useEffect(() => {
     fetchAddress();
     ADD_ADDRESS;
@@ -56,16 +55,6 @@ const ViewAddress = ({navigation}, props) => {
       });
   };
 
-  //   const handleRemove = props => {
-  //     axios
-  //       .get(`${url}/user/delete/myaddress/${props.id}`, config)
-  //       .then(response => {
-  //         console.log('Deleted');
-  //       })
-  //       .catch(function (error) {
-  //         alert(error);
-  //       });
-  //   };
   return (
     <SafeAreaView>
       <Modal
@@ -89,8 +78,10 @@ const ViewAddress = ({navigation}, props) => {
           </View>
         </TouchableOpacity>
       </Modal>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Button
+          style={{paddingTop: 10}}
+          color={Colors.purple}
           onPress={() => {
             navigation.navigate(ADD_ADDRESS);
           }}>
@@ -109,7 +100,6 @@ const ViewAddress = ({navigation}, props) => {
               state={itemData.item.state}
               pincode={itemData.item.pincode}
               number={itemData.item.phoneno}
-              //onRemove={handleRemove}
               onRemove={() => {
                 axios
                   .delete(

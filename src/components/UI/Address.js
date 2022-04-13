@@ -1,10 +1,9 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text} from 'react-native-paper';
-import {SafeAreaView} from 'react-native-safe-area-context';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../assets/theme/Colors';
+
 const Address = props => {
   return (
     <View style={styles.card}>
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor: 'white',
+    backgroundColor: Colors.thistle,
     padding: 15,
     justifyContent: 'flex-start',
     alignItems: 'center',

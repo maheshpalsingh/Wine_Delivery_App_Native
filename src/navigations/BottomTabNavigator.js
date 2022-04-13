@@ -1,38 +1,21 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import DrawerNavigator from './DrawerNavigator';
 import Colors from '../assets/theme/Colors';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   AccountStackScreen,
-  CartStackScreen,
   CategoryStackScreen,
   HomeStackScreen,
-  OrdersStackScreen,
-  SearchStackScreen,
 } from './HomeNavigator';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Categories from '../screens/Categories';
-import {
-  ACCOUNT,
-  CATEGORIES,
-  MY_ORDERS,
-  PRODUCTS_LIST,
-  SEARCH,
-} from '../constants/routeName';
-import Search from '../screens/Search';
-import ProductsScreen from '../screens/ProductsScreen';
-import ProductoverviewScreen from '../screens/ProductOverviewScreen';
-import MycartScreen from '../screens/MyCartScreen';
-import MyordersScreen from '../screens/MyOrdersScreen';
-import Settings from '../screens/Settings';
+import {ACCOUNT} from '../constants/routeName';
 
 const Tab = createMaterialBottomTabNavigator();
+
 const BottomtabNavigator = ({navigation}) => {
   return (
     <Tab.Navigator
-      initialRouteName="Categories"
+      initialRouteName="Feed"
       activeColor={Colors.white}
       barStyle={{backgroundColor: Colors.purple}}>
       <Tab.Screen
@@ -40,7 +23,8 @@ const BottomtabNavigator = ({navigation}) => {
         component={HomeStackScreen}
         options={{
           tabBarLabel: 'PRODUCTS',
-          tabBarIcon: ({color}) => <Icon name="wine" size={28} />,
+          //tabBarColor: Colors.white,
+          tabBarIcon: ({color}) => <Icon name="wine" color="white" size={28} />,
         }}
       />
       <Tab.Screen
@@ -65,7 +49,6 @@ const BottomtabNavigator = ({navigation}) => {
       /> */}
       <Tab.Screen
         name={ACCOUNT}
-        //component={(MY_ORDERS, {screen: MyordersScreen})}
         component={AccountStackScreen}
         options={{
           tabBarLabel: 'My Account',

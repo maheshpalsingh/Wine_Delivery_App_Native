@@ -60,7 +60,7 @@ const WineByCategory = [
 const ByCategory = (props, {navigation}) => {
   const {navigate} = useNavigation();
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         showsVerticalScrollIndicator={false}
         {...props}
@@ -130,10 +130,14 @@ const WineImage = props => (
   </>
 );
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: Colors.thistle,
+  container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: Colors.thistle,
+    padding: 10,
+  },
+  screen: {
+    flex: 1,
+    padding: 10,
     // paddingTop: 20,
     // paddingLeft: 20,
     // paddingRight: 20,
