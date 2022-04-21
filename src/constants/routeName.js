@@ -15,3 +15,5 @@ export const RESET_PASSWORD = 'RESET PASSWORD';
 export const MY_ADDRESS = 'MY ADDRESSES';
 export const ADD_ADDRESS = 'ADD ADDRESSES';
 export const PRODUCTSBYCATEGORY = 'Products By Category';
+export const URL =
+  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';

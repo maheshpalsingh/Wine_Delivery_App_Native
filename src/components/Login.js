@@ -14,7 +14,7 @@ import {
   Alert,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
-import {REGISTER, RESET_PASSWORD} from '../constants/routeName';
+import {REGISTER, RESET_PASSWORD, URL} from '../constants/routeName';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
@@ -25,8 +25,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Commanbutton from './shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
 const Login = props => {
   const [userEmail, setUserEmail] = useState('');
@@ -57,7 +55,7 @@ const Login = props => {
       },
     };
     axios
-      .post(`${url}/users/login`, dataToSend, config)
+      .post(`${URL}/users/login`, dataToSend, config)
       .then(async response => {
         const {token} = response.data;
         console.log('while login..', token);

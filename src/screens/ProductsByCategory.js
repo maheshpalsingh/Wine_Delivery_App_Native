@@ -15,11 +15,9 @@ import {WineCard, WineImage} from '../components/WineComponent';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
-import {PRODUCTS_OVERVIEW} from '../constants/routeName';
+import {PRODUCTS_OVERVIEW, URL} from '../constants/routeName';
 import {Text} from 'react-native-paper';
 const axios = require('axios');
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 const WIDTH = Dimensions.get('window').width;
 
 const Productsbycategory = props => {
@@ -41,7 +39,7 @@ const Productsbycategory = props => {
   };
   const fetchProducts = () => {
     axios
-      .get(`${url}/products/category/${winecategory}`)
+      .get(`${URL}/products/category/${winecategory}`)
       .then(response => {
         setfilterdata(response.data ?? []);
         setmasterdata(response.data ?? []);
@@ -101,6 +99,7 @@ const Productsbycategory = props => {
 
         <WineImage />
         <FlatList
+          style={{paddingTop: 15}}
           data={filtereddata}
           keyExtractor={item => item._id}
           {...props}
@@ -122,7 +121,7 @@ const Productsbycategory = props => {
                       Authorization: `Bearer ${token}`,
                     },
                   };
-                  fetch(`${url}/cart/${addProduct}`, config)
+                  fetch(`${URL}/cart/${addProduct}`, config)
                     .then(function (response) {
                       console.log('Added Successfully');
                     })

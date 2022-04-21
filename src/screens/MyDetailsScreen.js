@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 import {
   View,
   Text,
@@ -16,6 +14,7 @@ import {
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {URL} from '../constants/routeName';
 const WIDTH = Dimensions.get('window').width;
 
 const MyDetailsScreen = ({navigation}) => {
@@ -43,7 +42,7 @@ const MyDetailsScreen = ({navigation}) => {
 
   const fetchMyProfile = () => {
     axios
-      .get(`${url}/users/get/me`, config)
+      .get(`${URL}/users/get/me`, config)
       .then(response => {
         setdata(response.data);
       })
@@ -67,7 +66,7 @@ const MyDetailsScreen = ({navigation}) => {
     };
     console.log(dataToSend);
     axios
-      .patch(`${url}/users/update/me`, dataToSend, config)
+      .patch(`${URL}/users/update/me`, dataToSend, config)
       .then(() => console.log('Successfully Updates'))
       .then(() => {
         changeModalVisible1(false);
@@ -85,7 +84,7 @@ const MyDetailsScreen = ({navigation}) => {
     };
     console.log(dataToSend);
     axios
-      .patch(`${url}/users/update/me`, dataToSend, config)
+      .patch(`${URL}/users/update/me`, dataToSend, config)
       .then(() => console.log('Successfully Updates'))
       .then(() => {
         changeModalVisible2(false);
@@ -103,7 +102,7 @@ const MyDetailsScreen = ({navigation}) => {
     };
     console.log(dataToSend);
     axios
-      .patch(`${url}/users/update/me`, dataToSend, config)
+      .patch(`${URL}/users/update/me`, dataToSend, config)
       .then(() => console.log('Successfully Updates'))
       .then(() => {
         changeModalVisible(false);

@@ -11,14 +11,12 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from 'react-native';
-import {LOGIN} from '../constants/routeName';
+import {LOGIN, URL} from '../constants/routeName';
 import Colors from '../assets/theme/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import Commanbutton from '../components/shop/CommanButton';
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 const WIDTH = Dimensions.get('window').width;
 
 const Forgetpassword = ({navigation}) => {
@@ -69,7 +67,7 @@ const Forgetpassword = ({navigation}) => {
       },
     };
     axios
-      .post(`${url}/users/reset/password`, dataToSend, config)
+      .post(`${URL}/users/reset/password`, dataToSend, config)
       .then(
         changeModalVisible(true),
         setTimeout(() => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ProductsScreen from '../screens/ProductsScreen';
 import ProductoverviewScreen from '../screens/ProductOverviewScreen';
 import MycartScreen from '../screens/MyCartScreen';
@@ -14,7 +14,6 @@ import {
   PRODUCTSBYCATEGORY,
   PRODUCTS_LIST,
   PRODUCTS_OVERVIEW,
-  SEARCH,
 } from '../constants/routeName';
 import {createStackNavigator} from '@react-navigation/stack';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -26,18 +25,34 @@ import MyDetailsScreen from '../screens/MyDetailsScreen';
 import Addaddress from '../screens/ADDRESS/AddAddress';
 import ViewAddress from '../screens/ADDRESS/ViewAddress';
 import Productsbycategory from '../screens/ProductsByCategory';
+import {useSelector} from 'react-redux';
+import {Badge} from 'react-native-paper';
 
 const screenOptions = ({navigation}) => ({
   headerRight: () => (
-    <Icons
-      name="cart"
-      size={32}
-      color={Colors.white}
-      style={{paddingRight: 10}}
-      onPress={() => {
-        navigation.navigate(MY_CART);
-      }}
-    />
+    <>
+      <Icons
+        name="cart"
+        size={32}
+        color={Colors.white}
+        style={{paddingRight: 10}}
+        onPress={() => {
+          navigation.navigate(MY_CART);
+        }}
+      />
+      <Badge
+        visible={true}
+        size={25}
+        style={{
+          backgroundColor: Colors.thistle,
+          marginTop: 2,
+          marginRight: 2,
+          top: 0,
+          position: 'absolute',
+        }}>
+        {global.cartLength}
+      </Badge>
+    </>
   ),
   headerTitleAlign: 'center',
   headerTintColor: Colors.white,
@@ -51,6 +66,8 @@ const screenOptions = ({navigation}) => ({
 
 export const HomeStackScreen = ({navigation}) => {
   const HomeStack = createStackNavigator();
+  const cartItems = useSelector(state => state.cart.availableOrders);
+  global.cartLength = cartItems.length;
   return (
     <HomeStack.Navigator
       initialRouteName={PRODUCTS_LIST}

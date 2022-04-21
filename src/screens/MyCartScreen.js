@@ -12,6 +12,7 @@ import {
   Dimensions,
   Modal,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
@@ -21,11 +22,8 @@ import CartItem from '../components/shop/CartItem';
 import Card from '../components/UI/Card';
 import * as cartActions from '../store/actions/cart';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {PRODUCTS_LIST} from '../constants/routeName';
+import {PRODUCTS_LIST, URL} from '../constants/routeName';
 const WIDTH = Dimensions.get('window').width;
-
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
 const MycartScreen = (props, {navigation}) => {
   const {navigate} = useNavigation();
@@ -33,6 +31,7 @@ const MycartScreen = (props, {navigation}) => {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
   const [isModalVisible, setisModalVisible] = useState(false);
+
   const cartItems = useSelector(state => state.cart.availableOrders);
 
   let token = useSelector(state => state.cart.token);
@@ -68,20 +67,31 @@ const MycartScreen = (props, {navigation}) => {
     },
   };
   const placeorder = props => {
-    fetch(`${url}/placeorder/my`, config)
-      .then(
-        changeModalVisible(true),
-        setTimeout(() => {
-          changeModalVisible(false);
-        }, 1000),
-      )
-      .then(response => {
-        console.log('Successfully order');
-      })
-      .catch(function (error) {
-        alert(error);
-      });
+    Alert.alert('Place Order', 'Are you sure?', [
+      {
+        text: 'Cancel',
+        style: 'destructive',
+      },
+      {
+        text: 'OK',
+        onPress: () =>
+          fetch(`${URL}/placeorder/my`, config)
+            .then(
+              changeModalVisible(true),
+              setTimeout(() => {
+                changeModalVisible(false);
+              }, 2000),
+            )
+            .then(response => {
+              console.log('Successfully order');
+            })
+            .catch(function (error) {
+              alert(error);
+            }),
+      },
+    ]);
   };
+
   if (cartItems.length === 0) {
     return (
       <View>
@@ -132,7 +142,6 @@ const MycartScreen = (props, {navigation}) => {
         <View style={styles.screen}>
           <ActivityIndicator
             animating={visible}
-            // hidesWhenStopped={false}
             color={'purple'}
             size={'large'}
           />
@@ -174,24 +183,37 @@ const MycartScreen = (props, {navigation}) => {
                   parseInt(itemData.item.productPrice)
                 }
                 onRemove={() => {
-                  setVisible(true);
-                  setTimeout(() => {
-                    setVisible(false);
-                  }, 500);
                   const idToRemove = itemData.item._id;
-                  //console.log(idToRemove);
                   const config = {
                     headers: {
                       'Content-Type': 'application/json',
                       Authorization: `Bearer ${token}`,
                     },
                   };
-                  axios
-                    .delete(`${url}/carts/me/${idToRemove}`, config)
-                    .then(() => console.log('Delete successful'))
-                    .catch(e => {
-                      console.log(e);
-                    });
+                  Alert.alert(
+                    'Remove Item',
+                    'Are you sure you want to remove this item?',
+                    [
+                      {
+                        text: 'Cancel',
+                      },
+                      {
+                        text: 'OK',
+                        onPress: () => {
+                          setVisible(true),
+                            setTimeout(() => {
+                              setVisible(false);
+                            }, 500);
+                          axios
+                            .delete(`${URL}/carts/me/${idToRemove}`, config)
+                            .then(() => console.log('Delete successful'))
+                            .catch(e => {
+                              console.log(e);
+                            });
+                        },
+                      },
+                    ],
+                  );
                 }}
               />
             )}

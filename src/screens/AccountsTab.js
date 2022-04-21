@@ -9,13 +9,11 @@ import {
   ScrollView,
 } from 'react-native';
 const axios = require('axios');
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {removeToken, setToken} from '../store/actions/cart';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
-import {MY_ADDRESS, MY_DETAILS, MY_ORDERS} from '../constants/routeName';
+import {MY_ADDRESS, MY_DETAILS, MY_ORDERS, URL} from '../constants/routeName';
 import * as userActions from '../store/actions/user';
 import Icons from 'react-native-vector-icons/Ionicons';
 
@@ -39,7 +37,7 @@ const AccountsTab = ({navigation}) => {
   };
 
   const logout = () => {
-    fetch(`${url}/users/logout`, config)
+    fetch(`${URL}/users/logout`, config)
       .then(async response => {
         dispatch(removeToken());
         await AsyncStorage.removeItem('token');
@@ -50,7 +48,7 @@ const AccountsTab = ({navigation}) => {
   };
 
   const logoutall = () => {
-    fetch(`${url}/users/logoutAll`, config)
+    fetch(`${URL}/users/logoutAll`, config)
       .then(async response => {
         dispatch(removeToken());
         await AsyncStorage.removeItem('token');

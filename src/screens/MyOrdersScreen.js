@@ -3,10 +3,9 @@ import {View, Text, StyleSheet, Image, Platform, FlatList} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
+import {URL} from '../constants/routeName';
 
 const axios = require('axios');
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
 const MyordersScreen = props => {
   const [masterdata, setmasterdata] = useState([]);
@@ -24,7 +23,7 @@ const MyordersScreen = props => {
   };
   const fetchProducts = () => {
     axios
-      .get(`${url}/orders/my`, config)
+      .get(`${URL}/orders/my`, config)
       .then(response => {
         setmasterdata(response.data ?? []);
         // console.log(masterdata);
@@ -36,7 +35,13 @@ const MyordersScreen = props => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 15,
+          paddingBottom: 15,
+          backgroundColor: '#F2C1D1' + 33,
+        }}>
         <FlatList
           data={masterdata}
           keyExtractor={item => item._id}
@@ -63,8 +68,7 @@ const Card = props => (
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginLeft: 10,
-        marginRight: 10,
+        marginHorizontal: 10,
       }}>
       <Text style={styles.txt_qtn}>Final Amount: $ {props.Total}</Text>
       <Text style={styles.txt_qtn}>Total Products: {props.totqtn}</Text>
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   wine_card: {
-    margin: 15,
+    marginTop: 15,
     flex: 1,
     backgroundColor: Colors.white,
     paddingTop: 20,

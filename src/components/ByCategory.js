@@ -6,14 +6,12 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  Dimensions,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
 import Colors from '../assets/theme/Colors';
 
 import {useNavigation} from '@react-navigation/native';
 import {PRODUCTSBYCATEGORY, PRODUCTS_LIST} from '../constants/routeName';
-const WIDTH = Dimensions.get('window').width;
+
 const WineByCategory = [
   {
     image_url:

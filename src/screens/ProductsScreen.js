@@ -9,31 +9,38 @@ import {
   Dimensions,
   Modal,
   TouchableOpacity,
+  ActivityIndicator,
+  Animated,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {WineCard, WineImage} from '../components/WineComponent';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
-import {PRODUCTS_OVERVIEW} from '../constants/routeName';
+import {PRODUCTS_OVERVIEW, URL} from '../constants/routeName';
 import {Text} from 'react-native-paper';
 const axios = require('axios');
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
-
 const WIDTH = Dimensions.get('window').width;
+
+const SPACING = 20;
+const AVATAR = 70;
+const ITEM_SIZE = AVATAR + SPACING * 3;
 
 const ProductsScreen = props => {
   const [masterdata, setmasterdata] = useState([]);
   const [filtereddata, setfilterdata] = useState([]);
   const [searchdata, setsearchdata] = useState('');
+  const [visible, setVisible] = useState(false);
   const [isModalVisible, setisModalVisible] = useState(false);
 
   let token = useSelector(state => state.cart.token);
 
   useEffect(() => {
+    setVisible(true);
     fetchProducts();
+    setTimeout(() => {
+      setVisible(false);
+    }, 500);
     return () => {};
   }, []);
 
@@ -42,7 +49,7 @@ const ProductsScreen = props => {
   };
   const fetchProducts = () => {
     axios
-      .get(`${url}/products/all`)
+      .get(`${URL}/products/all`)
       .then(response => {
         setfilterdata(response.data ?? []);
         setmasterdata(response.data ?? []);
@@ -66,8 +73,10 @@ const ProductsScreen = props => {
       setsearchdata(text);
     }
   };
+
+  const scrollY = React.useRef(new Animated.Value(0)).current;
   return (
-    <View>
+    <View style={{paddingBottom: 10}}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -100,66 +109,85 @@ const ProductsScreen = props => {
           underlineColorAndroid="transparent"
           focusable={true}
         />
-
         <WineImage />
-        <FlatList
+        <ActivityIndicator
+          animating={visible}
+          // hidesWhenStopped={false}
+          color={'purple'}
+          size={'large'}
+        />
+        <Animated.FlatList
           data={filtereddata}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {y: scrollY}}}],
+            {useNativeDriver: true},
+          )}
           keyExtractor={item => item._id}
           {...props}
-          renderItem={itemData => (
-            <WineCard
-              image={itemData.item.image}
-              winename={itemData.item.name}
-              price={itemData.item.price}
-              category={itemData.item.category}>
-              <Button
-                title="Add To Cart"
-                color={Colors.purple}
-                onPress={() => {
-                  // setVisible(true);
-                  // setTimeout(() => {
-                  //   setVisible(false);
-                  // }, 500);
-                  const addProduct = itemData.item._id;
-                  const config = {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      Authorization: `Bearer ${token}`,
-                    },
-                  };
-                  fetch(`${url}/cart/${addProduct}`, config)
-                    .then(function (response) {
-                      console.log('Added Successfully');
-                    })
-                    .then(
-                      changeModalVisible(true),
-                      setTimeout(() => {
-                        changeModalVisible(false);
-                      }, 1000),
-                    )
-                    .catch(function (error) {
-                      console.log(error);
-                    });
-                }}
-              />
-              <View style={{paddingTop: 5}}>
-                <Button
-                  title="More Info"
-                  onPress={productId => {
-                    props.navigation.navigate(PRODUCTS_OVERVIEW, {
-                      productDescription: itemData.item.description,
-                      productimage: itemData.item.image,
-                      productPrice: itemData.item.price,
-                      productCategory: itemData.item.category,
-                      productName: itemData.item.name,
-                      productCompany: itemData.item.company,
-                    });
-                  }}
-                />
-              </View>
-            </WineCard>
-          )}
+          renderItem={({item, index}) => {
+            const inputRange = [
+              -1,
+              0,
+              ITEM_SIZE * index,
+              ITEM_SIZE * (index + 2),
+            ];
+            const scale = scrollY.interpolate({
+              inputRange,
+              outputRange: [1, 1, 1, 0],
+            });
+            return (
+              <Animated.View style={{transform: [{scale}]}}>
+                <WineCard
+                  image={item.image}
+                  winename={item.name}
+                  price={item.price}
+                  category={item.category}>
+                  <Button
+                    title="Add To Cart"
+                    color={Colors.purple}
+                    onPress={() => {
+                      const addProduct = item._id;
+                      const config = {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          Authorization: `Bearer ${token}`,
+                        },
+                      };
+                      fetch(`${URL}/cart/${addProduct}`, config)
+                        .then(function (response) {
+                          console.log('Added Successfully');
+                        })
+                        .then(
+                          changeModalVisible(true),
+                          setTimeout(() => {
+                            changeModalVisible(false);
+                          }, 1000),
+                        )
+                        .catch(function (error) {
+                          console.log(error);
+                        });
+                    }}
+                  />
+                  <View style={{paddingTop: 5}}>
+                    <Button
+                      title="More Info"
+                      onPress={productId => {
+                        props.navigation.navigate(PRODUCTS_OVERVIEW, {
+                          productDescription: item.description,
+                          productimage: item.image,
+                          productPrice: item.price,
+                          productCategory: item.category,
+                          productName: item.name,
+                          productCompany: item.company,
+                        });
+                      }}
+                    />
+                  </View>
+                </WineCard>
+              </Animated.View>
+            );
+          }}
         />
       </ScrollView>
     </View>

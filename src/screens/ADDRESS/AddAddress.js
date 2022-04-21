@@ -15,9 +15,8 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
 import axios from 'axios';
 import {useSelector} from 'react-redux';
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {URL} from '../../constants/routeName';
 const Addaddress = ({navigation}) => {
   const [fullname, setfullname] = useState('');
   const [userphoneno, setUserphoneno] = useState('');
@@ -84,7 +83,7 @@ const Addaddress = ({navigation}) => {
     };
 
     axios
-      .post(`${url}/user/add/address`, dataToSend, config)
+      .post(`${URL}/user/add/address`, dataToSend, config)
       .then(
         changeModalVisible(true),
         setTimeout(() => {

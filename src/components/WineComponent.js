@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
   wine_card: {
     backgroundColor: 'white',
     marginHorizontal: 15,
-    marginTop: 15,
+    marginBottom: 15,
+
     borderRadius: 20,
     flexDirection: 'row',
     shadowColor: Colors.pink,

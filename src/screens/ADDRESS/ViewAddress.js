@@ -15,10 +15,8 @@ import {Button} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import Colors from '../../assets/theme/Colors';
 import Address from '../../components/UI/Address';
-import {ADD_ADDRESS} from '../../constants/routeName';
+import {ADD_ADDRESS, URL} from '../../constants/routeName';
 const axios = require('axios');
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
 
@@ -45,7 +43,7 @@ const ViewAddress = ({navigation}, props) => {
 
   const fetchAddress = () => {
     axios
-      .get(`${url}/user/getmy/addresses`, config)
+      .get(`${URL}/user/getmy/addresses`, config)
       .then(response => {
         setmasterdata(response.data ?? []);
         // console.log(masterdata);
@@ -103,7 +101,7 @@ const ViewAddress = ({navigation}, props) => {
               onRemove={() => {
                 axios
                   .delete(
-                    `${url}/user/delete/myaddress/${itemData.item._id}`,
+                    `${URL}/user/delete/myaddress/${itemData.item._id}`,
                     config,
                   )
                   .then(
