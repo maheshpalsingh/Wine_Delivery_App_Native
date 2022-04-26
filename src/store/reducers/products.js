@@ -12,6 +12,7 @@ import {CREATE_PRODUCT, GET_PRODUCTS} from '../actions/products';
 const initialState = {
   // wines: products,
   availableProducts: [],
+  token: null,
 };
 
 export default (state = initialState, action) => {

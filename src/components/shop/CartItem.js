@@ -60,7 +60,7 @@ const CartItem = props => {
         <Text style={styles.txt_name}>{props.name}</Text>
         <Text style={styles.txt_name}>$ {props.price}</Text>
         <Text style={styles.txt_name}>Qty:{props.qty}</Text>
-        <Text style={styles.txt_name}>Total:{props.totalQty}</Text>
+        <Text style={styles.txt_name}>Total : $ {props.totalQty}</Text>
       </View>
       <View style={styles.add_to_cart}>
         {props.children}
@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
   },
   txt_name: {
     fontSize: 15,
-
     margin: 4,
     fontFamily: 'sans-serif-medium',
   },

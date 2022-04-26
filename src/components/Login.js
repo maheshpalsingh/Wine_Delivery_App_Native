@@ -6,7 +6,6 @@ import {
   Text,
   Image,
   StyleSheet,
-  Button,
   TouchableOpacity,
   Dimensions,
   KeyboardAvoidingView,
@@ -17,14 +16,12 @@ import Colors from '../assets/theme/Colors';
 import {REGISTER, RESET_PASSWORD, URL} from '../constants/routeName';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {setToken} from '../store/actions/cart';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Commanbutton from './shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = 150;
 
 const Login = props => {
   const [userEmail, setUserEmail] = useState('');
@@ -58,10 +55,8 @@ const Login = props => {
       .post(`${URL}/users/login`, dataToSend, config)
       .then(async response => {
         const {token} = response.data;
-        console.log('while login..', token);
-        // Using Redux Store
+        //console.log('while login..', token);
         dispatch(setToken(token));
-        //Using AsyncStorage
         try {
           await AsyncStorage.setItem('token', JSON.stringify({token}));
         } catch (e) {
@@ -72,7 +67,6 @@ const Login = props => {
         changeModalVisible(true),
           setTimeout(() => {
             changeModalVisible(false);
-            navigate('DrawerNavigationRoutes');
           }, 3000);
       })
       .catch(function (error) {
@@ -100,7 +94,6 @@ const Login = props => {
                   size={90}
                   color={Colors.white}
                 />
-
                 <View style={styles.modaltext}>
                   <Text style={{fontSize: 26}}>Login Success</Text>
                 </View>

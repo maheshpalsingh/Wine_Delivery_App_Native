@@ -27,7 +27,7 @@ const ProductoverviewScreen = props => {
           <Image source={{uri: productimage}} style={styles.image1} />
         </View>
         <View style={styles.view2}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
             <View style={styles.company}>
               <Text style={styles.companytext}>
                 {productCompany.toUpperCase()}
@@ -38,7 +38,7 @@ const ProductoverviewScreen = props => {
                 <Text style={styles.text1}>{productName.toUpperCase()}</Text>
                 <Text style={styles.qty}>{productCategory.toUpperCase()}</Text>
               </View>
-              <Text style={styles.text}>${productPrice}</Text>
+              <Text style={styles.text}>$ {productPrice}</Text>
             </View>
 
             <View>
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   image: {
+    position: 'relative',
     flex: 1,
     //marginLeft: 90,
     height: '100%',

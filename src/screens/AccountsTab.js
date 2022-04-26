@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  Share,
 } from 'react-native';
 const axios = require('axios');
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -57,9 +58,31 @@ const AccountsTab = ({navigation}) => {
         alert(error);
       });
   };
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          'React Native | A framework for building native apps using React',
+        title: 'AAAAAAAAAA',
+      });
+      // if (result.action === Share.sharedAction) {
+      //   if (result.activityType) {
+      //     // shared with activity type of result.activityType
+      //   } else {
+      //     // shared
+      //   }
+      // } else if (result.action === Share.dismissedAction) {
+      //   // dismissed
+      // }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.thistle}}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <View
             style={{
@@ -162,6 +185,20 @@ const AccountsTab = ({navigation}) => {
                 style={{paddingLeft: 10, paddingRight: 10}}
               />
               <Text style={styles.buttonTextStyle}>Sign Out All </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.myorders}>
+            <TouchableOpacity
+              style={styles.buttonStyle1}
+              activeOpacity={0.5}
+              onPress={onShare}>
+              <Icons
+                color={Colors.purple}
+                name="share"
+                size={24}
+                style={{paddingLeft: 10, paddingRight: 10}}
+              />
+              <Text style={styles.buttonTextStyle}>Share me</Text>
             </TouchableOpacity>
           </View>
         </View>

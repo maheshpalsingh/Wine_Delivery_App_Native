@@ -16,7 +16,6 @@ const AuthNavigator = () => {
         name={LOGIN}
         options={styles.header}
         component={LoginScreen}></AuthStack.Screen>
-
       <AuthStack.Screen
         name={REGISTER}
         options={styles.header}
@@ -25,16 +24,6 @@ const AuthNavigator = () => {
         name={RESET_PASSWORD}
         options={styles.header}
         component={Forgetpassword}></AuthStack.Screen>
-
-      <AuthStack.Screen
-        name="DrawerNavigationRoutes"
-        options={{headerShown: false}}
-        component={BottomtabNavigator}
-      />
-      {/* <AuthStack.Screen
-        name={PRODUCTS_LIST}
-        options={styles.header}
-        component={ProductsScreen}></AuthStack.Screen> */}
     </AuthStack.Navigator>
   );
 };

@@ -12,11 +12,13 @@ import {
 import {TextInput} from 'react-native-paper';
 import Colors from '../../assets/theme/Colors';
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = 150;
+
+import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {URL} from '../../constants/routeName';
+
 const Addaddress = ({navigation}) => {
   const [fullname, setfullname] = useState('');
   const [userphoneno, setUserphoneno] = useState('');
@@ -24,12 +26,10 @@ const Addaddress = ({navigation}) => {
   const [userState, setUserState] = useState('');
   const [pincode, setPincode] = useState('');
   const [userAddress, setUserAddress] = useState('');
-
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
   const [isModalVisible, setisModalVisible] = useState(false);
-  const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
-  const fullnameInputRef = createRef();
+
   const phoneInputRef = createRef();
   const addressInputRef = createRef();
   const cityInputRef = createRef();
@@ -46,24 +46,23 @@ const Addaddress = ({navigation}) => {
       alert('Please fill Name');
       return;
     }
-    if (!userphoneno) {
-      alert('Please fill Contactno');
+    if (!userphoneno || userphoneno.length !== 10) {
+      alert('Please fill Correct Contactno');
       return;
     }
     if (!userCity) {
       alert('Please fill City');
       return;
     }
-    if (!userState) {
-      alert('Please fill State');
-      return;
-    }
+    // if (!userState) {
+    //   alert('Please fill State');
+    //   return;
+    // }
     if (!pincode) {
       alert('Please fill Pincode');
       return;
     }
 
-    //Show Loader
     setLoading(true);
     var dataToSend = {
       fullname: fullname,
@@ -94,7 +93,6 @@ const Addaddress = ({navigation}) => {
         navigation.goBack();
       })
       .catch(error => {
-        //Hide Loader
         setLoading(false);
         console.error(error);
       });
@@ -115,7 +113,6 @@ const Addaddress = ({navigation}) => {
               size={90}
               color={Colors.white}
             />
-
             <View style={styles.modaltext}>
               <Text style={{fontSize: 26}}>Address Added Success</Text>
             </View>
@@ -123,12 +120,11 @@ const Addaddress = ({navigation}) => {
         </TouchableOpacity>
       </Modal>
       <View>
-        {/* <Text style={styles.title}>Welcome to Wine Delivery App</Text>
-        <Text style={styles.subtitle}>Create a free Account🎁</Text> */}
         <ScrollView>
           <KeyboardAvoidingView enabled>
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserName => setfullname(UserName)}
                 underlineColorAndroid="#f000"
@@ -144,6 +140,7 @@ const Addaddress = ({navigation}) => {
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserEmail => setUserphoneno(UserEmail)}
                 underlineColorAndroid="#f000"
@@ -160,12 +157,47 @@ const Addaddress = ({navigation}) => {
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserPassword => setUserAddress(UserPassword)}
                 underlineColorAndroid="#f000"
                 placeholder="Enter Address"
                 placeholderTextColor="#8b9cb5"
                 ref={addressInputRef}
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  stateInputRef.current && stateInputRef.current.focus()
+                }
+                blurOnSubmit={false}
+              />
+            </View>
+            <View style={styles.SectionStyle}>
+              {/* <RNPickerSelect
+                //onChangeText={value => setUserState(value)}
+                onValueChange={value => setUserState(value)}
+                items={[
+                  {label: 'Football', value: 'football'},
+                  {label: 'Baseball', value: 'baseball'},
+                  {label: 'Hockey', value: 'hockey'},
+                  {label: 'Football', value: 'football'},
+                  {label: 'Baseball', value: 'baseball'},
+                  {label: 'Hockey', value: 'hockey'},
+                  {label: 'Football', value: 'football'},
+                  {label: 'Baseball', value: 'baseball'},
+                  {label: 'Hockey', value: 'hockey'},
+                  {label: 'Football', value: 'football'},
+                  {label: 'Baseball', value: 'baseball'},
+                  {label: 'Hockey', value: 'hockey'},
+                ]}
+              /> */}
+              <TextInput
+                theme={{colors: {primary: 'purple'}}}
+                style={styles.inputStyle}
+                onChangeText={UserAge => setUserState(UserAge)}
+                underlineColorAndroid="#f000"
+                placeholder="Enter State"
+                placeholderTextColor="#8b9cb5"
+                ref={stateInputRef}
                 returnKeyType="next"
                 onSubmitEditing={() =>
                   cityInputRef.current && cityInputRef.current.focus()
@@ -175,27 +207,13 @@ const Addaddress = ({navigation}) => {
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserPassword => setUserCity(UserPassword)}
                 underlineColorAndroid="#f000"
                 placeholder="Enter City Name"
                 placeholderTextColor="#8b9cb5"
                 ref={cityInputRef}
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  stateInputRef.current && stateInputRef.current.focus()
-                }
-                blurOnSubmit={false}
-              />
-            </View>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={UserAge => setUserState(UserAge)}
-                underlineColorAndroid="#f000"
-                placeholder="Enter State"
-                placeholderTextColor="#8b9cb5"
-                ref={stateInputRef}
                 returnKeyType="next"
                 onSubmitEditing={() =>
                   pincodeInputRef.current && pincodeInputRef.current.focus()
@@ -206,6 +224,7 @@ const Addaddress = ({navigation}) => {
 
             <View style={styles.SectionStyle}>
               <TextInput
+                theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserContact => setPincode(UserContact)}
                 underlineColorAndroid="#f000"
@@ -270,7 +289,6 @@ const styles = StyleSheet.create({
   },
   form: {
     paddingTop: 20,
-    // fontSize: 20,
   },
   button: {
     borderRadius: 10,
@@ -302,16 +320,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'baseline',
     padding: 5,
+    fontWeight: '500',
   },
   buttonStyle: {
     fontSize: 22,
     backgroundColor: Colors.purple,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 120,
+    width: 350,
+    marginLeft: 120,
+    right: 80,
     height: 40,
-
-    borderRadius: 18,
+    borderRadius: 8,
   },
   buttonTextStyle: {
     justifyContent: 'center',

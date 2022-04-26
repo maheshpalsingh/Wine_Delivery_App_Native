@@ -11,6 +11,7 @@ import {
   Modal,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from 'react-native';
 import Colors from '../assets/theme/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -25,7 +26,7 @@ const MyDetailsScreen = ({navigation}) => {
   const [isModalVisible1, setisModalVisible1] = useState(false);
   const [isModalVisible2, setisModalVisible2] = useState(false);
   const [data, setdata] = useState('');
-
+  const [errortext, setErrortext] = useState('');
   let token = useSelector(state => state.cart.token);
 
   const config = {
@@ -60,50 +61,58 @@ const MyDetailsScreen = ({navigation}) => {
     setisModalVisible2(bool);
   };
   const updateEmail = () => {
-    console.log(userEmail);
+    setErrortext('');
+    if (!userEmail) {
+      Alert.alert('Warning', 'Please Enter Correct Data', [{text: 'OK'}]);
+      return;
+    }
     var dataToSend = {
       email: userEmail,
     };
+
     console.log(dataToSend);
     axios
       .patch(`${URL}/users/update/me`, dataToSend, config)
-      .then(() => console.log('Successfully Updates'))
       .then(() => {
         changeModalVisible1(false);
       })
       .catch(error => {
-        //Hide Loader
         setLoading(false);
         console.error(error);
       });
   };
   const updateContact = () => {
-    console.log(userEmail);
+    setErrortext('');
+    if (!userContact || userContact.length !== 10) {
+      Alert.alert('Warning', 'Please Enter Correct Data', [{text: 'OK'}]);
+      return;
+    }
     var dataToSend = {
       contactno: userContact,
     };
     console.log(dataToSend);
     axios
       .patch(`${URL}/users/update/me`, dataToSend, config)
-      .then(() => console.log('Successfully Updates'))
       .then(() => {
         changeModalVisible2(false);
       })
       .catch(error => {
-        //Hide Loader
         setLoading(false);
         console.error(error);
       });
   };
   const updateName = () => {
-    console.log(userName);
+    setErrortext('');
+    if (!userName) {
+      Alert.alert('Warning', 'Please Enter Correct Data', [{text: 'OK'}]);
+      return;
+    }
     var dataToSend = {
       name: userName,
     };
     console.log(dataToSend);
     axios
       .patch(`${URL}/users/update/me`, dataToSend, config)
-      .then(() => console.log('Successfully Updates'))
       .then(() => {
         changeModalVisible(false);
       })
@@ -264,7 +273,7 @@ const MyDetailsScreen = ({navigation}) => {
         <Text style={styles.heading}>Contactno</Text>
         <View style={{flexDirection: 'row'}}>
           <View style={styles.data}>
-            <Text style={styles.text2}>{data.contactno}</Text>
+            <Text style={styles.text2}>{parseInt(data.contactno)}</Text>
           </View>
 
           <View style={{width: 80, alignSelf: 'flex-end', padding: 10}}>

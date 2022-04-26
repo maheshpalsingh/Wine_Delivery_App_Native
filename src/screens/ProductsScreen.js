@@ -3,14 +3,12 @@ import {
   View,
   StyleSheet,
   FlatList,
-  Platform,
   Button,
   TextInput,
   Dimensions,
   Modal,
   TouchableOpacity,
   ActivityIndicator,
-  Animated,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {WineCard, WineImage} from '../components/WineComponent';
@@ -19,12 +17,9 @@ import {useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
 import {PRODUCTS_OVERVIEW, URL} from '../constants/routeName';
 import {Text} from 'react-native-paper';
+import * as productActions from '../store/actions/products';
 const axios = require('axios');
 const WIDTH = Dimensions.get('window').width;
-
-const SPACING = 20;
-const AVATAR = 70;
-const ITEM_SIZE = AVATAR + SPACING * 3;
 
 const ProductsScreen = props => {
   const [masterdata, setmasterdata] = useState([]);
@@ -32,6 +27,7 @@ const ProductsScreen = props => {
   const [searchdata, setsearchdata] = useState('');
   const [visible, setVisible] = useState(false);
   const [isModalVisible, setisModalVisible] = useState(false);
+  //const productItems = useSelector(state => state.wines.availableProducts);
 
   let token = useSelector(state => state.cart.token);
 
@@ -48,6 +44,7 @@ const ProductsScreen = props => {
     setisModalVisible(bool);
   };
   const fetchProducts = () => {
+    // await dispatch(productActions.GetProductsAction());
     axios
       .get(`${URL}/products/all`)
       .then(response => {
@@ -74,9 +71,8 @@ const ProductsScreen = props => {
     }
   };
 
-  const scrollY = React.useRef(new Animated.Value(0)).current;
   return (
-    <View style={{paddingBottom: 10}}>
+    <View>
       <Modal
         animationType="slide"
         transparent={true}
@@ -110,33 +106,21 @@ const ProductsScreen = props => {
           focusable={true}
         />
         <WineImage />
-        <ActivityIndicator
-          animating={visible}
-          // hidesWhenStopped={false}
-          color={'purple'}
-          size={'large'}
-        />
-        <Animated.FlatList
+        {visible && (
+          <ActivityIndicator
+            animating={visible}
+            // hidesWhenStopped={false}
+            color={'purple'}
+            size={'large'}
+          />
+        )}
+        <FlatList
           data={filtereddata}
-          onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {y: scrollY}}}],
-            {useNativeDriver: true},
-          )}
           keyExtractor={item => item._id}
           {...props}
           renderItem={({item, index}) => {
-            const inputRange = [
-              -1,
-              0,
-              ITEM_SIZE * index,
-              ITEM_SIZE * (index + 2),
-            ];
-            const scale = scrollY.interpolate({
-              inputRange,
-              outputRange: [1, 1, 1, 0],
-            });
             return (
-              <Animated.View style={{transform: [{scale}]}}>
+              <View>
                 <WineCard
                   image={item.image}
                   winename={item.name}
@@ -185,7 +169,7 @@ const ProductsScreen = props => {
                     />
                   </View>
                 </WineCard>
-              </Animated.View>
+              </View>
             );
           }}
         />
@@ -226,7 +210,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 20,
     flex: 2,
-    // justifyContent: 'center',
+
     width: 200,
     height: 110,
     paddingRight: 10,

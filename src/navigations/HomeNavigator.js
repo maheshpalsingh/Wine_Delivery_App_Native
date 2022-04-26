@@ -27,6 +27,7 @@ import ViewAddress from '../screens/ADDRESS/ViewAddress';
 import Productsbycategory from '../screens/ProductsByCategory';
 import {useSelector} from 'react-redux';
 import {Badge} from 'react-native-paper';
+import {Text, View} from 'react-native';
 
 const screenOptions = ({navigation}) => ({
   headerRight: () => (
@@ -37,21 +38,39 @@ const screenOptions = ({navigation}) => ({
         color={Colors.white}
         style={{paddingRight: 10}}
         onPress={() => {
-          navigation.navigate(MY_CART);
+          setTimeout(() => {
+            navigation.navigate(MY_CART);
+          }, 500);
         }}
       />
-      <Badge
-        visible={true}
-        size={25}
-        style={{
-          backgroundColor: Colors.thistle,
-          marginTop: 2,
-          marginRight: 2,
-          top: 0,
-          position: 'absolute',
-        }}>
-        {global.cartLength}
-      </Badge>
+      {global.cartLength > 0 ? (
+        <Badge
+          visible={true}
+          size={20}
+          onPress={() => {
+            navigation.navigate(MY_CART);
+          }}
+          style={{
+            backgroundColor: Colors.thistle,
+            marginTop: 6,
+            right: 6,
+            top: 0,
+            position: 'absolute',
+            transform: [{rotate: '-10deg'}],
+          }}>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: '500',
+              fontStyle: 'italic',
+              color: Colors.purple,
+            }}>
+            {global.cartLength}
+          </Text>
+        </Badge>
+      ) : (
+        <View></View>
+      )}
     </>
   ),
   headerTitleAlign: 'center',
@@ -87,6 +106,8 @@ export const HomeStackScreen = ({navigation}) => {
 
 export const CategoryStackScreen = ({navigation}) => {
   const CategoryStack = createStackNavigator();
+  const cartItems = useSelector(state => state.cart.availableOrders);
+  global.cartLength = cartItems.length;
   return (
     <CategoryStack.Navigator screenOptions={screenOptions}>
       <CategoryStack.Screen
@@ -105,19 +126,10 @@ export const CategoryStackScreen = ({navigation}) => {
   );
 };
 
-export const OrdersStackScreen = ({navigation}) => {
-  const OrdersStack = createStackNavigator();
-  return (
-    <OrdersStack.Navigator screenOptions={screenOptions}>
-      <OrdersStack.Screen
-        name={MY_ORDERS}
-        component={MyordersScreen}></OrdersStack.Screen>
-    </OrdersStack.Navigator>
-  );
-};
-
 export const AccountStackScreen = ({navigation}) => {
   const AccountStack = createStackNavigator();
+  const cartItems = useSelector(state => state.cart.availableOrders);
+  global.cartLength = cartItems.length;
   return (
     <AccountStack.Navigator screenOptions={screenOptions}>
       <AccountStack.Screen
@@ -138,18 +150,10 @@ export const AccountStackScreen = ({navigation}) => {
       <AccountStack.Screen
         name={ADD_ADDRESS}
         component={Addaddress}></AccountStack.Screen>
-    </AccountStack.Navigator>
-  );
-};
 
-export const CartStackScreen = ({navigation}) => {
-  // const navigation = useNavigation();
-  const CartStack = createStackNavigator();
-  return (
-    <CartStack.Navigator screenOptions={screenOptions}>
-      <CartStack.Screen
-        name={MY_CART}
-        component={MycartScreen}></CartStack.Screen>
-    </CartStack.Navigator>
+      <AccountStack.Screen
+        name={PRODUCTS_LIST}
+        component={ProductsScreen}></AccountStack.Screen>
+    </AccountStack.Navigator>
   );
 };

@@ -2,12 +2,9 @@ import React, {createRef, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
-  Input,
   Text,
   Image,
-  Button,
   ScrollView,
-  Keyboard,
   TouchableOpacity,
   KeyboardAvoidingView,
   Modal,
@@ -16,16 +13,12 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
-const url =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3001' : 'http://127.0.0.1:3000';
 
 import Colors from '../assets/theme/Colors';
 
 import {useNavigation} from '@react-navigation/native';
-import {LOGIN} from '../constants/routeName';
-import {HomeStackScreen} from '../navigations/HomeNavigator';
+import {LOGIN, URL} from '../constants/routeName';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Commanbutton from './shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = 150;
@@ -36,12 +29,10 @@ const Signup = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userAge, setUserAge] = useState('');
   const [userContact, setUserContact] = useState('');
-  const [userAddress, setUserAddress] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
   const [isModalVisible, setisModalVisible] = useState(false);
-  const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   const emailInputRef = createRef();
   const ageInputRef = createRef();
   const passwordInputRef = createRef();
@@ -66,7 +57,7 @@ const Signup = () => {
       Alert.alert('Warning', 'Please enter Age', [{text: 'OK'}]);
       return;
     }
-    if (!userContact) {
+    if (!userContact || userContact.length !== 10) {
       Alert.alert('Warning', 'Please enter Contact No.', [{text: 'OK'}]);
       return;
     }
@@ -92,7 +83,7 @@ const Signup = () => {
     };
 
     axios
-      .post(`${url}/users/register`, dataToSend, config)
+      .post(`${URL}/users/register`, dataToSend, config)
       .then(
         changeModalVisible(true),
         setTimeout(() => {
@@ -103,7 +94,6 @@ const Signup = () => {
         navigate(LOGIN);
       })
       .catch(error => {
-        //Hide Loader
         Alert.alert('Warning', 'Email Already Exists', [{text: 'OK'}]);
         setLoading(false);
         console.error(error);
@@ -111,7 +101,7 @@ const Signup = () => {
   };
   return (
     <View style={styles.screen}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Modal
           animationType="slide"
           transparent={true}
@@ -157,6 +147,7 @@ const Signup = () => {
           <KeyboardAvoidingView enabled="true">
             <View style={styles.SectionStyle}>
               <TextInput
+                autoCapitalize={true}
                 theme={{colors: {primary: 'purple'}}}
                 style={styles.inputStyle}
                 onChangeText={UserName => setUserName(UserName)}

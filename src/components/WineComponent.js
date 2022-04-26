@@ -57,16 +57,20 @@ export const WineCard = props => {
 };
 
 const styles = StyleSheet.create({
-  screenimage: {width: '100%', height: 150, paddingBottom: 20},
+  screenimage: {
+    width: '100%',
+    height: 150,
+    paddingBottom: 20,
+    marginBottom: 15,
+  },
   wine_card: {
     backgroundColor: 'white',
     marginHorizontal: 15,
     marginBottom: 15,
-
     borderRadius: 20,
     flexDirection: 'row',
-    shadowColor: Colors.pink,
-    shadowOpacity: 0.5,
+    shadowColor: 'red',
+    shadowOpacity: 0.25,
     shadowOffset: {width: 0, height: 3},
     shadowRadius: 8,
     elevation: 8,

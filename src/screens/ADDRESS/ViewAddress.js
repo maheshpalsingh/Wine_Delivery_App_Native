@@ -9,6 +9,7 @@ import {
   Modal,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
@@ -27,9 +28,9 @@ const ViewAddress = ({navigation}, props) => {
 
   useEffect(() => {
     fetchAddress();
-    ADD_ADDRESS;
+
     return () => {};
-  }, []);
+  }, [masterdata]);
   const changeModalVisible = bool => {
     setisModalVisible(bool);
   };
@@ -51,6 +52,38 @@ const ViewAddress = ({navigation}, props) => {
       .catch(function (error) {
         alert(error);
       });
+  };
+
+  const removeaddress = id => {
+    Alert.alert(
+      'Remove Item',
+      'Are you sure you want to remove this address?',
+      [
+        {
+          text: 'Cancel',
+          style: styles.alert,
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            axios
+              .delete(`${URL}/user/delete/myaddress/${id}`, config)
+              .then(
+                changeModalVisible(true),
+                setTimeout(() => {
+                  changeModalVisible(false);
+                }, 2000),
+              )
+              .then(response => {
+                fetchAddress();
+              })
+              .catch(function (error) {
+                alert(error);
+              });
+          },
+        },
+      ],
+    );
   };
 
   return (
@@ -99,23 +132,7 @@ const ViewAddress = ({navigation}, props) => {
               pincode={itemData.item.pincode}
               number={itemData.item.phoneno}
               onRemove={() => {
-                axios
-                  .delete(
-                    `${URL}/user/delete/myaddress/${itemData.item._id}`,
-                    config,
-                  )
-                  .then(
-                    changeModalVisible(true),
-                    setTimeout(() => {
-                      changeModalVisible(false);
-                    }, 2000),
-                  )
-                  .then(response => {
-                    fetchAddress();
-                  })
-                  .catch(function (error) {
-                    alert(error);
-                  });
+                removeaddress(itemData.item._id);
               }}
             />
           )}
@@ -145,6 +162,9 @@ const styles = StyleSheet.create({
   modaltext: {
     flex: 1,
     fontSize: '30',
+  },
+  alert: {
+    color: 'red',
   },
 });
 

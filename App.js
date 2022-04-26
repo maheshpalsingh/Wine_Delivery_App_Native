@@ -7,7 +7,7 @@
  */
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import AppNavContainer from './src/navigations';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
@@ -25,6 +25,7 @@ const Store = createStore(rootReducer, applyMiddleware(thunk));
 
 const App = () => {
   useEffect(() => {
+    <StatusBar hidden />;
     SplashScreen.hide();
   }, []);
   return (

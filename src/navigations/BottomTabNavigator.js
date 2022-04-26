@@ -24,7 +24,7 @@ const BottomtabNavigator = ({navigation}) => {
         options={{
           tabBarLabel: 'PRODUCTS',
           //tabBarColor: Colors.white,
-          tabBarIcon: ({color}) => <Icon name="wine" color="white" size={28} />,
+          tabBarIcon: ({color}) => <Icon name="wine" color={color} size={28} />,
         }}
       />
       <Tab.Screen

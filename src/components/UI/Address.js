@@ -13,9 +13,12 @@ const Address = props => {
         <Text style={styles.heading2}>
           {props.address},{props.city},{props.state}-{props.pincode}
         </Text>
-        <Text style={styles.heading3}>{props.number}</Text>
+        <Text style={styles.heading3}>Contact no. +91- {props.number}</Text>
       </View>
-      <View style={{flex: 1}}>
+      <View
+        style={{
+          flex: 1,
+        }}>
         <Icon
           name="trash"
           size={24}
@@ -39,12 +42,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   heading1: {
-    fontSize: 20,
+    fontSize: 18,
+    fontWeight: '700',
     paddingTop: 10,
     paddingBottom: 10,
   },
   heading2: {
     fontSize: 16,
+    fontWeight: '500',
   },
   heading3: {
     paddingTop: 10,

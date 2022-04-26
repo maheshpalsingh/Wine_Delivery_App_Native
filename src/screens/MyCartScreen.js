@@ -14,7 +14,6 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
@@ -31,7 +30,6 @@ const MycartScreen = (props, {navigation}) => {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
   const [isModalVisible, setisModalVisible] = useState(false);
-
   const cartItems = useSelector(state => state.cart.availableOrders);
 
   let token = useSelector(state => state.cart.token);
@@ -41,12 +39,12 @@ const MycartScreen = (props, {navigation}) => {
   };
 
   useEffect(() => {
-    const loadProducts = async () => {
-      await dispatch(cartActions.GetCartsAction());
-    };
     loadProducts();
-  }, [dispatch, cartItems]);
+  }, [cartItems]);
 
+  const loadProducts = async () => {
+    await dispatch(cartActions.GetCartsAction());
+  };
   const cartTotalAmount = useSelector(state => state.cart.totalAmount);
 
   useEffect(() => {
@@ -140,15 +138,17 @@ const MycartScreen = (props, {navigation}) => {
           </TouchableOpacity>
         </Modal>
         <View style={styles.screen}>
-          <ActivityIndicator
-            animating={visible}
-            color={'purple'}
-            size={'large'}
-          />
+          {visible && (
+            <ActivityIndicator
+              animating={visible}
+              color={'purple'}
+              size={'large'}
+            />
+          )}
           <View>
             <Card style={styles.summary}>
               <Text style={styles.summaryText}>
-                Total :-
+                GRAND TOTAL :-
                 <Text style={styles.amount}>
                   $ {Math.round(total.toFixed(2) * 100) / 100}
                 </Text>
@@ -165,7 +165,7 @@ const MycartScreen = (props, {navigation}) => {
           </View>
 
           <View>
-            <Text style={styles.ordertext}>Products</Text>
+            <Text style={styles.ordertext}>Your Products</Text>
           </View>
 
           <FlatList
@@ -250,12 +250,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginVertical: 15,
+    marginLeft: 15,
+    marginRight: 15,
     padding: 10,
   },
   summaryText: {
     fontFamily: 'sans-serif-medium',
     fontSize: 18,
+    color: Colors.grey,
   },
   amount: {
     color: Colors.purple,
