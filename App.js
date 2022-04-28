@@ -5,6 +5,7 @@
  * @format
  * @flow strict-local
  */
+import 'react-native-reanimated';
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
@@ -25,7 +26,6 @@ const Store = createStore(rootReducer, applyMiddleware(thunk));
 
 const App = () => {
   useEffect(() => {
-    <StatusBar hidden />;
     SplashScreen.hide();
   }, []);
   return (

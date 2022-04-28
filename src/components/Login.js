@@ -24,6 +24,7 @@ import Commanbutton from './shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
 
 const Login = props => {
+  const {navigate} = useNavigation();
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [errortext, setErrortext] = useState('');
@@ -75,7 +76,7 @@ const Login = props => {
         ]);
       });
   };
-  const {navigate} = useNavigation();
+
   return (
     <View style={styles.screen}>
       <ScrollView>

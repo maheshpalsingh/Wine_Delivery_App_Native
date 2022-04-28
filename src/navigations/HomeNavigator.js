@@ -19,7 +19,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Icons from 'react-native-vector-icons/Ionicons';
 import Colors from '../assets/theme/Colors';
 import Categories from '../screens/Categories';
-
 import AccountsTab from '../screens/AccountsTab';
 import MyDetailsScreen from '../screens/MyDetailsScreen';
 import Addaddress from '../screens/ADDRESS/AddAddress';

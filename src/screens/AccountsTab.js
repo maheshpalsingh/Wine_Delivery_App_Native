@@ -18,6 +18,8 @@ import {MY_ADDRESS, MY_DETAILS, MY_ORDERS, URL} from '../constants/routeName';
 import * as userActions from '../store/actions/user';
 import Icons from 'react-native-vector-icons/Ionicons';
 
+import LottieView from 'lottie-react-native';
+
 const AccountsTab = ({navigation}) => {
   const dispatch = useDispatch();
   const mydetails = useSelector(state => state.user.mydetails);
@@ -84,18 +86,18 @@ const AccountsTab = ({navigation}) => {
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.thistle}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <View
-            style={{
-              borderWidth: 2,
-              borderColor: 'white',
-              backgroundColor: '#C5C6D0',
-            }}>
-            <Image
+          <View style={{width: '70%', height: '40%'}}>
+            <LottieView
+              source={require('./../assets/loader/68030-user-profile.json')}
+              autoPlay
+              loop
+            />
+            {/* <Image
               style={styles.tinyLogo}
               source={{
                 uri: 'https://st3.depositphotos.com/1007566/13129/v/950/depositphotos_131295836-stock-illustration-businessman-character-avatar-icon.jpg',
               }}
-            />
+            /> */}
           </View>
 
           <View style={styles.screen}>
@@ -124,7 +126,6 @@ const AccountsTab = ({navigation}) => {
                 size={24}
                 style={{paddingLeft: 10, paddingRight: 10}}
               />
-
               <Text style={styles.heading}>My Orders </Text>
             </View>
             <TouchableOpacity
@@ -209,10 +210,11 @@ const AccountsTab = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 15,
+    height: '40%',
+    // paddingBottom: 15,
     paddingTop: 10,
     backgroundColor: Colors.purple,
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignItems: 'center',
   },
   tinyLogo: {

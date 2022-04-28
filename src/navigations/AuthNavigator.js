@@ -5,7 +5,6 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import {LOGIN, REGISTER, RESET_PASSWORD} from '../constants/routeName';
 import Colors from '../assets/theme/Colors';
-import BottomtabNavigator from './BottomTabNavigator';
 import Forgetpassword from '../screens/ForgetPassword';
 
 const AuthNavigator = () => {

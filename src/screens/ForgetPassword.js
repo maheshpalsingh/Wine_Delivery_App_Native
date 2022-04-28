@@ -18,6 +18,7 @@ import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import Commanbutton from '../components/shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
+import LottieView from 'lottie-react-native';
 
 const Forgetpassword = ({navigation}) => {
   const {navigate} = useNavigation();
@@ -43,15 +44,12 @@ const Forgetpassword = ({navigation}) => {
       Alert.alert('Warning', 'Please enter Email', [{text: 'OK'}]);
       return;
     }
-
     if (!userPassword) {
       Alert.alert('Warning', 'Please enter Password', [{text: 'OK'}]);
-
       return;
     }
     if (!userconfirmPassword) {
       Alert.alert('Warning', 'Please enter Confirm Password', [{text: 'OK'}]);
-
       return;
     }
 
@@ -106,11 +104,16 @@ const Forgetpassword = ({navigation}) => {
       <ScrollView>
         <KeyboardAvoidingView enabled="true">
           <View style={styles.form}>
-            <Image
+            {/* <Image
               style={styles.image}
               source={require('../assets/my-app/download.jpg')}
+            /> */}
+            <LottieView
+              style={styles.image}
+              source={require('./../assets/loader/97494-cheers-wine.json')}
+              autoPlay
+              loop
             />
-
             <TextInput
               theme={{colors: {primary: 'purple'}}}
               label="Enter email"
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.thistle,
   },
   form: {
-    margin: 21,
+    //margin: 21,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
@@ -226,10 +229,7 @@ const styles = StyleSheet.create({
     fontSize: '30',
   },
   image: {
-    marginBottom: 10,
-
-    width: 350,
-    borderRadius: 15,
+    width: 200,
   },
 });
 

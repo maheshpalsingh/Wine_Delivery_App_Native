@@ -18,6 +18,7 @@ import Colors from '../assets/theme/Colors';
 import {PRODUCTS_OVERVIEW, URL} from '../constants/routeName';
 import {Text} from 'react-native-paper';
 import * as productActions from '../store/actions/products';
+import LottieView from 'lottie-react-native';
 const axios = require('axios');
 const WIDTH = Dimensions.get('window').width;
 
@@ -40,11 +41,8 @@ const ProductsScreen = props => {
     return () => {};
   }, []);
 
-  const changeModalVisible = bool => {
-    setisModalVisible(bool);
-  };
-  const fetchProducts = () => {
-    // await dispatch(productActions.GetProductsAction());
+  const fetchProducts = async () => {
+    // await dispatch(productActions.A());
     axios
       .get(`${URL}/products/all`)
       .then(response => {
@@ -54,6 +52,10 @@ const ProductsScreen = props => {
       .catch(function (error) {
         alert(error);
       });
+  };
+
+  const changeModalVisible = bool => {
+    setisModalVisible(bool);
   };
 
   const searchFilter = text => {
@@ -82,12 +84,17 @@ const ProductsScreen = props => {
         }}>
         <TouchableOpacity disabled={true} style={styles.container}>
           <View style={styles.modal}>
-            <Icon
+            {/* <Icon
               name="checkmark-circle-outline"
               size={90}
               color={Colors.white}
+            /> */}
+            <LottieView
+              style={{flex: 1}}
+              source={require('./../assets/loader/90283-add-to-cart.json')}
+              autoPlay
+              loop
             />
-
             <View style={styles.modaltext}>
               <Text style={{fontSize: 26}}>Added to Cart Successfully</Text>
             </View>
@@ -109,7 +116,6 @@ const ProductsScreen = props => {
         {visible && (
           <ActivityIndicator
             animating={visible}
-            // hidesWhenStopped={false}
             color={'purple'}
             size={'large'}
           />

@@ -55,7 +55,7 @@ const WineByCategory = [
   },
 ];
 
-const ByCategory = (props, {navigation}) => {
+const ByCategory = props => {
   const {navigate} = useNavigation();
   return (
     <View style={styles.container}>
@@ -77,17 +77,6 @@ const ByCategory = (props, {navigation}) => {
           />
         )}
       />
-      {/* <ScrollView>
-        {WineByCategory.map((wine, index) => (
-          <View key={index}>
-            <WineImage
-              image={wine.image_url}
-              category={wine.category}
-              {...props}
-            />
-          </View>
-        ))}
-      </ScrollView> */}
     </View>
   );
 };
@@ -96,14 +85,7 @@ const WineImage = props => (
   <>
     <View style={styles.screen}>
       <View style={styles.main}>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={
-            //() =>
-            props.onClick
-            //console.log(props.category);
-            //navigate(PRODUCTSBYCATEGORY)
-          }>
+        <TouchableOpacity activeOpacity={0.5} onPress={props.onClick}>
           <Image
             source={{
               uri: props.image,
@@ -136,9 +118,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 10,
-    // paddingTop: 20,
-    // paddingLeft: 20,
-    // paddingRight: 20,
   },
   main: {
     flex: 1,

@@ -1,4 +1,4 @@
-import React, {createRef, useEffect, useState} from 'react';
+import React, {createRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -13,15 +13,12 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
-
 import Colors from '../assets/theme/Colors';
-
 import {useNavigation} from '@react-navigation/native';
 import {LOGIN, URL} from '../constants/routeName';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Commanbutton from './shop/CommanButton';
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = 150;
 
 const Signup = () => {
   const {navigate} = useNavigation();
@@ -46,7 +43,6 @@ const Signup = () => {
     setErrortext('');
     if (!userName) {
       Alert.alert('Warning', 'Please enter Name', [{text: 'OK'}]);
-
       return;
     }
     if (!userEmail) {
@@ -65,7 +61,7 @@ const Signup = () => {
       Alert.alert('Warning', 'Please enter Password', [{text: 'OK'}]);
       return;
     }
-    //Show Loader
+
     setLoading(true);
     var dataToSend = {
       name: userName,
@@ -74,7 +70,6 @@ const Signup = () => {
       password: userPassword,
       contactno: userContact,
     };
-    console.log(dataToSend);
 
     const config = {
       headers: {
@@ -99,6 +94,7 @@ const Signup = () => {
         console.error(error);
       });
   };
+
   return (
     <View style={styles.screen}>
       <ScrollView showsVerticalScrollIndicator={false}>
