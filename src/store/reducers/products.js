@@ -1,4 +1,4 @@
-import {CREATE_PRODUCT, GET_PRODUCTS} from '../actions/products';
+import {GET_PRODUCTS} from '../actions/products';
 
 const initialState = {
   availableProducts: [],

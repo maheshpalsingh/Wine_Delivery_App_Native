@@ -29,7 +29,7 @@ const AuthNavigator = () => {
 
 const styles = StyleSheet.create({
   header: {
-    headerTintColor: Colors.grey,
+    headerTintColor: Colors.white,
     headerTitleAlign: 'center',
     headerStyle: {
       backgroundColor: Colors.purple,

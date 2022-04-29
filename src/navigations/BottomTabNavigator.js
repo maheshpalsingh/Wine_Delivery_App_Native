@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import Colors from '../assets/theme/Colors';
@@ -9,10 +9,15 @@ import {
   HomeStackScreen,
 } from './HomeNavigator';
 import {ACCOUNT} from '../constants/routeName';
+import {useSelector} from 'react-redux';
 
 const Tab = createMaterialBottomTabNavigator();
 
 const BottomtabNavigator = ({navigation}) => {
+  const cartItems = useSelector(state => state.cart.availableOrders);
+  useEffect(() => {
+    global.cartLength = cartItems.length;
+  }, [cartItems]);
   return (
     <Tab.Navigator
       initialRouteName="Feed"

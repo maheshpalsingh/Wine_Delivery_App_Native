@@ -124,7 +124,7 @@ const MycartScreen = props => {
     );
   } else {
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <>
         <Modal
           animationType="slide"
           transparent={true}
@@ -183,6 +183,7 @@ const MycartScreen = props => {
             <Text style={styles.ordertext}>Your Products</Text>
           </View>
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={cartItems}
             keyExtractor={item => item._id}
             {...props}
@@ -233,7 +234,7 @@ const MycartScreen = props => {
             )}
           />
         </View>
-      </ScrollView>
+      </>
     );
   }
 };

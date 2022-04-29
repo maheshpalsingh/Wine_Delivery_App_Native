@@ -85,6 +85,7 @@ const screenOptions = ({navigation}) => ({
 export const HomeStackScreen = ({navigation}) => {
   const HomeStack = createStackNavigator();
   const cartItems = useSelector(state => state.cart.availableOrders);
+  useEffect(() => {}, [cartItems]);
   global.cartLength = cartItems.length;
   return (
     <HomeStack.Navigator
@@ -127,8 +128,7 @@ export const CategoryStackScreen = ({navigation}) => {
 
 export const AccountStackScreen = ({navigation}) => {
   const AccountStack = createStackNavigator();
-  const cartItems = useSelector(state => state.cart.availableOrders);
-  global.cartLength = cartItems.length;
+
   return (
     <AccountStack.Navigator screenOptions={screenOptions}>
       <AccountStack.Screen

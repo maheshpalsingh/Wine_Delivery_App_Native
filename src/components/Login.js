@@ -46,7 +46,7 @@ const Login = props => {
       return;
     }
     let dataToSend = {email: userEmail, password: userPassword};
-    console.log(dataToSend);
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -136,8 +136,8 @@ const Login = props => {
               }}>
               <Text
                 style={{
-                  paddingRight: 20,
-                  fontSize: 14,
+                  paddingRight: 30,
+                  fontSize: 15,
                   color: '#7F7D9C',
                 }}>
                 Forget Password

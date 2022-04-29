@@ -13,7 +13,7 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import {WineCard, WineImage} from '../components/WineComponent';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Colors from '../assets/theme/Colors';
 import {PRODUCTS_OVERVIEW, URL} from '../constants/routeName';
 import {Text} from 'react-native-paper';
@@ -21,6 +21,7 @@ import * as productActions from '../store/actions/products';
 import LottieView from 'lottie-react-native';
 const axios = require('axios');
 const WIDTH = Dimensions.get('window').width;
+import * as cartActions from '../store/actions/cart';
 
 const ProductsScreen = props => {
   const [masterdata, setmasterdata] = useState([]);
@@ -29,7 +30,7 @@ const ProductsScreen = props => {
   const [visible, setVisible] = useState(false);
   const [isModalVisible, setisModalVisible] = useState(false);
   //const productItems = useSelector(state => state.wines.availableProducts);
-
+  const dispatch = useDispatch();
   let token = useSelector(state => state.cart.token);
 
   useEffect(() => {
@@ -101,7 +102,7 @@ const ProductsScreen = props => {
           </View>
         </TouchableOpacity>
       </Modal>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <>
         <TextInput
           style={styles.input}
           value={searchdata}
@@ -121,6 +122,7 @@ const ProductsScreen = props => {
           />
         )}
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={filtereddata}
           keyExtractor={item => item._id}
           {...props}
@@ -145,8 +147,9 @@ const ProductsScreen = props => {
                         },
                       };
                       fetch(`${URL}/cart/${addProduct}`, config)
-                        .then(function (response) {
+                        .then(async function (response) {
                           console.log('Added Successfully');
+                          await dispatch(cartActions.GetCartsAction());
                         })
                         .then(
                           changeModalVisible(true),
@@ -179,7 +182,7 @@ const ProductsScreen = props => {
             );
           }}
         />
-      </ScrollView>
+      </>
     </View>
   );
 };

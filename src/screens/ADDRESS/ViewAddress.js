@@ -109,7 +109,7 @@ const ViewAddress = ({navigation}, props) => {
           </View>
         </TouchableOpacity>
       </Modal>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <>
         <Button
           style={{paddingTop: 10}}
           color={Colors.purple}
@@ -120,6 +120,7 @@ const ViewAddress = ({navigation}, props) => {
         </Button>
 
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={masterdata}
           keyExtractor={item => item._id}
           {...props}
@@ -137,7 +138,7 @@ const ViewAddress = ({navigation}, props) => {
             />
           )}
         />
-      </ScrollView>
+      </>
     </SafeAreaView>
   );
 };

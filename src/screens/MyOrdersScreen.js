@@ -43,7 +43,7 @@ const MyordersScreen = props => {
   };
   if (masterdata.length > 0) {
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <>
         <View
           style={{
             flex: 1,
@@ -52,6 +52,7 @@ const MyordersScreen = props => {
             backgroundColor: '#fff1',
           }}>
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={masterdata}
             keyExtractor={item => item._id}
             {...props}
@@ -67,7 +68,7 @@ const MyordersScreen = props => {
             )}
           />
         </View>
-      </ScrollView>
+      </>
     );
   } else {
     return (

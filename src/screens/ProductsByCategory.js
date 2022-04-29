@@ -85,7 +85,7 @@ const Productsbycategory = props => {
           </View>
         </TouchableOpacity>
       </Modal>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <>
         <TextInput
           style={styles.input}
           value={searchdata}
@@ -99,6 +99,7 @@ const Productsbycategory = props => {
 
         <WineImage />
         <FlatList
+          showsVerticalScrollIndicator={false}
           style={{paddingTop: 15}}
           data={filtereddata}
           keyExtractor={item => item._id}
@@ -154,7 +155,7 @@ const Productsbycategory = props => {
             </WineCard>
           )}
         />
-      </ScrollView>
+      </>
     </View>
   );
 };

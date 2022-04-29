@@ -17,6 +17,7 @@ import Colors from '../assets/theme/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {URL} from '../constants/routeName';
 const WIDTH = Dimensions.get('window').width;
+import LottieView from 'lottie-react-native';
 
 const MyDetailsScreen = ({navigation}) => {
   const [userName, setUserName] = useState('');
@@ -85,6 +86,7 @@ const MyDetailsScreen = ({navigation}) => {
     setErrortext('');
     if (!userContact || userContact.length !== 10) {
       Alert.alert('Warning', 'Please Enter Correct Data', [{text: 'OK'}]);
+
       return;
     }
     var dataToSend = {

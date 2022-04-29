@@ -7,39 +7,9 @@ import {
   Platform,
   Image,
   TouchableNativeFeedback,
-  Button,
-  Number,
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import Colors from '../../assets/theme/Colors';
-
-// const CartItem = props => {
-//   return (
-//     <View style={styles.cartItem}>
-//       <View style={styles.itemData}>
-//         <Image style={styles.pic} />
-//         <Text style={styles.quantity}>{props.qty} </Text>
-//         <Text style={styles.mainText}>{props.name}</Text>
-//       </View>
-//       <View style={styles.itemData}>
-//         <Text style={styles.mainText}>
-//           ${Math.round(props.amount.toFixed(2) * 100) / 100}
-//         </Text>
-//         {props.deletable && (
-//           <TouchableOpacity
-//             onPress={props.onRemove}
-//             style={styles.deleteButton}>
-//             <Icons
-//               name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-//               size={23}
-//               color="red"
-//             />
-//           </TouchableOpacity>
-//         )}
-//       </View>
-//     </View>
-//   );
-// };
 
 const CartItem = props => {
   let TouchableCmp = TouchableOpacity;

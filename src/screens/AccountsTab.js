@@ -52,8 +52,11 @@ const AccountsTab = ({navigation}) => {
 
   const logoutall = () => {
     fetch(`${URL}/users/logoutAll`, config)
-      .then(async response => {
+      .then(() => {
+        console.log('Successfully Logout');
         dispatch(removeToken());
+      })
+      .then(async () => {
         await AsyncStorage.removeItem('token');
       })
       .catch(function (error) {
@@ -210,11 +213,9 @@ const AccountsTab = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: '40%',
-    // paddingBottom: 15,
+    height: '35%',
     paddingTop: 10,
     backgroundColor: Colors.purple,
-    //justifyContent: 'center',
     alignItems: 'center',
   },
   tinyLogo: {
@@ -224,6 +225,7 @@ const styles = StyleSheet.create({
   container2: {
     backgroundColor: Colors.thistle,
     padding: 10,
+    marginBottom: 80,
   },
   screen: {
     padding: 10,
@@ -276,8 +278,9 @@ const styles = StyleSheet.create({
     borderBottomColor: 'grey',
   },
   heading: {
-    color: 'black',
+    color: 'purple',
     fontSize: 20,
+    fontWeight: '500',
   },
 });
 
